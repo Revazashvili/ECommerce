@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D86968BD-DA8A-4A79-9B51-CC3A56F1C265}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{F7D00D38-EA76-477A-B70D-9889A0A7AFB5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{5CABE16A-1389-44E8-A6B1-C740E5C44EE4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ordering", "Ordering", "{B30BFBA5-FA9F-4FBC-A97F-9E0D145475A6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Products", "Products", "{3BB5862C-CDCD-417E-9AB6-A0BAA400C3D2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Identity", "Identity", "{00C00537-F393-4CB4-88E6-280C913B4498}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F7D00D38-EA76-477A-B70D-9889A0A7AFB5} = {D86968BD-DA8A-4A79-9B51-CC3A56F1C265}
+		{5CABE16A-1389-44E8-A6B1-C740E5C44EE4} = {D86968BD-DA8A-4A79-9B51-CC3A56F1C265}
+		{B30BFBA5-FA9F-4FBC-A97F-9E0D145475A6} = {5CABE16A-1389-44E8-A6B1-C740E5C44EE4}
+		{3BB5862C-CDCD-417E-9AB6-A0BAA400C3D2} = {5CABE16A-1389-44E8-A6B1-C740E5C44EE4}
+		{00C00537-F393-4CB4-88E6-280C913B4498} = {5CABE16A-1389-44E8-A6B1-C740E5C44EE4}
+	EndGlobalSection
+EndGlobal
