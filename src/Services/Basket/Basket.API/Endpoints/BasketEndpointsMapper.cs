@@ -34,6 +34,15 @@ internal static class BasketEndpointsMapper
             .Produces<Models.Basket>()
             .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
         
+        basketRouteGroupBuilder.MapPost("/checkout", async (Models.BasketCheckout basketCheckout, CancellationToken cancellationToken,
+                ISender sender) =>
+            {
+                var result = await sender.Send(new BasketCheckoutCommand(basketCheckout), cancellationToken);
+                return result.ToResult();
+            })
+            .Produces<Models.Basket>()
+            .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
+        
         basketRouteGroupBuilder.MapDelete("/{id:int}", async (int id, CancellationToken cancellationToken,
                 ISender sender) =>
             {

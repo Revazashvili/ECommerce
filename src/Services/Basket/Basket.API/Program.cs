@@ -2,6 +2,7 @@ using System.Text.Json.Serialization;
 using Basket.API.Endpoints;
 using Basket.API.Interfaces;
 using Basket.API.Repositories;
+using EventBus.Kafka;
 using Services.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +20,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 builder.Services.AddScoped<IBasketRepository, RedisBasketRepository>();
 
 builder.Services.AddRedis(builder.Configuration);
+builder.Services.AddKafka(builder.Configuration);
 
 var app = builder.Build();
 
