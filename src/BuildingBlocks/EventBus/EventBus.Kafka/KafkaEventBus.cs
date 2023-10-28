@@ -3,6 +3,7 @@ using Confluent.Kafka;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace EventBus.Kafka;
 
@@ -29,8 +30,9 @@ public class KafkaEventBus : IEventBus
 
         try
         {
-            using var producer = _kafkaConnection.BuildProducer<T>();
-            var producerResult = await producer.ProduceAsync(eventType, new Message<Null, T> { Value = @event });
+            using var producer = _kafkaConnection.BuildProducer();
+            var json = JsonSerializer.Serialize(@event);
+            var producerResult = await producer.ProduceAsync(eventType, new Message<Null, string> { Value = json });
         }
         catch (Exception ex)
         {

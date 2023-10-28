@@ -4,6 +4,7 @@ using Confluent.SchemaRegistry;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using ProducerConfig = Confluent.Kafka.ProducerConfig;
 
 namespace EventBus.Kafka;
 
@@ -13,8 +14,12 @@ public static class KafkaServiceCollectionExtensions
     {
         var kafkaOptionsSection = configuration.GetSection("KafkaOptions");
         var bootstrapServers = kafkaOptionsSection["BootstrapServers"];
-        
-        var producerConfiguration = new ProducerConfig { BootstrapServers = bootstrapServers, AllowAutoCreateTopics = true};
+
+        var producerConfiguration = new ProducerConfig
+        {
+            BootstrapServers = bootstrapServers,
+            AllowAutoCreateTopics = true
+        };
         
         var schemaRegistryConfiguration = new SchemaRegistryConfig
         {

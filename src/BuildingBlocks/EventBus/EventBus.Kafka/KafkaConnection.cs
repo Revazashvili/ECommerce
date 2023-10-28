@@ -20,18 +20,16 @@ public class KafkaConnection
         _schemaRegistryConfiguration = schemaRegistryConfiguration ?? throw new ArgumentNullException(nameof(schemaRegistryConfiguration));
     }
 
-    public IProducer<Null, T> BuildProducer<T>() 
-        where T : class
+    public IProducer<Null, string> BuildProducer()
     {
         if (_producerBuilder != null)
-            return (IProducer<Null, T>)_producerBuilder;
+            return (IProducer<Null, string>)_producerBuilder;
         
         var schemaRegistry = new CachedSchemaRegistryClient(_schemaRegistryConfiguration);
-        _producerBuilder = new ProducerBuilder<Null, T>(_producerConfiguration)
-            .SetValueSerializer(new AvroSerializer<T>(schemaRegistry))
+        _producerBuilder = new ProducerBuilder<Null, string>(_producerConfiguration)
             .Build();
 
-        return (IProducer<Null,T>)_producerBuilder;
+        return (IProducer<Null,string>)_producerBuilder;
     }
 
     public IConsumer<Null, T> BuildConsumer<T>() 
