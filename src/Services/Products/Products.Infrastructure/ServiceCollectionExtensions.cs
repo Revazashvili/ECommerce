@@ -19,6 +19,7 @@ public static class ServiceCollectionExtensions
             }));
 
         services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
+        services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IUnitOfWork, ProductsContext>();
         
         return services;

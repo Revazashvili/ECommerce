@@ -11,6 +11,11 @@ public class ProductCategoryRepository : IProductCategoryRepository
     
     public IUnitOfWork UnitOfWork => _context;
 
+    public Task<List<ProductCategory>> GetAsync(int[] ids, CancellationToken cancellationToken) => 
+        _context.ProductCategories
+            .Where(category => ids.Contains(category.Id))
+            .ToListAsync(cancellationToken);
+
     public Task<List<ProductCategory>> GetAsync(CancellationToken cancellationToken) => 
         _context.ProductCategories.AsNoTracking().ToListAsync(cancellationToken);
 

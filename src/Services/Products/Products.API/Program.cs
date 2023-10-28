@@ -24,6 +24,7 @@ app.UseSwaggerUI();
 
 app.MapApi();
 app.MapProductCategory();
+app.MapProduct();
 
 app.UseFluentValidationMiddleware();
 
