@@ -46,11 +46,11 @@ public class KafkaEventBus : IEventBus
         where TH : IIntegrationEventHandler<T>
     {
         var eventName = typeof(T).Name;
-        using var consumer = _kafkaConnection.BuildConsumer<T>();
-
+        using var consumer = _kafkaConnection.BuildConsumer();
+        
         _subscriptionManager.AddSubscription<T, TH>();
         consumer.Subscribe(eventName);
-
+        
         //create a task to listen to the topic
         await Task.Run(async () =>
         {
@@ -59,7 +59,9 @@ public class KafkaEventBus : IEventBus
                 try
                 {
                     var consumerResult = consumer.Consume();
-                    await ProcessEvent(consumerResult.Message.Value);
+                    var value = JsonSerializer.Deserialize<T>(consumerResult.Message.Value)!;
+                    
+                    await ProcessEvent(value);
                 }
                 catch (ConsumeException e)
                 {
@@ -67,13 +69,13 @@ public class KafkaEventBus : IEventBus
                     _logger.LogError(e.Message + "\n" + e.StackTrace);
                 }
             }
-        }).ConfigureAwait(false);
+        });
     }
 
-    private async Task<bool> ProcessEvent<T>(T value) where T : IntegrationEvent
+    private async Task ProcessEvent<T>(T value) where T : IntegrationEvent
     {
-        if (!_subscriptionManager.HasEvent<T>())
-            return false;
+        if (!_subscriptionManager.HasEvent<T>()) 
+            return;
 
         using var scope = _serviceScopeFactory.CreateScope();
         
@@ -88,7 +90,5 @@ public class KafkaEventBus : IEventBus
             await (Task)concreteType.GetMethod("Handle")!
                 .Invoke(handler, new object[] { value })!;
         }
-
-        return true;
     }
 }

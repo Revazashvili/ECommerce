@@ -32,11 +32,9 @@ public class KafkaConnection
         return (IProducer<Null,string>)_producerBuilder;
     }
 
-    public IConsumer<Null, T> BuildConsumer<T>() 
-        where T : class
+    public IConsumer<Null, string> BuildConsumer() 
     {
-        var consumer = new ConsumerBuilder<Null, T>(_consumerConfiguration)
-            .SetValueDeserializer(new JsonDeserializer<T>().AsSyncOverAsync())
+        var consumer = new ConsumerBuilder<Null, string>(_consumerConfiguration)
             .Build();
 
         return consumer;
