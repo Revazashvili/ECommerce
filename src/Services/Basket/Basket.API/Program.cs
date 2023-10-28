@@ -1,25 +1,35 @@
+using System.Text.Json.Serialization;
+using Basket.API.Endpoints;
+using Basket.API.Interfaces;
+using Basket.API.Repositories;
+using Services.DependencyInjection;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddMediatrWithValidation();
+
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
+
+builder.Services.AddScoped<IBasketRepository, RedisBasketRepository>();
+
+builder.Services.AddRedis(builder.Configuration);
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+
+var apiEndpointRouteBuilder = app.MapApi();
+apiEndpointRouteBuilder.MapBasket();
+
+app.UseFluentValidationMiddleware();
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
-
-
-app.Run();
+await app.RunAsync();
