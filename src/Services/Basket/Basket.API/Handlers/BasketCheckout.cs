@@ -36,7 +36,7 @@ public class BasketCheckoutCommandHandler : IValidatedCommandHandler<BasketCheck
                 return new ValidationResult("Can't find basket");
 
             var checkoutEvent = new BasketCheckoutStartedEvent(request.BasketCheckout.UserId, orderNumber,
-                request.BasketCheckout.Address, request.BasketCheckout.PaymentInfo);
+                request.BasketCheckout.Address, request.BasketCheckout.PaymentInfo,request.BasketCheckout.BasketItems);
             
             await _eventBus.PublishAsync(checkoutEvent);
         }
