@@ -2,14 +2,9 @@ using Basket.API.Handlers;
 using Contracts;
 using Contracts.Mediatr.Validation;
 using MediatR;
+using Services.Common;
 
 namespace Basket.API.Endpoints;
-
-internal static class EitherExtensions
-{
-    internal static IResult ToResult<TLeft, TRight>(this Either<TLeft, TRight> either) =>
-        either.Match(Results.Ok, Results.BadRequest);
-}
 
 internal static class BasketEndpointsMapper
 {

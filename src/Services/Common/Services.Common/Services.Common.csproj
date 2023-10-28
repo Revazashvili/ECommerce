@@ -13,6 +13,16 @@
       <Reference Include="MediatR">
         <HintPath>..\..\..\..\..\..\.nuget\packages\mediatr\12.1.1\lib\net6.0\MediatR.dll</HintPath>
       </Reference>
+      <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
+        <HintPath>..\..\..\..\..\..\..\..\usr\lib64\dotnet\shared\Microsoft.AspNetCore.App\7.0.11\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.AspNetCore.Http.Results">
+        <HintPath>..\..\..\..\..\..\..\..\usr\lib64\dotnet\shared\Microsoft.AspNetCore.App\7.0.11\Microsoft.AspNetCore.Http.Results.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\BuildingBlocks\Contracts\Contracts\Contracts.csproj" />
     </ItemGroup>
 
 </Project>
