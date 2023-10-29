@@ -32,6 +32,16 @@ internal static class OrderEndpointsMapper
                 return result.ToResult();
             }).Produces<Order>()
             .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
+        
+        orderRouteGroupBuilder.MapGet("/{userId:int}", async (int userId,
+                CancellationToken cancellationToken,
+                ISender sender) =>
+            {
+                var result = await sender.Send(new GetUserOrderHistoryQuery(userId), cancellationToken);
+                return result.ToResult();
+            }).Produces<Order>()
+            .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
+        
         //
         // basketRouteGroupBuilder.MapPost("/search", async (SearchProductsQuery query ,CancellationToken cancellationToken,
         //         ISender sender) =>

@@ -42,4 +42,13 @@ public class OrderRepository : IOrderRepository
             .AsNoTracking()
             .ToListAsync(cancellationToken);
     }
+
+    public Task<List<Order>> GetUserOrdersAsync(int userId, CancellationToken cancellationToken)
+    {
+        return _context.Orders
+            .Include(order => order.OrderItems)
+            .Include(order => order.Address)
+            .Where(order => order.UserId == userId)
+            .ToListAsync(cancellationToken);
+    }
 }
