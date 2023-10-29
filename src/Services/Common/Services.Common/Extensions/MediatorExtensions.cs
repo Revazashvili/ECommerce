@@ -1,11 +1,12 @@
 using MediatR;
-using Products.Domain.Models;
+using Microsoft.EntityFrameworkCore;
+using Services.Common.Domain;
 
-namespace Products.Infrastructure.Extensions;
+namespace Services.Common.Extensions;
 
 public static class MediatorExtensions
 {
-    public static async Task PublishDomainEventsAsync(this IMediator mediator, ProductsContext context)
+    public static async Task PublishDomainEventsAsync(this IMediator mediator, DbContext context)
     {
         var domainEntities = context.ChangeTracker
             .Entries<Entity>()

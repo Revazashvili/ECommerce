@@ -2,8 +2,8 @@ using System.Reflection;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Products.Domain.Entities;
-using Products.Domain.Models;
-using Products.Infrastructure.Extensions;
+using Services.Common.Domain;
+using Services.Common.Extensions;
 
 namespace Products.Infrastructure;
 

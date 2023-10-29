@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
 using Contracts.Mediatr.Wrappers;
 
-namespace Products.Domain.Models;
+namespace Services.Common.Domain;
 
 public abstract class Entity
 {

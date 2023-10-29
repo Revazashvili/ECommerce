@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Products.Domain.Models;
 using Products.Infrastructure.Repositories;
+using Services.Common.Domain;
 
 namespace Products.Infrastructure;
 

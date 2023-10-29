@@ -1,5 +1,5 @@
 using Products.Domain.Events;
-using Products.Domain.Models;
+using Services.Common.Domain;
 
 namespace Products.Domain.Entities;
 

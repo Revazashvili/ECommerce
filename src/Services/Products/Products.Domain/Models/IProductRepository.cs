@@ -1,4 +1,5 @@
 using Products.Domain.Entities;
+using Services.Common.Domain;
 
 namespace Products.Domain.Models;
 
