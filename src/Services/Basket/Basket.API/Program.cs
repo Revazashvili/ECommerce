@@ -1,7 +1,10 @@
 using System.Text.Json.Serialization;
 using Basket.API.Endpoints;
+using Basket.API.IntegrationEvents.EventHandlers;
+using Basket.API.IntegrationEvents.Events;
 using Basket.API.Interfaces;
 using Basket.API.Repositories;
+using EventBus;
 using EventBus.Kafka;
 using Services.DependencyInjection;
 
@@ -18,6 +21,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 });
 
 builder.Services.AddScoped<IBasketRepository, RedisBasketRepository>();
+builder.Services.AddScoped<ProductStockUnAvailableIntegrationEventHandler>();
 
 builder.Services.AddRedis(builder.Configuration);
 builder.Services.AddKafka(builder.Configuration);
@@ -31,5 +35,8 @@ var apiEndpointRouteBuilder = app.MapApi();
 apiEndpointRouteBuilder.MapBasket();
 
 app.UseFluentValidationMiddleware();
+
+var eventBus = app.Services.GetRequiredService<IEventBus>();
+eventBus.SubscribeAsync<ProductStockUnAvailableIntegrationEvent, ProductStockUnAvailableIntegrationEventHandler>();
 
 await app.RunAsync();

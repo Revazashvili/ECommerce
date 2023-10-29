@@ -1,7 +1,7 @@
 using Basket.API.Models;
 using EventBus;
 
-namespace Basket.API.Events;
+namespace Basket.API.IntegrationEvents.Events;
 
 public class BasketCheckoutStartedEvent : IntegrationEvent
 {

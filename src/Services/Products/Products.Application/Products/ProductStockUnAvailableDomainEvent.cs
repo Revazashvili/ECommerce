@@ -22,7 +22,7 @@ public class ProductStockUnAvailableDomainEventHandler : INotificationHandler<Pr
         try
         {
             var productStockUnAvailableIntegrationEvent =
-                new ProductStockUnAvailableIntegrationEvent(notification.Product);
+                new ProductStockUnAvailableIntegrationEvent(notification.Product.Id);
             await _eventBus.PublishAsync(productStockUnAvailableIntegrationEvent);
             
         }

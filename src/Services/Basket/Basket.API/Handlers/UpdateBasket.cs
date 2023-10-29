@@ -86,8 +86,8 @@ public class BasketItemValidator : AbstractValidator<BasketItem>
         RuleFor(command => command.ProductId)
             .NotNull()
             .WithMessage("ProductId must not be null.")
-            .GreaterThanOrEqualTo(1)
-            .WithMessage("ProductId must not equal to or less than zero.");
+            .NotEmpty()
+            .WithMessage("ProductId must not be empty.");
         
         RuleFor(command => command.ProductName)
             .NotNull()

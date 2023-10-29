@@ -1,4 +1,4 @@
-using Basket.API.Events;
+using Basket.API.IntegrationEvents.Events;
 using Basket.API.Interfaces;
 using Basket.API.Models;
 using Contracts;

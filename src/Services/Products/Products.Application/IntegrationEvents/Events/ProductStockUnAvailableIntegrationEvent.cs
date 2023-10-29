@@ -5,10 +5,10 @@ namespace Products.Application.IntegrationEvents.Events;
 
 public class ProductStockUnAvailableIntegrationEvent : IntegrationEvent
 {
-    public ProductStockUnAvailableIntegrationEvent(Product product)
+    public ProductStockUnAvailableIntegrationEvent(Guid productId)
     {
-        Product = product;
+        ProductId = productId;
     }
 
-    public Product Product { get; }
+    public Guid ProductId { get; }
 }
