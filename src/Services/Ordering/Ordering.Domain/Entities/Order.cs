@@ -13,6 +13,7 @@ public class Order : Entity
         Address = address;
         OrderStatus = orderStatus;
         OrderingDate = orderingDate;
+        OrderItems = new List<OrderItem>();
     }
     
     public Guid OrderNumber { get; private set; }
