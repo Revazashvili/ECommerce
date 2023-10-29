@@ -1,5 +1,7 @@
+using System.Reflection;
 using Contracts.Mediatr.Validation;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Products.Application.Products;
 using Products.Domain.Entities;
 using Services.Common;
@@ -12,13 +14,21 @@ internal static class ProductEndpointsMapper
     {
         var basketRouteGroupBuilder = endpointRouteBuilder.MapGroup("product");
 
-        // basketRouteGroupBuilder.MapGet("/", async (CancellationToken cancellationToken,
-        //         ISender sender) =>
-        //     {
-        //         var result = await sender.Send(new GetProductCategoriesQuery(), cancellationToken);
-        //         return result.ToResult();
-        //     }).Produces<IEnumerable<ProductCategory>>()
-        //     .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
+        basketRouteGroupBuilder.MapGet("/", async (CancellationToken cancellationToken,
+                ISender sender) =>
+            {
+                var result = await sender.Send(new GetProductsQuery(), cancellationToken);
+                return result.ToResult();
+            }).Produces<IEnumerable<Product>>()
+            .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
+        
+        basketRouteGroupBuilder.MapPost("/search", async (SearchProductsQuery query ,CancellationToken cancellationToken,
+                ISender sender) =>
+            {
+                var result = await sender.Send(new SearchProductsQuery(query.Name,query.Categories), cancellationToken);
+                return result.ToResult();
+            }).Produces<IEnumerable<Product>>()
+            .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
 
         basketRouteGroupBuilder.MapPost("/", async (CreateProductCommand command, CancellationToken cancellationToken,
                 ISender sender) =>
@@ -28,23 +38,5 @@ internal static class ProductEndpointsMapper
             })
             .Produces<Product>()
             .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
-        
-        // basketRouteGroupBuilder.MapPut("/", async (UpdateProductCategoryCommand command, CancellationToken cancellationToken,
-        //         ISender sender) =>
-        //     {
-        //         var result = await sender.Send(command, cancellationToken);
-        //         return result.ToResult();
-        //     })
-        //     .Produces<ProductCategory>()
-        //     .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
-        //
-        // basketRouteGroupBuilder.MapDelete("/{id:int}", async (int id, CancellationToken cancellationToken,
-        //         ISender sender) =>
-        //     {
-        //         var result = await sender.Send(new DeleteProductCategoryCommand(id), cancellationToken);
-        //         return result.ToResult();
-        //     })
-        //     .Produces<None>()
-        //     .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
     }
 }
