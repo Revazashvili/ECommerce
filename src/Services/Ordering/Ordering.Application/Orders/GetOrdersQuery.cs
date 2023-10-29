@@ -1,6 +1,7 @@
 using Contracts;
 using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
+using FluentValidation;
 using Microsoft.Extensions.Logging;
 using Ordering.Domain.Entities;
 using Ordering.Domain.Models;
@@ -33,5 +34,27 @@ public class GetOrdersQueryHandler : IValidatedQueryHandler<GetOrdersQuery, IEnu
             _logger.LogError(exception,"Error occured in {Handler}",nameof(GetOrdersQueryHandler));
             return new ValidationResult("Can't retrieve orders");
         }
+    }
+}
+
+public class GetOrdersQueryValidator : AbstractValidator<GetOrdersQuery>
+{
+    public GetOrdersQueryValidator()
+    {
+        RuleFor(command => command.From)
+            .NotNull()
+            .WithMessage("From must not be null.")
+            .GreaterThan(DateTime.MinValue)
+            .WithMessage("From must be greater or equal to MinValue.");
+        
+        RuleFor(command => command.To)
+            .NotNull()
+            .WithMessage("To must not be null.")
+            .GreaterThan(DateTime.MinValue)
+            .WithMessage("To must be greater or equal to MinValue.");
+        
+        RuleFor(command => command.Pagination)
+            .NotNull()
+            .WithMessage("Pagination must not be null.");
     }
 }

@@ -1,6 +1,7 @@
 using Contracts;
 using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
+using FluentValidation;
 using Microsoft.Extensions.Logging;
 using Ordering.Domain.Entities;
 using Ordering.Domain.Models;
@@ -36,5 +37,17 @@ public class GetOrderByOrderNumberQueryHandler : IValidatedQueryHandler<GetOrder
             _logger.LogError(exception,"Error occured in {Handler}",nameof(GetOrderByOrderNumberQueryHandler));
             return new ValidationResult("Can't retrieve order");
         }
+    }
+}
+
+public class GetOrderByOrderNumberQueryValidator : AbstractValidator<GetOrderByOrderNumberQuery>
+{
+    public GetOrderByOrderNumberQueryValidator()
+    {
+        RuleFor(command => command.OrderNumber)
+            .NotNull()
+            .WithMessage("OrderNumber must not be null.")
+            .NotEmpty()
+            .WithMessage("OrderNumber must not be empty.");
     }
 }

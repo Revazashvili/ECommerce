@@ -1,6 +1,7 @@
 using Contracts;
 using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
+using FluentValidation;
 using Microsoft.Extensions.Logging;
 using Ordering.Domain.Entities;
 using Ordering.Domain.Models;
@@ -32,5 +33,17 @@ public class GetUserOrderHistoryQueryHandler : IValidatedQueryHandler<GetUserOrd
             _logger.LogError(exception,"Error occured in {Handler}",nameof(GetOrdersQueryHandler));
             return new ValidationResult("Can't retrieve user orders");
         }
+    }
+}
+
+public class GetUserOrderHistoryQueryValidator : AbstractValidator<GetUserOrderHistoryQuery>
+{
+    public GetUserOrderHistoryQueryValidator()
+    {
+        RuleFor(command => command.UserId)
+            .NotNull()
+            .WithMessage("UserId must not be null.")
+            .GreaterThanOrEqualTo(1)
+            .WithMessage("UserId must be greater or equal to 1.");
     }
 }
