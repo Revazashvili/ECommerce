@@ -8,16 +8,13 @@ namespace EventBus.Kafka;
 public class KafkaConnection
 {
     private readonly ProducerConfig _producerConfiguration;
-    private readonly SchemaRegistryConfig _schemaRegistryConfiguration;
     private readonly ConsumerConfig _consumerConfiguration;
     private object? _producerBuilder;
 
-    public KafkaConnection(ProducerConfig producerConfiguration, ConsumerConfig consumerConfiguration,
-        SchemaRegistryConfig schemaRegistryConfiguration)
+    public KafkaConnection(ProducerConfig producerConfiguration, ConsumerConfig consumerConfiguration)
     {
         _producerConfiguration =producerConfiguration ?? throw new ArgumentNullException(nameof(producerConfiguration));
         _consumerConfiguration =consumerConfiguration ?? throw new ArgumentNullException(nameof(consumerConfiguration));
-        _schemaRegistryConfiguration = schemaRegistryConfiguration ?? throw new ArgumentNullException(nameof(schemaRegistryConfiguration));
     }
 
     public IProducer<Null, string> BuildProducer()
@@ -25,7 +22,6 @@ public class KafkaConnection
         if (_producerBuilder != null)
             return (IProducer<Null, string>)_producerBuilder;
         
-        var schemaRegistry = new CachedSchemaRegistryClient(_schemaRegistryConfiguration);
         _producerBuilder = new ProducerBuilder<Null, string>(_producerConfiguration)
             .Build();
 

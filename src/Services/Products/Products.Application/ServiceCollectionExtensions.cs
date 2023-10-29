@@ -1,4 +1,6 @@
 using BlobHelper;
+using EventBus.Kafka;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Products.Application.Services;
 using Services.DependencyInjection;
@@ -7,7 +9,7 @@ namespace Products.Application;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddApplication(this IServiceCollection services)
+    public static IServiceCollection AddApplication(this IServiceCollection services,IConfiguration configuration)
     {
         
         var settings = new AwsSettings(
@@ -20,6 +22,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IImageService, ImageService>();
         
         services.AddMediatrWithValidation();
+
+        services.AddKafka(configuration);
         return services;
     }
 }

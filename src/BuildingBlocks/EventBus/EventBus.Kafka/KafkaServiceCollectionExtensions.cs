@@ -18,16 +18,10 @@ public static class KafkaServiceCollectionExtensions
         var producerConfiguration = new ProducerConfig
         {
             BootstrapServers = bootstrapServers,
-            AllowAutoCreateTopics = true
+            AllowAutoCreateTopics = true,
+            MessageTimeoutMs = int.Parse(kafkaOptionsSection["MessageTimeoutMs"]!)
         };
         
-        var schemaRegistryConfiguration = new SchemaRegistryConfig
-        {
-            Url = kafkaOptionsSection["SchemaRegistryUrl"],
-            RequestTimeoutMs = Convert.ToInt32(kafkaOptionsSection["SchemaRegistryTimeoutMs"]),
-            MaxCachedSchemas = Convert.ToInt32(kafkaOptionsSection["SchemaRegistryMaxCachedSchemas"])
-        };
-
         var consumerConfiguration = new ConsumerConfig
         {
             BootstrapServers = bootstrapServers,
@@ -36,7 +30,7 @@ public static class KafkaServiceCollectionExtensions
         };
 
         //Set up the event bus
-        services.AddSingleton(new KafkaConnection(producerConfiguration, consumerConfiguration,schemaRegistryConfiguration));
+        services.AddSingleton(new KafkaConnection(producerConfiguration, consumerConfiguration));
         services.AddSingleton<IEventBusSubscriptionManager, InMemoryEventBusSubscriptionManager>();
 
         services.AddSingleton<IEventBus, KafkaEventBus>(sp =>

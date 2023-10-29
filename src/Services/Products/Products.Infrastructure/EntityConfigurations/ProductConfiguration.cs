@@ -29,5 +29,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .WithMany(category => category.Products);
 
         builder.HasIndex(product => product.Name);
+
+        builder.Ignore(product => product.DomainEvents);
     }
 }

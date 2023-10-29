@@ -1,14 +1,20 @@
 using System.Reflection;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Products.Domain.Entities;
 using Products.Domain.Models;
+using Products.Infrastructure.Extensions;
 
 namespace Products.Infrastructure;
 
 public class ProductsContext : DbContext,IUnitOfWork
 {
-    
-    public ProductsContext(DbContextOptions<ProductsContext> options) : base(options){}
+    private readonly IMediator _mediator;
+
+    public ProductsContext(DbContextOptions<ProductsContext> options,IMediator mediator) : base(options)
+    {
+        _mediator = mediator;
+    }
     
     public ProductsContext() { }
     public DbSet<Product> Products { get; set; }
@@ -20,6 +26,15 @@ public class ProductsContext : DbContext,IUnitOfWork
         base.OnModelCreating(modelBuilder);
     }
 
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    {
+        var affectedRows = await base.SaveChangesAsync(cancellationToken);
+
+        await _mediator.PublishDomainEventsAsync(this);
+        
+        return affectedRows;
+    }
+    
     public void RejectChanges()
     {
         var entityEntries = ChangeTracker.Entries()

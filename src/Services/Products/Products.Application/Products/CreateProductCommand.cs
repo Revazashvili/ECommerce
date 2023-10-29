@@ -81,7 +81,7 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
         RuleFor(command => command.Categories)
             .NotNull()
             .WithMessage("Categories must not be null.")
-            .Empty()
+            .NotEmpty()
             .WithMessage("Categories must not be empty.")
             .MustAsync(async (command, context, cancellationToken) =>
             {

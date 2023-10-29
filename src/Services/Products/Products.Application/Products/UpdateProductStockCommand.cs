@@ -28,6 +28,9 @@ public class UpdateProductStockCommandHandler : IValidatedCommandHandler<UpdateP
             var product = await _productRepository.GetByIdAsync(request.Id,cancellationToken);
             if (product is null)
                 return new ValidationResult("Can't find product");
+
+            if (product.Quantity == request.Quantity)
+                return product;
             
             product.UpdateQuantity(request.Quantity);
             await _productRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
@@ -58,7 +61,7 @@ public class UpdateProductStockCommandValidator : AbstractValidator<UpdateProduc
         RuleFor(command => command.Quantity)
             .NotNull()
             .WithMessage("Quantity must not be null.")
-            .GreaterThanOrEqualTo(1)
-            .WithMessage("Quantity must be greater or equal to 1.");
+            .GreaterThanOrEqualTo(0)
+            .WithMessage("Quantity must be greater or equal to 0.");
     }
 }

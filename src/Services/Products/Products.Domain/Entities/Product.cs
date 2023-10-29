@@ -1,6 +1,9 @@
+using Products.Domain.Events;
+using Products.Domain.Models;
+
 namespace Products.Domain.Entities;
 
-public class Product
+public class Product : Entity
 {
     private Product() {}
     public Product(Guid id,string name, int quantity, double price, 
@@ -23,11 +26,14 @@ public class Product
 
     public void UpdateQuantity(int quantity)
     {
-        if (quantity < 0)
+        const int zero = 0;
+        if (quantity < zero)
             throw new Exception(nameof(quantity));
         
         Quantity = quantity;
-        
-        //TODO: throw domain event
+
+        if (quantity == zero)
+            AddDomainEvent(new ProductStockUnAvailableDomainEvent(this));
+
     }
 }
