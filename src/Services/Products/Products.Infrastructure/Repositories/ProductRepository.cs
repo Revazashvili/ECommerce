@@ -19,6 +19,9 @@ public class ProductRepository : IProductRepository
             .ToListAsync(cancellationToken);
     }
 
+    public Task<Product?> GetByIdAsync(Guid id, CancellationToken cancellationToken) =>
+        _context.Products.FirstOrDefaultAsync(product => product.Id == id, cancellationToken);
+
     public Task<List<Product>> SearchAsync(string? name, List<int>? categories, CancellationToken cancellationToken)
     {
         IQueryable<Product> productsQueryable = null;
@@ -41,4 +44,7 @@ public class ProductRepository : IProductRepository
         var entityEntry = await _context.Products.AddAsync(product,cancellationToken);
         return entityEntry.Entity;
     }
+
+    public Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken) =>
+        _context.Products.AnyAsync(product => product.Id == id, cancellationToken);
 }

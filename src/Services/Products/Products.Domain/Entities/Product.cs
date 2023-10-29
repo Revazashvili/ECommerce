@@ -20,4 +20,14 @@ public class Product
     public double Price { get; set; }
     public string ImageUrl { get; set; }
     public List<ProductCategory> Categories { get; set; }
+
+    public void UpdateQuantity(int quantity)
+    {
+        if (quantity < 0)
+            throw new Exception(nameof(quantity));
+        
+        Quantity = quantity;
+        
+        //TODO: throw domain event
+    }
 }

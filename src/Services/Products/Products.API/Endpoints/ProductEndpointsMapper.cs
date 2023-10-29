@@ -38,5 +38,14 @@ internal static class ProductEndpointsMapper
             })
             .Produces<Product>()
             .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
+        
+        basketRouteGroupBuilder.MapPut("/stock", async (UpdateProductStockCommand command, CancellationToken cancellationToken,
+                ISender sender) =>
+            {
+                var result = await sender.Send(command, cancellationToken);
+                return result.ToResult();
+            })
+            .Produces<Product>()
+            .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
     }
 }
