@@ -23,8 +23,8 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.MapApi();
-app.MapOrder();
+var endpointRouteBuilder = app.MapApi();
+endpointRouteBuilder.MapOrder();
 
 app.UseFluentValidationMiddleware();
 app.SubscribeToEvents();

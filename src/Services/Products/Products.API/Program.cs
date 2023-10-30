@@ -22,9 +22,9 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.MapApi();
-app.MapProductCategory();
-app.MapProduct();
+var endpointRouteBuilder = app.MapApi();
+endpointRouteBuilder.MapProductCategory();
+endpointRouteBuilder.MapProduct();
 
 app.UseFluentValidationMiddleware();
 app.SubscribeToEvents();
