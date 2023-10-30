@@ -26,7 +26,8 @@ public static class KafkaServiceCollectionExtensions
         {
             BootstrapServers = bootstrapServers,
             GroupId = Assembly.GetExecutingAssembly().GetName().Name,
-            AutoOffsetReset = AutoOffsetReset.Earliest
+            AutoOffsetReset = AutoOffsetReset.Earliest,
+            AllowAutoCreateTopics = true
         };
 
         //Set up the event bus
