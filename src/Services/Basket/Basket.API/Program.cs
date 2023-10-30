@@ -22,6 +22,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 
 builder.Services.AddScoped<IBasketRepository, RedisBasketRepository>();
 builder.Services.AddScoped<ProductStockUnAvailableIntegrationEventHandler>();
+builder.Services.AddScoped<OrderPlaceStartedIntegrationEventHandler>();
 
 builder.Services.AddRedis(builder.Configuration);
 builder.Services.AddKafka(builder.Configuration);
@@ -38,5 +39,6 @@ app.UseFluentValidationMiddleware();
 
 var eventBus = app.Services.GetRequiredService<IEventBus>();
 eventBus.SubscribeAsync<ProductStockUnAvailableIntegrationEvent, ProductStockUnAvailableIntegrationEventHandler>();
+eventBus.SubscribeAsync<OrderPlaceStartedIntegrationEvent, OrderPlaceStartedIntegrationEventHandler>();
 
 await app.RunAsync();
