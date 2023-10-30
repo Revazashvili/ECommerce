@@ -17,6 +17,7 @@ public static class ServiceCollectionExtensions
 
         services.AddHostedService<OrderProcessingBackgroundService>();
         services.AddScoped<OrderQuantityNotAvailableIntegrationEventHandler>();
+        services.AddScoped<OrderQuantityAvailableIntegrationEventHandler>();
         
         return services;
     }

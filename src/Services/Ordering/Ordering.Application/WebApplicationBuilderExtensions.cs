@@ -12,6 +12,7 @@ public static class WebApplicationBuilderExtensions
     {
         var eventBus = app.Services.GetRequiredService<IEventBus>();
         eventBus.SubscribeAsync<OrderQuantityNotAvailableIntegrationEvent, OrderQuantityNotAvailableIntegrationEventHandler>();
+        eventBus.SubscribeAsync<OrderQuantityAvailableIntegrationEvent, OrderQuantityAvailableIntegrationEventHandler>();
 
         return app;
     }
