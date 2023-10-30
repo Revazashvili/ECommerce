@@ -4,8 +4,8 @@ public enum OrderStatus
 {
     Created, 
     Pending,
-    StockAvailable,
-    StockUnAvailable,
+    AvailableQuantity,
+    UnAvailableQuantity,
     Paid,
     Cancelled
 }

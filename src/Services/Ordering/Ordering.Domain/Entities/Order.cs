@@ -54,6 +54,15 @@ public class Order : Entity
         OrderStatus = OrderStatus.Created;
     }
     
+    public void SetUnAvailableQuantityStatus()
+    {
+        if (OrderStatus != OrderStatus.Pending)
+            throw new OrderStatusException(OrderStatus, OrderStatus.AvailableQuantity);
+        OrderStatus = OrderStatus.UnAvailableQuantity;
+
+        AddDomainEvent(new SetOrderUnAvailableQuantityStatusDomainEvent(OrderNumber));
+    }
+    
     public void SetPendingStatus()
     {
         if (OrderStatus != OrderStatus.Created)

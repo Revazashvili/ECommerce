@@ -27,5 +27,6 @@ app.MapApi();
 app.MapOrder();
 
 app.UseFluentValidationMiddleware();
+app.SubscribeToEvents();
 
 app.Run();

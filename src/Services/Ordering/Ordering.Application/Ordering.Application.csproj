@@ -7,6 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Reference Include="Microsoft.AspNetCore">
+        <HintPath>..\..\..\..\..\..\..\..\usr\lib64\dotnet\shared\Microsoft.AspNetCore.App\7.0.11\Microsoft.AspNetCore.dll</HintPath>
+      </Reference>
       <Reference Include="Microsoft.Extensions.Configuration.Abstractions">
         <HintPath>..\..\..\..\..\..\.nuget\packages\microsoft.extensions.configuration.abstractions\7.0.0\lib\net7.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
       </Reference>
@@ -22,6 +25,7 @@
       <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBus.Kafka\EventBus.Kafka.csproj" />
       <ProjectReference Include="..\..\Common\Services.DependencyInjection\Services.DependencyInjection.csproj" />
       <ProjectReference Include="..\Ordering.Domain\Ordering.Domain.csproj" />
+
     </ItemGroup>
 
 
