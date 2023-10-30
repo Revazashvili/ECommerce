@@ -18,6 +18,8 @@ public static class ServiceCollectionExtensions
         services.AddHostedService<OrderProcessingBackgroundService>();
         services.AddScoped<OrderQuantityNotAvailableIntegrationEventHandler>();
         services.AddScoped<OrderQuantityAvailableIntegrationEventHandler>();
+        services.AddScoped<OrderPaymentSucceededIntegrationEventHandler>();
+        services.AddScoped<OrderPaymentFailedIntegrationEventHandler>();
         
         return services;
     }

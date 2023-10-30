@@ -72,6 +72,15 @@ public class Order : Entity
         AddDomainEvent(new SetOrderAvailableQuantityStatusDomainEvent(OrderNumber));
     }
     
+    public void SetPaidStatus()
+    {
+        if (OrderStatus != OrderStatus.AvailableQuantity)
+            throw new OrderStatusException(OrderStatus, OrderStatus.Paid);
+        OrderStatus = OrderStatus.Paid;
+
+        AddDomainEvent(new SetOrderStatusPaidDomainEvent(this));
+    }
+    
     public void SetPendingStatus()
     {
         if (OrderStatus != OrderStatus.Created)
