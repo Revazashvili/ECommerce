@@ -51,4 +51,14 @@ public class OrderRepository : IOrderRepository
             .Where(order => order.UserId == userId)
             .ToListAsync(cancellationToken);
     }
+
+    public Task<List<Guid>> GetNewOrdersOrderNumbersAsync()
+    {
+        return _context.Orders
+            .Include(order => order.OrderItems)
+            .Include(order => order.Address)
+            .Where(order => order.OrderStatus == OrderStatus.Created)
+            .Select(order => order.OrderNumber)
+            .ToListAsync();
+    }
 }

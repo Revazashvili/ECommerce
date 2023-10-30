@@ -18,6 +18,12 @@
       <Reference Include="FluentValidation">
         <HintPath>..\..\..\..\..\..\.nuget\packages\fluentvalidation\11.8.0\lib\net7.0\FluentValidation.dll</HintPath>
       </Reference>
+      <Reference Include="Microsoft.AspNetCore">
+        <HintPath>..\..\..\..\..\..\..\..\usr\lib64\dotnet\shared\Microsoft.AspNetCore.App\7.0.11\Microsoft.AspNetCore.dll</HintPath>
+      </Reference>
+      <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
+        <HintPath>..\..\..\..\..\..\..\..\usr\lib64\dotnet\shared\Microsoft.AspNetCore.App\7.0.11\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+      </Reference>
       <Reference Include="Microsoft.AspNetCore.Http.Features">
         <HintPath>..\..\..\..\..\..\..\..\usr\lib64\dotnet\shared\Microsoft.AspNetCore.App\7.0.11\Microsoft.AspNetCore.Http.Features.dll</HintPath>
       </Reference>
@@ -30,6 +36,10 @@
     <ItemGroup>
       <PackageReference Include="BlobHelper" Version="4.1.5" />
     </ItemGroup>
+
+
+
+
 
 
 

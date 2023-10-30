@@ -2,6 +2,7 @@ using BlobHelper;
 using EventBus.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Products.Application.IntegrationEvents.EventHandlers;
 using Products.Application.Services;
 using Services.DependencyInjection;
 
@@ -24,6 +25,8 @@ public static class ServiceCollectionExtensions
         services.AddMediatrWithValidation();
 
         services.AddKafka(configuration);
+
+        services.AddScoped<SetOrderPendingStatusIntegrationEventHandler>();
         return services;
     }
 }

@@ -1,3 +1,4 @@
+using Ordering.Domain.Events;
 using Ordering.Domain.Exceptions;
 using Services.Common.Domain;
 
@@ -46,5 +47,20 @@ public class Order : Entity
             throw new OrderStatusException(OrderStatus.Paid, OrderStatus.Cancelled);
 
         OrderStatus = OrderStatus.Cancelled;
+    }
+    
+    public void SetCreatedStatus()
+    {
+        OrderStatus = OrderStatus.Created;
+    }
+    
+    public void SetPendingStatus()
+    {
+        if (OrderStatus != OrderStatus.Created)
+            throw new OrderStatusException(OrderStatus, OrderStatus.Pending);
+
+        OrderStatus = OrderStatus.Pending;
+
+        AddDomainEvent(new SetOrderPendingStatusDomainEvent(OrderNumber));
     }
 }

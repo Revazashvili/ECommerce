@@ -28,7 +28,7 @@ public class ProductStockUnAvailableDomainEventHandler : INotificationHandler<Pr
         }
         catch (Exception exception)
         {
-            _logger.LogError(exception,"Error while publishing event {Event}",nameof(ProductStockUnAvailableDomainEvent));
+            _logger.LogError(exception,"Error while publishing event {Event}",nameof(ProductStockUnAvailableIntegrationEvent));
         }
     }
 }

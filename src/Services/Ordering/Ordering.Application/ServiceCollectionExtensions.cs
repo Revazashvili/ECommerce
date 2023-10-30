@@ -1,6 +1,7 @@
 using EventBus.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Ordering.Application.BackgroundServices;
 using Services.DependencyInjection;
 
 namespace Ordering.Application;
@@ -12,6 +13,9 @@ public static class ServiceCollectionExtensions
         services.AddMediatrWithValidation();
 
         services.AddKafka(configuration);
+
+        services.AddHostedService<OrderProcessingBackgroundService>();
+        
         return services;
     }
 }

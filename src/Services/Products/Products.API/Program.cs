@@ -27,5 +27,6 @@ app.MapProductCategory();
 app.MapProduct();
 
 app.UseFluentValidationMiddleware();
+app.SubscribeToEvents();
 
 app.Run();

@@ -26,6 +26,14 @@ public class GetUserOrderHistoryQueryHandler : IValidatedQueryHandler<GetUserOrd
         try
         {
             var orders = await _orderRepository.GetUserOrdersAsync(request.UserId,cancellationToken);
+
+            foreach (var order in orders)
+            {
+                order.SetCreatedStatus();
+            }
+
+            await _orderRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+            
             return orders;
         }
         catch (Exception exception)
