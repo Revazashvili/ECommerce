@@ -22,6 +22,7 @@ public class OrderQuantityAvailableIntegrationEventHandler : IIntegrationEventHa
     {
         try
         {
+            _logger.LogInformation("Handling Event: {@Event}", @event);
             await _sender.Send(new SetOrderQuantityAvailableStatusCommand(@event.OrderNumber));
         }
         catch (Exception exception)

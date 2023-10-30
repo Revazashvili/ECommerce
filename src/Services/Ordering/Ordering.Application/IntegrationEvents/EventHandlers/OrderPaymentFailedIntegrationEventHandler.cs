@@ -22,6 +22,7 @@ public class OrderPaymentFailedIntegrationEventHandler : IIntegrationEventHandle
     {
         try
         {
+            _logger.LogInformation("Handling Event: {@Event}", @event);
             await _sender.Send(new CancelOrderCommand(@event.OrderNumber));
         }
         catch (Exception exception)

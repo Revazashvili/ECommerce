@@ -23,6 +23,7 @@ public class SetOrderPendingStatusIntegrationEventHandler : IIntegrationEventHan
     {
         try
         {
+            _logger.LogInformation("Handling Event: {@Event}", @event);
             var productQuantityMapping = new Dictionary<Guid, bool>();
             foreach (var eventOrderItem in @event.OrderItems)
             {
