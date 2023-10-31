@@ -11,7 +11,7 @@ using Ordering.Domain.Models;
 
 namespace Ordering.Application.Orders;
 
-public record PlaceOrderCommand(int UserId,AddressDto Address,PaymentInfo PaymentInfo,List<BasketItem> BasketItems) 
+public record PlaceOrderCommand(int UserId,AddressDto Address,List<BasketItem> BasketItems) 
     : IValidatedCommand<Order>;
     
 public class PlaceOrderCommandHandler : IValidatedCommandHandler<PlaceOrderCommand,Order>
@@ -78,44 +78,6 @@ public class PlaceOrderCommandValidator : AbstractValidator<PlaceOrderCommand>
             .NotNull()
             .WithMessage("Address must not be null.")
             .SetValidator(command => new AddressDtoValidator());
-        
-        RuleFor(command => command.PaymentInfo)
-            .NotNull()
-            .WithMessage("PaymentInfo must not be null.")
-            .SetValidator(command => new PaymentInfoValidator());
-    }
-}
-
-public class PaymentInfoValidator : AbstractValidator<PaymentInfo>
-{
-    public PaymentInfoValidator()
-    {
-        RuleFor(command => command.CardNumber)
-            .NotNull()
-            .WithMessage("CardNumber must not be null.")
-            .NotEmpty()
-            .WithMessage("CardNumber must not be empty.");
-        
-        RuleFor(command => command.CardHolderName)
-            .NotNull()
-            .WithMessage("CardHolderName must not be null.")
-            .NotEmpty()
-            .WithMessage("CardHolderName must not be empty.");
-        
-        RuleFor(command => command.CardSecurityNumber)
-            .NotNull()
-            .WithMessage("CardSecurityNumber must not be null.")
-            .NotEmpty()
-            .WithMessage("CardSecurityNumber must not be empty.");
-        
-        RuleFor(command => command.CardExpiration)
-            .NotNull()
-            .WithMessage("CardExpiration must not be null.");
-        
-        RuleFor(command => command.CardType)
-            .NotNull()
-            .WithMessage("CardType must not be null.");
-
     }
 }
 
