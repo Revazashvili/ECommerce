@@ -22,13 +22,14 @@ public class OrderProcessingBackgroundService : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         _logger.LogInformation("Order processing service running.");
-
-        // process orders one time not to wait for timer to tick
-        await ProcessNewOrdersAsync();
         
-        using PeriodicTimer timer = new(TimeSpan.FromSeconds(3));
         try
         {
+            // process orders one time not to wait for timer to tick
+            await ProcessNewOrdersAsync();
+        
+            using PeriodicTimer timer = new(TimeSpan.FromSeconds(3));
+            
             while (await timer.WaitForNextTickAsync(stoppingToken))
             {
                 await ProcessNewOrdersAsync();
