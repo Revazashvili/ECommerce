@@ -1,21 +1,27 @@
-using BlobHelper;
-using Microsoft.AspNetCore.Http;
+using Amazon.S3;
+using Amazon.S3.Transfer;
 
 namespace Products.Application.Services;
 
 public class ImageService : IImageService
 {
-    private readonly BlobClient _blobClient;
+    private readonly IAmazonS3 _amazonS3;
 
-    public ImageService(BlobClient blobClient) => _blobClient = blobClient;
+    public ImageService(IAmazonS3 amazonS3) => _amazonS3 = amazonS3;
 
     public async Task<string> UploadAsync(Guid guid,string file,CancellationToken cancellationToken)
     {
-        var key = guid.ToString();
-        var contentType = $"image/{GetFileExtension(file)}";
-        await _blobClient.Write(key,contentType,file,cancellationToken);
+        const string bucketName = "ecommerce-microservices";
         
-        return _blobClient.GenerateUrl(key, cancellationToken);
+        var key = guid.ToString();
+        var transferUtility = new TransferUtility(_amazonS3);
+        var imageBytes = Convert.FromBase64String(file);
+        using (var stream = new MemoryStream(imageBytes))
+        {
+            await transferUtility.UploadAsync(stream, bucketName, key, cancellationToken);
+        }
+
+        return $"https://{bucketName}.s3.amazonaws.com/{key}";
     }
     
     private static string GetFileExtension(string base64String)
