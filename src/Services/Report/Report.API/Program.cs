@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Host.UseSerilogLogging();
 builder.Services.AddMediatrWithValidation();
 
 builder.Services.ConfigureHttpJsonOptions(options =>
