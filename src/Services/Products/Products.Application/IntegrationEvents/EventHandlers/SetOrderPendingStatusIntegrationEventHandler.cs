@@ -33,11 +33,10 @@ public class SetOrderPendingStatusIntegrationEventHandler : IIntegrationEventHan
                 productQuantityMapping.Add(eventOrderItem.ProductId, hasEnoughQuantity);
             }
 
-            IntegrationEvent quantityAvailabilityIntegrationEvent = productQuantityMapping.Any(pair => !pair.Value)
-                ? new OrderQuantityNotAvailableIntegrationEvent(@event.OrderNumber)
-                : new OrderQuantityAvailableIntegrationEvent(@event.OrderNumber);
-
-            await _eventBus.PublishAsync(quantityAvailabilityIntegrationEvent);
+            if (productQuantityMapping.Any(pair => !pair.Value))
+                await _eventBus.PublishAsync(new OrderQuantityNotAvailableIntegrationEvent(@event.OrderNumber));
+            else
+                await _eventBus.PublishAsync(new OrderQuantityAvailableIntegrationEvent(@event.OrderNumber));
         }
         catch (Exception exception)
         {

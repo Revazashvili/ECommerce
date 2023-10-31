@@ -23,11 +23,11 @@ public class OrderStatusChangedToAvailableQuantityIntegrationEventHandler
             // simulating payment process
             await Task.Delay(TimeSpan.FromSeconds(5));
 
-            IntegrationEvent integrationEvent = RandomBoolean()
-                ? new OrderPaymentSucceededIntegrationEvent(@event.OrderNumber)
-                : new OrderPaymentFailedIntegrationEvent(@event.OrderNumber);
-
-            await _eventBus.PublishAsync(integrationEvent);
+            if (RandomBoolean())
+                await _eventBus.PublishAsync(new OrderPaymentSucceededIntegrationEvent(@event.OrderNumber));
+            else
+                await _eventBus.PublishAsync(new OrderPaymentFailedIntegrationEvent(@event.OrderNumber));
+            
         }
         catch (Exception exception)
         {
