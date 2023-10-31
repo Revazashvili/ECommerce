@@ -14,8 +14,8 @@ public static class ServiceCollectionExtensions
     {
         
         var settings = new AwsSettings(
-            "AKIATRGB7XIRXBMVQAM2",
-            "M/roQv4zJCBNPa2Z8a9cBFWlsuSi7P94VUL36SxK",
+            configuration["AWS:ACCESS_KEY"],
+            configuration["AWS:SECRET_KEY"],
             AwsRegion.USEast1,
             "ecommerce-microservices");
         
