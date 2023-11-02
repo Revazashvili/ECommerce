@@ -33,13 +33,11 @@ internal static class OrderEndpointsMapper
             }).Produces<Order>()
             .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
         
-        orderRouteGroupBuilder.MapGet("/{userId:int}", async (int userId,
-                CancellationToken cancellationToken,
-                ISender sender) =>
+        orderRouteGroupBuilder.MapGet("/for_user", async (CancellationToken cancellationToken,ISender sender) =>
             {
-                var result = await sender.Send(new GetUserOrderHistoryQuery(userId), cancellationToken);
+                var result = await sender.Send(new GetUserOrderHistoryQuery(), cancellationToken);
                 return result.ToResult();
-            }).Produces<Order>()
+            }).Produces<IEnumerable<Order>>()
             .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
         
         
@@ -50,16 +48,6 @@ internal static class OrderEndpointsMapper
                 return result.ToResult();
             }).Produces<IEnumerable<Order>>()
             .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
-        //
-        // basketRouteGroupBuilder.MapPost("/", async (CreateProductCommand command, CancellationToken cancellationToken,
-        //         ISender sender) =>
-        //     {
-        //         var result = await sender.Send(command, cancellationToken);
-        //         return result.ToResult();
-        //     })
-        //     .Produces<Product>()
-        //     .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
-        //
         
         orderRouteGroupBuilder.MapPut("/cancel", async (CancelOrderCommand command, CancellationToken cancellationToken,
                 ISender sender) =>

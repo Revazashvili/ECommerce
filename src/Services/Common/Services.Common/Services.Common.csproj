@@ -27,6 +27,10 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\BuildingBlocks\Contracts\Contracts\Contracts.csproj" />
     </ItemGroup>
+    
+    <ItemGroup>
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
 
 
 

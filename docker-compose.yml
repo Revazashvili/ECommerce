@@ -28,9 +28,9 @@ services:
     ports:
       - "1433:1433"
     volumes:
-      - ~/apps/mssql/data:/var/opt/mssql/data
-      - ~/apps/mssql/log:/var/opt/mssql/log
-      - ~/apps/mssql/secrets:/var/opt/mssql/secrets
+      - ~/apps/mssql/ordering/data:/var/opt/mssql/data
+      - ~/apps/mssql/ordering/log:/var/opt/mssql/log
+      - ~/apps/mssql/ordering/secrets:/var/opt/mssql/secrets
     environment:
       MSSQL_SA_PASSWORD: "myStrong(!)Password"
       ACCEPT_EULA: "Y"
@@ -42,9 +42,9 @@ services:
     ports:
       - "1432:1433"
     volumes:
-      - ~/apps/mssql/data:/var/opt/mssql/data
-      - ~/apps/mssql/log:/var/opt/mssql/log
-      - ~/apps/mssql/secrets:/var/opt/mssql/secrets
+      - ~/apps/mssql/identity/data:/var/opt/mssql/data
+      - ~/apps/mssql/identity/log:/var/opt/mssql/log
+      - ~/apps/mssql/identity/secrets:/var/opt/mssql/secrets
     environment:
       MSSQL_SA_PASSWORD: "myStrong(!)Password"
       ACCEPT_EULA: "Y"

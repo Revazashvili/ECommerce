@@ -7,7 +7,7 @@ namespace Ordering.Domain.Entities;
 public class Order : Entity
 {
     private Order() { }
-    private Order(Guid orderNumber, int userId, Address address, OrderStatus orderStatus, DateTime orderingDate)
+    private Order(Guid orderNumber, Guid userId, Address address, OrderStatus orderStatus, DateTime orderingDate)
     {
         OrderNumber = orderNumber;
         UserId = userId;
@@ -18,13 +18,13 @@ public class Order : Entity
     }
     
     public Guid OrderNumber { get; private set; }
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
     public List<OrderItem> OrderItems { get; private set; }
     public Address Address { get; private set; }
     public OrderStatus OrderStatus { get; private set; }
     public DateTime OrderingDate { get; private set; }
     
-    public static Order Create(int userId,Address address)
+    public static Order Create(Guid userId,Address address)
     {
         var orderNumber = Guid.NewGuid();
         return new Order(orderNumber, userId,address, OrderStatus.Created, DateTime.Now);

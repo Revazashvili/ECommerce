@@ -6,12 +6,13 @@ using FluentValidation;
 using Microsoft.Extensions.Logging;
 using Ordering.Application.IntegrationEvents.Events;
 using Ordering.Application.Models;
+using Ordering.Application.Services;
 using Ordering.Domain.Entities;
 using Ordering.Domain.Models;
 
 namespace Ordering.Application.Orders;
 
-public record PlaceOrderCommand(int UserId,AddressDto Address,List<BasketItem> BasketItems) 
+public record PlaceOrderCommand(AddressDto Address,List<BasketItem> BasketItems) 
     : IValidatedCommand<Order>;
     
 public class PlaceOrderCommandHandler : IValidatedCommandHandler<PlaceOrderCommand,Order>
@@ -19,20 +20,23 @@ public class PlaceOrderCommandHandler : IValidatedCommandHandler<PlaceOrderComma
     private readonly ILogger<CancelOrderCommandHandler> _logger;
     private readonly IOrderRepository _orderRepository;
     private readonly IEventBus _eventBus;
+    private readonly IIdentityService _identityService;
 
     public PlaceOrderCommandHandler(ILogger<CancelOrderCommandHandler> logger,IOrderRepository orderRepository,
-        IEventBus eventBus)
+        IEventBus eventBus,IIdentityService identityService)
     {
         _logger = logger;
         _orderRepository = orderRepository;
         _eventBus = eventBus;
+        _identityService = identityService;
     }
 
     public async Task<Either<Order, ValidationResult>> Handle(PlaceOrderCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            var order = Order.Create(request.UserId, request.Address.ToAddress());
+            var userId = _identityService.GetUserId();
+            var order = Order.Create(userId, request.Address.ToAddress());
             foreach (var basketItem in request.BasketItems)
             {
                 order.AddOrderItem(basketItem.ProductId,
@@ -43,7 +47,7 @@ public class PlaceOrderCommandHandler : IValidatedCommandHandler<PlaceOrderComma
             await _orderRepository.AddAsync(order);
             await _orderRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
-            await _eventBus.PublishAsync(new OrderPlaceStartedIntegrationEvent(request.UserId));
+            await _eventBus.PublishAsync(new OrderPlaceStartedIntegrationEvent(userId));
             
             return order;
         }
@@ -59,18 +63,6 @@ public class PlaceOrderCommandValidator : AbstractValidator<PlaceOrderCommand>
 {
     public PlaceOrderCommandValidator()
     {
-        RuleFor(command => command.UserId)
-            .NotNull()
-            .WithMessage("UserId must not be null.")
-            .GreaterThanOrEqualTo(1)
-            .WithMessage("UserId must be greater or equal to 1.");
-        
-        RuleFor(command => command.UserId)
-            .NotNull()
-            .WithMessage("UserId must not be null.")
-            .GreaterThanOrEqualTo(1)
-            .WithMessage("UserId must be greater or equal to 1.");
-        
         RuleForEach(command => command.BasketItems)
             .SetValidator(model => new BasketItemValidator());
         

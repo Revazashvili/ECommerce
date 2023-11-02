@@ -16,7 +16,7 @@ namespace Ordering.Infrastructure.Migrations
                 columns: table => new
                 {
                     OrderNumber = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Address_Street = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address_City = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address_State = table.Column<string>(type: "nvarchar(max)", nullable: true),

@@ -3,29 +3,34 @@ using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
+using Ordering.Application.Services;
 using Ordering.Domain.Entities;
 using Ordering.Domain.Models;
 
 namespace Ordering.Application.Orders;
 
-public record GetUserOrderHistoryQuery(int UserId) : IValidatedQuery<IEnumerable<Order>>;
+public record GetUserOrderHistoryQuery : IValidatedQuery<IEnumerable<Order>>;
 
 public class GetUserOrderHistoryQueryHandler : IValidatedQueryHandler<GetUserOrderHistoryQuery, IEnumerable<Order>>
 {
     private readonly ILogger<CancelOrderCommandHandler> _logger;
     private readonly IOrderRepository _orderRepository;
+    private readonly IIdentityService _identityService;
 
-    public GetUserOrderHistoryQueryHandler(ILogger<CancelOrderCommandHandler> logger,IOrderRepository orderRepository)
+    public GetUserOrderHistoryQueryHandler(ILogger<CancelOrderCommandHandler> logger,IOrderRepository orderRepository,
+        IIdentityService identityService)
     {
         _logger = logger;
         _orderRepository = orderRepository;
+        _identityService = identityService;
     }
     
     public async Task<Either<IEnumerable<Order>, ValidationResult>> Handle(GetUserOrderHistoryQuery request, CancellationToken cancellationToken)
     {
         try
         {
-            var orders = await _orderRepository.GetUserOrdersAsync(request.UserId,cancellationToken);
+            var userId = _identityService.GetUserId();
+            var orders = await _orderRepository.GetUserOrdersAsync(userId,cancellationToken);
 
             foreach (var order in orders)
             {
@@ -41,17 +46,5 @@ public class GetUserOrderHistoryQueryHandler : IValidatedQueryHandler<GetUserOrd
             _logger.LogError(exception,"Error occured in {Handler}",nameof(GetOrdersQueryHandler));
             return new ValidationResult("Can't retrieve user orders");
         }
-    }
-}
-
-public class GetUserOrderHistoryQueryValidator : AbstractValidator<GetUserOrderHistoryQuery>
-{
-    public GetUserOrderHistoryQueryValidator()
-    {
-        RuleFor(command => command.UserId)
-            .NotNull()
-            .WithMessage("UserId must not be null.")
-            .GreaterThanOrEqualTo(1)
-            .WithMessage("UserId must be greater or equal to 1.");
     }
 }

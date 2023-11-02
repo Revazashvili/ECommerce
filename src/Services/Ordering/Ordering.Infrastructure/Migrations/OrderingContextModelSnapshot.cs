@@ -35,8 +35,8 @@ namespace Ordering.Infrastructure.Migrations
                     b.Property<DateTime>("OrderingDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("OrderNumber");
 

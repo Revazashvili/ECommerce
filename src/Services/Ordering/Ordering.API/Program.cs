@@ -6,8 +6,11 @@ using Services.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddEndpointsApiExplorer()
+    .AddAuthorization()
+    .AddAuthentication(builder.Configuration);
+builder.Services.AddSwagger(builder.Configuration);
+
 builder.Host.UseSerilogLogging();
 builder.Services
     .AddApplication(builder.Configuration)
@@ -20,8 +23,10 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 
 var app = builder.Build();
 
-app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwagger(app.Configuration);
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 var endpointRouteBuilder = app.MapApi();
 endpointRouteBuilder.MapOrder();

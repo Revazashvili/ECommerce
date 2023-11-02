@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ordering.Application.BackgroundServices;
 using Ordering.Application.IntegrationEvents.EventHandlers;
+using Ordering.Application.Services;
 using Services.DependencyInjection;
 
 namespace Ordering.Application;
@@ -16,6 +17,7 @@ public static class ServiceCollectionExtensions
         services.AddKafka(configuration);
 
         services.AddHostedService<OrderProcessingBackgroundService>();
+        services.AddScoped<IIdentityService, IdentityService>();
         services.AddScoped<OrderQuantityNotAvailableIntegrationEventHandler>();
         services.AddScoped<OrderQuantityAvailableIntegrationEventHandler>();
         services.AddScoped<OrderPaymentSucceededIntegrationEventHandler>();
