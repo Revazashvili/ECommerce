@@ -34,3 +34,17 @@ services:
     environment:
       MSSQL_SA_PASSWORD: "myStrong(!)Password"
       ACCEPT_EULA: "Y"
+      
+  identity-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    user: root
+    restart: always
+    ports:
+      - "1432:1433"
+    volumes:
+      - ~/apps/mssql/data:/var/opt/mssql/data
+      - ~/apps/mssql/log:/var/opt/mssql/log
+      - ~/apps/mssql/secrets:/var/opt/mssql/secrets
+    environment:
+      MSSQL_SA_PASSWORD: "myStrong(!)Password"
+      ACCEPT_EULA: "Y"

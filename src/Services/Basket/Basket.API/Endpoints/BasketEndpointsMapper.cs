@@ -1,7 +1,9 @@
 using Basket.API.Handlers;
+using Basket.API.Services;
 using Contracts;
 using Contracts.Mediatr.Validation;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Services.Common;
 
 namespace Basket.API.Endpoints;
@@ -10,11 +12,12 @@ internal static class BasketEndpointsMapper
 {
     internal static void MapBasket(this IEndpointRouteBuilder endpointRouteBuilder)
     {
-        var basketRouteGroupBuilder = endpointRouteBuilder.MapGroup("basket");
+        var basketRouteGroupBuilder = endpointRouteBuilder.MapGroup("basket").RequireAuthorization();
 
         basketRouteGroupBuilder.MapGet("/{id:int}", async (int id, CancellationToken cancellationToken,
-                ISender sender) =>
+                [FromServices]ISender sender,[FromServices]IIdentityService identityService) =>
             {
+                var userId = identityService.GetUserId();
                 var result = await sender.Send(new GetBasketQuery(id), cancellationToken);
                 return result.ToResult();
             }).Produces<Models.Basket>()
