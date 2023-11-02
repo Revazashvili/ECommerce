@@ -12,7 +12,7 @@ internal static class BasketEndpointsMapper
 {
     internal static void MapBasket(this IEndpointRouteBuilder endpointRouteBuilder)
     {
-        var basketRouteGroupBuilder = endpointRouteBuilder.MapGroup("basket").RequireAuthorization();
+        var basketRouteGroupBuilder = endpointRouteBuilder.MapGroup("basket");
 
         basketRouteGroupBuilder.MapGet("/{id:int}", async (int id, CancellationToken cancellationToken,
                 [FromServices]ISender sender,[FromServices]IIdentityService identityService) =>
