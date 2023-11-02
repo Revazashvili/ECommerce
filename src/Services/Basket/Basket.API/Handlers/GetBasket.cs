@@ -3,6 +3,7 @@ using Basket.API.Services;
 using Contracts;
 using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
+using FluentValidation;
 
 namespace Basket.API.Handlers;
 

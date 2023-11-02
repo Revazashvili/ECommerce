@@ -1,3 +1,4 @@
+using System.Security.Principal;
 using System.Text.Json.Serialization;
 using Basket.API.Endpoints;
 using Basket.API.IntegrationEvents.EventHandlers;
