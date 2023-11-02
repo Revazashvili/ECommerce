@@ -14,11 +14,10 @@ internal static class BasketEndpointsMapper
     {
         var basketRouteGroupBuilder = endpointRouteBuilder.MapGroup("basket");
 
-        basketRouteGroupBuilder.MapGet("/{id:int}", async (int id, CancellationToken cancellationToken,
+        basketRouteGroupBuilder.MapGet("/", async (CancellationToken cancellationToken,
                 [FromServices]ISender sender,[FromServices]IIdentityService identityService) =>
             {
-                var userId = identityService.GetUserId();
-                var result = await sender.Send(new GetBasketQuery(id), cancellationToken);
+                var result = await sender.Send(new GetBasketQuery(), cancellationToken);
                 return result.ToResult();
             }).Produces<Models.Basket>()
             .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
@@ -32,10 +31,10 @@ internal static class BasketEndpointsMapper
             .Produces<Models.Basket>()
             .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
         
-        basketRouteGroupBuilder.MapDelete("/{id:int}", async (int id, CancellationToken cancellationToken,
+        basketRouteGroupBuilder.MapDelete("/", async (CancellationToken cancellationToken,
                 ISender sender) =>
             {
-                var result = await sender.Send(new DeleteBasketCommand(id), cancellationToken);
+                var result = await sender.Send(new DeleteBasketCommand(), cancellationToken);
                 return result.ToResult();
             })
             .Produces<None>()

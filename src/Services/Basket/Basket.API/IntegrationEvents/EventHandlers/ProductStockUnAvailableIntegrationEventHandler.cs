@@ -28,7 +28,7 @@ public class ProductStockUnAvailableIntegrationEventHandler : IIntegrationEventH
                     continue;
 
                 basket.Items.RemoveAll(item => item.ProductId == @event.ProductId);
-                await _basketRepository.CreateOrUpdateBasketAsync(basket);
+                await _basketRepository.CreateOrUpdateBasketAsync(key,basket);
                 // notify user through web sockets that product is removed from basket
             }
         }

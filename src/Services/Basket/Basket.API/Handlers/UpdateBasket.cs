@@ -1,5 +1,6 @@
 using Basket.API.Interfaces;
 using Basket.API.Models;
+using Basket.API.Services;
 using Contracts;
 using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
@@ -12,12 +13,15 @@ public record UpdateBasketCommand(Models.Basket Basket) : IValidatedCommand<Mode
 public class UpdateBasketCommandHandler : IValidatedCommandHandler<UpdateBasketCommand,Models.Basket>
 {
     private readonly ILogger<UpdateBasketCommand> _logger;
+    private readonly IIdentityService _identityService;
     private readonly IBasketRepository _basketRepository;
     private static readonly ValidationResult Error = new("Can't update basket");
     
-    public UpdateBasketCommandHandler(ILogger<UpdateBasketCommand> logger,IBasketRepository basketRepository)
+    public UpdateBasketCommandHandler(ILogger<UpdateBasketCommand> logger,IBasketRepository basketRepository,
+        IIdentityService identityService)
     {
         _logger = logger;
+        _identityService = identityService;
         _basketRepository = basketRepository;
     }
     
@@ -25,8 +29,9 @@ public class UpdateBasketCommandHandler : IValidatedCommandHandler<UpdateBasketC
     {
         try
         {
-            await _basketRepository.CreateOrUpdateBasketAsync(request.Basket);
-            var basket = await _basketRepository.GetBasketAsync(request.Basket.UserId.ToString(), cancellationToken);
+            var userId = _identityService.GetUserId();
+            await _basketRepository.CreateOrUpdateBasketAsync(userId,request.Basket);
+            var basket = await _basketRepository.GetBasketAsync(userId, cancellationToken);
 
             return basket is null ? Error : basket;
         }
@@ -42,12 +47,6 @@ public class UpdateBasketCommandValidator : AbstractValidator<UpdateBasketComman
 {
     public UpdateBasketCommandValidator()
     {
-        RuleFor(command => command.Basket.UserId)
-            .NotNull()
-            .WithMessage("UserId must not be null.")
-            .NotEqual(0)
-            .WithMessage("Id must not equal to zero.");
-
         RuleFor(command => command.Basket.Items)
             .NotNull()
             .WithMessage("Items must not be null.")

@@ -1,4 +1,3 @@
-using System.Net;
 using System.Text.Json;
 using Basket.API.Interfaces;
 using Microsoft.Extensions.Caching.Distributed;
@@ -48,10 +47,10 @@ public class RedisBasketRepository : IBasketRepository
             : await JsonSerializer.DeserializeAsync<Models.Basket>(new MemoryStream(value), cancellationToken: cancellationToken);
     }
 
-    public async Task CreateOrUpdateBasketAsync(Models.Basket basket)
+    public async Task CreateOrUpdateBasketAsync(string key,Models.Basket basket)
     {
         var json = JsonSerializer.Serialize(basket);
-        await _distributedCache.SetStringAsync(basket.UserId.ToString(), json);
+        await _distributedCache.SetStringAsync(key, json);
     }
 
     public async Task DeleteBasketAsync(string key, CancellationToken cancellationToken) =>

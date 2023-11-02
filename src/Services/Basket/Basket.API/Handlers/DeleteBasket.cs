@@ -1,29 +1,33 @@
 using Basket.API.Interfaces;
+using Basket.API.Services;
 using Contracts;
 using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
-using FluentValidation;
 
 namespace Basket.API.Handlers;
 
-public record DeleteBasketCommand(int UserId) : IValidatedCommand<None>;
+public record DeleteBasketCommand : IValidatedCommand<None>;
 
 public class DeleteBasketCommandHandler : IValidatedCommandHandler<DeleteBasketCommand, None>
 {
     private readonly ILogger<UpdateBasketCommand> _logger;
     private readonly IBasketRepository _basketRepository;
+    private readonly IIdentityService _identityService;
 
-    public DeleteBasketCommandHandler(ILogger<UpdateBasketCommand> logger,IBasketRepository basketRepository)
+    public DeleteBasketCommandHandler(ILogger<UpdateBasketCommand> logger,IBasketRepository basketRepository,
+        IIdentityService identityService)
     {
         _logger = logger;
         _basketRepository = basketRepository;
+        _identityService = identityService;
     }
     
     public async Task<Either<None, ValidationResult>> Handle(DeleteBasketCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            await _basketRepository.DeleteBasketAsync(request.UserId.ToString(),cancellationToken);
+            var userId = _identityService.GetUserId();
+            await _basketRepository.DeleteBasketAsync(userId,cancellationToken);
             return None.Instance;
         }
         catch (Exception exception)
@@ -31,17 +35,5 @@ public class DeleteBasketCommandHandler : IValidatedCommandHandler<DeleteBasketC
             _logger.LogError(exception, "Error occured in {Handler}", nameof(DeleteBasketCommandHandler));
             return new ValidationResult("Can't delete basket");
         }
-    }
-}
-
-public class DeleteBasketCommandValidator : AbstractValidator<DeleteBasketCommand>
-{
-    public DeleteBasketCommandValidator()
-    {
-        RuleFor(command => command.UserId)
-            .NotNull()
-            .WithMessage("UserId must not be null.")
-            .NotEqual(0)
-            .WithMessage("Id must not equal to zero.");
     }
 }
