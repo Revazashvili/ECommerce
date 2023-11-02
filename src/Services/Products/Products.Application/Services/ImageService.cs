@@ -3,6 +3,11 @@ using Amazon.S3.Transfer;
 
 namespace Products.Application.Services;
 
+public interface IImageService
+{
+    Task<string> UploadAsync(Guid guid,string file,CancellationToken cancellationToken);
+}
+
 public class ImageService : IImageService
 {
     private readonly IAmazonS3 _amazonS3;
