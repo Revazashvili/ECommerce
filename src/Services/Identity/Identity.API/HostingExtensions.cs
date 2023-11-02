@@ -1,9 +1,11 @@
 using Duende.IdentityServer;
 using Identity.API.Data;
+using Identity.API.Endpoints;
 using Identity.API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Services.DependencyInjection;
 
 namespace Identity.API;
 
@@ -19,6 +21,9 @@ internal static class HostingExtensions
         builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
+
+        builder.Services.AddEndpointsApiExplorer();
+        builder.Services.AddSwaggerGen();
 
         builder.Services
             .AddIdentityServer(options =>
@@ -41,23 +46,32 @@ internal static class HostingExtensions
             .AddAspNetIdentity<ApplicationUser>()
             .AddDeveloperSigningCredential();
         
+        builder.Host.UseSerilogLogging();
+        builder.Services.AddMediatrWithValidation();
+        
         return builder.Build();
     }
 
     public static WebApplication ConfigurePipeline(this WebApplication app)
     {
-        app.UseSerilogRequestLogging();
-
         if (app.Environment.IsDevelopment())
         {
             app.UseDeveloperExceptionPage();
         }
+
+        app.UseSwagger();
+        app.UseSwaggerUI();
 
         app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = SameSiteMode.Lax });
         app.UseStaticFiles();
         app.UseRouting();
         app.UseIdentityServer();
         app.UseAuthorization();
+            
+        var endpointRouteBuilder = app.MapApi();
+        endpointRouteBuilder.MapUser();
+        
+        app.UseFluentValidationMiddleware();
 
         app.MapRazorPages()
             .RequireAuthorization();

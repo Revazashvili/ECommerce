@@ -2,6 +2,7 @@
 // See LICENSE in the project root for license information.
 
 
+using System.Runtime.Serialization;
 using Microsoft.AspNetCore.Identity;
 
 namespace Identity.API.Models;
