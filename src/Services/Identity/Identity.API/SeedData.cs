@@ -14,9 +14,6 @@ public class SeedData
     {
         using var scope = app.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
         
-        // var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
-        // context.Database.Migrate();
-
         var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
         var alice = userMgr.FindByNameAsync("alice").Result;
         if (alice == null)
@@ -26,6 +23,8 @@ public class SeedData
                 UserName = "alice",
                 Email = "AliceSmith@email.com",
                 EmailConfirmed = true,
+                Status = ApplicationUserStatus.Active,
+                PersonalNumber = "12345678911"
             };
             var result = userMgr.CreateAsync(alice, "Pass123$").Result;
             if (!result.Succeeded)
@@ -59,7 +58,9 @@ public class SeedData
             {
                 UserName = "bob",
                 Email = "BobSmith@email.com",
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                Status = ApplicationUserStatus.Active,
+                PersonalNumber = "12345678911"
             };
             var result = userMgr.CreateAsync(bob, "Pass123$").Result;
             if (!result.Succeeded)
