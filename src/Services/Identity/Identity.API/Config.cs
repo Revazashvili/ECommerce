@@ -8,7 +8,9 @@ public static class Config
     {
         return new List<ApiResource>
         {
-            new ApiResource("basket", "Basket Service"),
+            new("basket", "Basket Service"),
+            new("products", "Products Service"),
+            new("ordering", "Ordering Service"),
         };
     }
 
@@ -22,7 +24,9 @@ public static class Config
     public static IEnumerable<ApiScope> ApiScopes =>
         new ApiScope[]
         {
-            new ApiScope("basket")
+            new("basket"),
+            new("products"),
+            new("ordering")
         };
 
     public static IEnumerable<Client> Clients(IConfiguration configuration)
@@ -43,6 +47,34 @@ public static class Config
                 PostLogoutRedirectUris = { $"{apisSection["Basket"]}/swagger" },
 
                 AllowedScopes = {  "openid", "profile", "basket" }
+            },
+            new Client
+            {
+                ClientId = "products",
+                ClientName = "Products API",
+                ClientSecrets = { new Secret("75DBB9C4-4E42-46ED-A012-298A88B8290A".Sha256()) },
+
+                AllowedGrantTypes = GrantTypes.Implicit,
+                AllowAccessTokensViaBrowser = true,
+
+                RedirectUris = { $"{apisSection["Products"]}/swagger/oauth2-redirect.html" },
+                PostLogoutRedirectUris = { $"{apisSection["Products"]}/swagger" },
+
+                AllowedScopes = {  "openid", "profile", "products" }
+            },
+            new Client
+            {
+                ClientId = "ordering",
+                ClientName = "Ordering API",
+                ClientSecrets = { new Secret("734A6DA8-F5DA-4B65-842E-FF13F82A550C".Sha256()) },
+
+                AllowedGrantTypes = GrantTypes.Implicit,
+                AllowAccessTokensViaBrowser = true,
+
+                RedirectUris = { $"{apisSection["Ordering"]}/swagger/oauth2-redirect.html" },
+                PostLogoutRedirectUris = { $"{apisSection["Ordering"]}/swagger" },
+
+                AllowedScopes = {  "openid", "profile", "ordering" }
             },
         };
     }
