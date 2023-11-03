@@ -22,7 +22,7 @@ public class OrderPaymentSucceededIntegrationEventHandler : IIntegrationEventHan
     {
         try
         {
-            await _sender.Send(new CancelOrderCommand(@event.OrderNumber));
+            await _sender.Send(new SetOrderPaidStatusCommand(@event.OrderNumber));
         }
         catch (Exception exception)
         {
