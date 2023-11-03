@@ -8,11 +8,3 @@ internal static class ApiEndpointsMapper
         return apiRouteGroupBuilder;
     }
 }
-
-internal static class ReportEndpointsMapper
-{
-    internal static void MapReport(this IEndpointRouteBuilder endpointRouteBuilder)
-    {
-        var basketRouteGroupBuilder = endpointRouteBuilder.MapGroup("report");
-    }
-}

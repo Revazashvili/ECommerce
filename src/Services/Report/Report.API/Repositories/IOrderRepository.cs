@@ -4,5 +4,6 @@ namespace Report.API.Repositories;
 
 public interface IOrderRepository
 {
-    Task<Order> AddAsync(Order order);
+    Task<IEnumerable<SalesReport>> GetSalesReportAsync(DateTime from, DateTime to);
+    Task<Order?> AddAsync(Order order);
 }

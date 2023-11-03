@@ -9,6 +9,7 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.11"/>
+        <PackageReference Include="NEST" Version="7.17.5" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
     </ItemGroup>
 
@@ -21,7 +22,10 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBus.Kafka\EventBus.Kafka.csproj" />
       <ProjectReference Include="..\..\Common\Services.DependencyInjection\Services.DependencyInjection.csproj" />
+
+
     </ItemGroup>
+
 
 
 
