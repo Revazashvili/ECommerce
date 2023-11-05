@@ -61,7 +61,9 @@ public class KafkaEventBus : IEventBus
                     var consumerResult = consumer.Consume();
                     var value = JsonSerializer.Deserialize<T>(consumerResult.Message.Value)!;
                     
+                    _logger.LogInformation("Started processing Event: {EventName} With Data: {@EventData}",eventName,value);
                     await ProcessEvent(value);
+                    _logger.LogInformation("Finished processing Event: {EventName} With Data: {@EventData}",eventName,value);
                 }
                 catch (ConsumeException e)
                 {
