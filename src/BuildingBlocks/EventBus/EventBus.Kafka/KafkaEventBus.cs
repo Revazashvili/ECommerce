@@ -85,9 +85,7 @@ public class KafkaEventBus : IEventBus
         foreach (var subscription in subscriptions)
         {
             var handler = scope.ServiceProvider.GetRequiredService(subscription);
-            if (handler == null)
-                continue;
-                    
+
             var concreteType = typeof(IIntegrationEventHandler<>).MakeGenericType(typeof(T));
             await (Task)concreteType.GetMethod("Handle")!
                 .Invoke(handler, new object[] { value })!;
