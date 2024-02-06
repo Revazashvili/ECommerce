@@ -6,14 +6,14 @@ public class Either<TLeft, TRight>
     private readonly TRight _right;
     private readonly bool _isLeft;
 
-    public Either(TLeft left)
+    private Either(TLeft left)
     {
         _left = left;
         _right = default!;
         _isLeft = true;
     }
 
-    public Either(TRight right)
+    private Either(TRight right)
     {
         _right = right;
         _left = default!;
