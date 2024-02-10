@@ -5,4 +5,4 @@ namespace Contracts.Mediatr.Wrappers;
 
 public interface IValidatedQueryHandler<in TRequest, TResponse> :
     IRequestHandler<TRequest, Either<TResponse, ValidationResult>> 
-    where TRequest : IValidatedQuery<TResponse> { }
+    where TRequest : IValidatedQuery<TResponse>;

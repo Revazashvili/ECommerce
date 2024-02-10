@@ -1,6 +1,3 @@
 namespace Contracts.Mediatr.Wrappers;
 
-public interface INotification : MediatR.INotification
-{
-    
-}
+public interface INotification : MediatR.INotification;
