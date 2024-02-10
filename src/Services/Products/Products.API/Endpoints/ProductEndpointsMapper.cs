@@ -1,7 +1,5 @@
-using System.Reflection;
 using Contracts.Mediatr.Validation;
 using MediatR;
-using Microsoft.AspNetCore.Mvc;
 using Products.Application.Products;
 using Products.Domain.Entities;
 using Services.Common;

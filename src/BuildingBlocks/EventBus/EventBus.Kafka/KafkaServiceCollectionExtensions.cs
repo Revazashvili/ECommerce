@@ -1,6 +1,5 @@
 using System.Reflection;
 using Confluent.Kafka;
-using Confluent.SchemaRegistry;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

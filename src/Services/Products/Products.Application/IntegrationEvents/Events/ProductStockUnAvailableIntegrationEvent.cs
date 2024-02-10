@@ -1,5 +1,4 @@
 using EventBus;
-using Products.Domain.Entities;
 
 namespace Products.Application.IntegrationEvents.Events;
 

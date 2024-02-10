@@ -1,10 +1,8 @@
-using Duende.IdentityServer;
 using Identity.API.Data;
 using Identity.API.Endpoints;
 using Identity.API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
 using Services.DependencyInjection;
 
 namespace Identity.API;

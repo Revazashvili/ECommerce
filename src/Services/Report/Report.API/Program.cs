@@ -2,7 +2,6 @@ using System.Text.Json.Serialization;
 using EventBus;
 using EventBus.Kafka;
 using Nest;
-using Newtonsoft.Json.Converters;
 using Report.API.Common;
 using Report.API.Endpoints;
 using Report.API.IntegrationEvents.Events;

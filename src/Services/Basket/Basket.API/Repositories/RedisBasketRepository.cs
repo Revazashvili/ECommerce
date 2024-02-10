@@ -1,4 +1,3 @@
-using System.Net;
 using System.Text.Json;
 using Basket.API.Interfaces;
 using Microsoft.Extensions.Caching.Distributed;
