@@ -7,8 +7,26 @@ using ProducerConfig = Confluent.Kafka.ProducerConfig;
 
 namespace EventBus.Kafka;
 
+/// <summary>
+/// Extension class for <see cref="IServiceCollection"/>.
+/// </summary>
 public static class KafkaServiceCollectionExtensions
 {
+    /// <summary>
+    /// Add Kafka configuration and event bus in <see cref="IServiceCollection"/>.
+    /// </summary>
+    /// <param name="services">Instance of <see cref="IServiceCollection"/>.</param>
+    /// <param name="configuration">Instance of <see cref="IConfiguration"/>.</param>
+    /// <example>
+    /// Kafka configuration example which will be retrieved using <paramref name="configuration"/>: 
+    /// <code>
+    /// "KafkaOptions" :{
+    ///     "BootstrapServers": "localhost:9092",
+    ///     "MessageTimeoutMs": 3000
+    /// }
+    /// </code>
+    /// </example>
+    /// <returns>Modified Instance of <see cref="IServiceCollection"/>.</returns>
     public static IServiceCollection AddKafka(this IServiceCollection services,IConfiguration configuration)
     {
         var kafkaOptionsSection = configuration.GetSection("KafkaOptions");

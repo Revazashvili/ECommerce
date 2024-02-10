@@ -2,22 +2,22 @@ using Newtonsoft.Json;
 
 namespace EventBus;
 
-public class IntegrationEvent
+/// <summary>
+/// Marker class for events.
+/// </summary>
+public class IntegrationEvent(Guid id,DateTime creationDate)
 {
-    public IntegrationEvent()
-    {
-        Id = Guid.NewGuid();
-        CreationDate = DateTime.UtcNow;           
-    }
-    
-    public IntegrationEvent(Guid id,DateTime creationDate)
-    {
-        Id = id;
-        CreationDate = creationDate;
-    }
+    public IntegrationEvent() : this(Guid.NewGuid(), DateTime.UtcNow) { }
 
+    /// <summary>
+    /// Identifier for event.
+    /// </summary>
     [JsonProperty("id")]
-    public Guid Id { get; init; }
+    public Guid Id { get; init; } = id;
+
+    /// <summary>
+    /// Event creation date.
+    /// </summary>
     [JsonProperty("creation_date")]
-    public DateTime CreationDate { get; init; }
+    public DateTime CreationDate { get; init; } = creationDate;
 }

@@ -2,34 +2,40 @@
 
 namespace EventBus.Kafka;
 
-public class KafkaConnection
+public class KafkaConnection(ProducerConfig producerConfiguration,
+    ConsumerConfig consumerConfiguration)
 {
-    private readonly ProducerConfig _producerConfiguration;
-    private readonly ConsumerConfig _consumerConfiguration;
-    private object? _producerBuilder;
+    private IProducer<Null, string>? _producerBuilder;
+    private IConsumer<Null, string>? _consumerBuilder;
 
-    public KafkaConnection(ProducerConfig producerConfiguration, ConsumerConfig consumerConfiguration)
-    {
-        _producerConfiguration =producerConfiguration ?? throw new ArgumentNullException(nameof(producerConfiguration));
-        _consumerConfiguration =consumerConfiguration ?? throw new ArgumentNullException(nameof(consumerConfiguration));
-    }
-
+    /// <summary>
+    /// Builds <see cref="IProducer{TKey,TValue}"/> based of injected <see cref="ProducerConfig"/>.
+    /// </summary>
+    /// <returns>Instance of <see cref="IProducer{TKey,TValue}"/>.</returns>
     public IProducer<Null, string> BuildProducer()
     {
-        if (_producerBuilder != null)
-            return (IProducer<Null, string>)_producerBuilder;
+        if (_producerBuilder is not null)
+            return _producerBuilder;
         
-        _producerBuilder = new ProducerBuilder<Null, string>(_producerConfiguration)
+        _producerBuilder = new ProducerBuilder<Null, string>(producerConfiguration)
             .Build();
 
-        return (IProducer<Null,string>)_producerBuilder;
+        return _producerBuilder;
     }
 
-    public IConsumer<Null, string> BuildConsumer() 
+    /// <summary>
+    /// Builds <see cref="IConsumer{TKey,TValue}"/> based of injected <see cref="ConsumerConfig"/>.
+    /// </summary>
+    /// <returns>Instance of <see cref="IConsumer{TKey,TValue}"/>.</returns>
+
+    public IConsumer<Null, string> BuildConsumer()
     {
-        var consumer = new ConsumerBuilder<Null, string>(_consumerConfiguration)
+        if (_consumerBuilder is not null)
+            return _consumerBuilder;
+        
+        _consumerBuilder = new ConsumerBuilder<Null, string>(consumerConfiguration)
             .Build();
 
-        return consumer;
+        return _consumerBuilder;
     }
 }
