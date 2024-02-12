@@ -1,10 +1,8 @@
-using Basket.API.Handlers;
+using Basket.API.Grains;
 using Basket.API.Services;
 using Contracts;
 using Contracts.Mediatr.Validation;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Services.Common;
 
 namespace Basket.API.Endpoints;
 
@@ -15,27 +13,36 @@ internal static class BasketEndpointsMapper
         var basketRouteGroupBuilder = endpointRouteBuilder.MapGroup("basket");
 
         basketRouteGroupBuilder.MapGet("/", async (CancellationToken cancellationToken,
-                [FromServices]ISender sender,[FromServices]IIdentityService identityService) =>
+                [FromServices]IGrainFactory grainFactory,
+                [FromServices]IIdentityService identityService) =>
             {
-                var result = await sender.Send(new GetBasketQuery(), cancellationToken);
-                return result.ToResult();
+                var userId = identityService.GetUserId();
+                var basketGrain = grainFactory.GetGrain<IBasketGrain>(userId);
+                var result = await basketGrain.GetAsync();
+                return Results.Ok(result);
             }).Produces<Models.Basket>()
             .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
 
-        basketRouteGroupBuilder.MapPost("/", async (Models.Basket basket, CancellationToken cancellationToken,
-                ISender sender) =>
+        basketRouteGroupBuilder.MapPost("/", async ([FromBody]Models.Basket basket, 
+                [FromServices]IGrainFactory grainFactory,
+                [FromServices]IIdentityService identityService) =>
             {
-                var result = await sender.Send(new UpdateBasketCommand(basket), cancellationToken);
-                return result.ToResult();
+                var userId = identityService.GetUserId();
+                var basketGrain = grainFactory.GetGrain<IBasketGrain>(userId);
+                var result = await basketGrain.UpdateAsync(basket);
+                return Results.Ok(result);
             })
             .Produces<Models.Basket>()
             .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
         
-        basketRouteGroupBuilder.MapDelete("/", async (CancellationToken cancellationToken,
-                ISender sender) =>
+        basketRouteGroupBuilder.MapDelete("/", async (
+                [FromServices]IGrainFactory grainFactory,
+                [FromServices]IIdentityService identityService) =>
             {
-                var result = await sender.Send(new DeleteBasketCommand(), cancellationToken);
-                return result.ToResult();
+                var userId = identityService.GetUserId();
+                var basketGrain = grainFactory.GetGrain<IBasketGrain>(userId);
+                await basketGrain.DeleteAsync();
+                return Results.Ok();
             })
             .Produces<None>()
             .Produces<ValidationResult>(StatusCodes.Status400BadRequest);

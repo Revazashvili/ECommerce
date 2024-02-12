@@ -1,14 +1,8 @@
 namespace Basket.API.Services;
 
-public class IdentityService : IIdentityService
+public class IdentityService(IHttpContextAccessor httpContextAccessor)
+    : IIdentityService
 {
-    private readonly IHttpContextAccessor _httpContextAccessor;
-
-    public IdentityService(IHttpContextAccessor httpContextAccessor)
-    {
-        _httpContextAccessor = httpContextAccessor;
-    }
-
     public string GetUserId() => 
-        _httpContextAccessor.HttpContext!.User.FindFirst("sub")!.Value;
+        httpContextAccessor.HttpContext!.User.FindFirst("sub")!.Value;
 }

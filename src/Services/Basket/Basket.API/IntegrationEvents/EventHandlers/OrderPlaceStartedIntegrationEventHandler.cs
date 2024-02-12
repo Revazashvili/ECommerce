@@ -1,30 +1,23 @@
+using Basket.API.Grains;
 using Basket.API.IntegrationEvents.Events;
-using Basket.API.Interfaces;
 using EventBus;
 
 namespace Basket.API.IntegrationEvents.EventHandlers;
 
-public class OrderPlaceStartedIntegrationEventHandler : IIntegrationEventHandler<OrderPlaceStartedIntegrationEvent>
+public class OrderPlaceStartedIntegrationEventHandler(ILogger logger,
+        IGrainFactory grainFactory)
+    : IIntegrationEventHandler<OrderPlaceStartedIntegrationEvent>
 {
-    private readonly ILogger<ProductStockUnAvailableIntegrationEventHandler> _logger;
-    private readonly IBasketRepository _basketRepository;
-
-    public OrderPlaceStartedIntegrationEventHandler(ILogger<ProductStockUnAvailableIntegrationEventHandler> logger, 
-        IBasketRepository basketRepository)
-    {
-        _logger = logger;
-        _basketRepository = basketRepository;
-    }
-    
     public async Task Handle(OrderPlaceStartedIntegrationEvent @event)
     {
         try
         {
-            await _basketRepository.DeleteBasketAsync(@event.UserId.ToString(), CancellationToken.None);
+            var basketGrain = grainFactory.GetGrain<IBasketGrain>(@event.UserId.ToString());
+            await basketGrain.DeleteAsync();
         }
         catch (Exception exception)
         {
-            _logger.LogError(exception, "Error occured in {Handler}",
+            logger.LogError(exception, "Error occured in {Handler}",
                 nameof(OrderPlaceStartedIntegrationEventHandler));
         }
     }

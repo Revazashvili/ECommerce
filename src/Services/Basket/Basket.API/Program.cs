@@ -21,7 +21,6 @@ builder.Services.AddEndpointsApiExplorer()
 builder.Services.AddSwagger(builder.Configuration);
 
 builder.Host.UseSerilogLogging();
-builder.Services.AddMediatrWithValidation();
 
 builder.Services.ConfigureHttpJsonOptions(options =>
 {
@@ -33,21 +32,21 @@ builder.Services.AddScoped<IBasketRepository, RedisBasketRepository>();
 builder.Services.AddScoped<ProductStockUnAvailableIntegrationEventHandler>();
 builder.Services.AddScoped<OrderPlaceStartedIntegrationEventHandler>();
 
-builder.Services.AddRedis(builder.Configuration);
 builder.Services.AddKafka(builder.Configuration);
 
-var app = builder.Build();
+builder.Host.UseOrleans(siloBuilder =>
+{
+    siloBuilder.UseLocalhostClustering();
+    siloBuilder.AddMemoryGrainStorage("baskets");
+});
 
-app.UseSwagger(app.Configuration);
+var app = builder.Build();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
 var apiEndpointRouteBuilder = app.MapApi();
 apiEndpointRouteBuilder.MapBasket();
-
-
-app.UseFluentValidationMiddleware();
 
 var eventBus = app.Services.GetRequiredService<IEventBus>();
 eventBus.SubscribeAsync<ProductStockUnAvailableIntegrationEvent, ProductStockUnAvailableIntegrationEventHandler>();
