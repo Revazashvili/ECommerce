@@ -48,6 +48,8 @@ app.UseAuthorization();
 var apiEndpointRouteBuilder = app.MapApi();
 apiEndpointRouteBuilder.MapBasket();
 
+app.UseSwagger(builder.Configuration);
+
 var eventBus = app.Services.GetRequiredService<IEventBus>();
 eventBus.SubscribeAsync<ProductStockUnAvailableIntegrationEvent, ProductStockUnAvailableIntegrationEventHandler>();
 eventBus.SubscribeAsync<OrderPlaceStartedIntegrationEvent, OrderPlaceStartedIntegrationEventHandler>();
