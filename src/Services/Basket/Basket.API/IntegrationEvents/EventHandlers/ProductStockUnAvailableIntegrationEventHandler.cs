@@ -6,7 +6,8 @@ using EventBus;
 namespace Basket.API.IntegrationEvents.EventHandlers;
 
 public class ProductStockUnAvailableIntegrationEventHandler(
-        ILogger logger, IBasketRepository basketRepository,
+        ILogger<ProductStockUnAvailableIntegrationEventHandler> logger,
+        IBasketRepository basketRepository,
         IGrainFactory grainFactory)
     : IIntegrationEventHandler<ProductStockUnAvailableIntegrationEvent>
 {

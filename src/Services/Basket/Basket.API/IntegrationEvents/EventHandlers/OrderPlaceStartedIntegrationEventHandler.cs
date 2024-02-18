@@ -4,7 +4,8 @@ using EventBus;
 
 namespace Basket.API.IntegrationEvents.EventHandlers;
 
-public class OrderPlaceStartedIntegrationEventHandler(ILogger logger,
+public class OrderPlaceStartedIntegrationEventHandler(
+        ILogger<OrderPlaceStartedIntegrationEventHandler> logger,
         IGrainFactory grainFactory)
     : IIntegrationEventHandler<OrderPlaceStartedIntegrationEvent>
 {
