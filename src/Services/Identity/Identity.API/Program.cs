@@ -1,5 +1,7 @@
 ﻿using Identity.API;
+using Identity.API.Data;
 using Serilog;
+using Services.DependencyInjection;
 
 Log.Information("Starting up");
 
@@ -17,6 +19,8 @@ try
     var app = builder
         .ConfigureServices()
         .ConfigurePipeline();
+
+    app.MigrateIfDevelopmentAsync<ApplicationDbContext>();
 
     SeedData.EnsureSeedData(app);
     
