@@ -7,6 +7,7 @@ using Basket.API.Repositories;
 using Basket.API.Services;
 using EventBus;
 using EventBus.Kafka;
+using MessageBus.Nats;
 using Microsoft.IdentityModel.Logging;
 using Services.DependencyInjection;
 using IIdentityService = Basket.API.Services.IIdentityService;
@@ -33,6 +34,7 @@ builder.Services.AddScoped<ProductStockUnAvailableIntegrationEventHandler>();
 builder.Services.AddScoped<OrderPlaceStartedIntegrationEventHandler>();
 
 builder.Services.AddKafka(builder.Configuration);
+builder.Services.AddNatsMessageBus(builder.Configuration);
 
 builder.Host.UseOrleans(siloBuilder =>
 {
