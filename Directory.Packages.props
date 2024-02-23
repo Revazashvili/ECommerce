@@ -1,0 +1,69 @@
+<Project>
+
+    <PropertyGroup>
+        <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    </PropertyGroup>
+    
+    <ItemGroup Label="MediatR">
+        <PackageVersion Include="MediatR" Version="12.1.1" />
+    </ItemGroup>
+
+    <ItemGroup Label="Confluent">
+        <PackageVersion Include="Confluent.SchemaRegistry.Serdes.Avro" Version="2.3.0" />
+        <PackageVersion Include="Confluent.SchemaRegistry.Serdes.Json" Version="2.3.0" />
+    </ItemGroup>
+
+    <ItemGroup Label="NATS">
+        <PackageVersion Include="NATS.Client" Version="1.1.2" />
+    </ItemGroup>
+
+    <ItemGroup Label="Swagger">
+        <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0"/>
+        <PackageVersion Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
+        <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
+        <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
+    </ItemGroup>
+
+    <ItemGroup Label="Microsoft">
+        <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="7.0.11"/>
+        <PackageVersion Include="Microsoft.Orleans.Server" Version="8.0.0"/>
+        <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.13" />
+        <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.13" />
+        <PackageVersion Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="7.0.13"/>
+        <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.13"/>
+        <PackageVersion Include="Microsoft.AspNetCore.Identity.UI" Version="7.0.13"/>
+        <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.13"/>
+        <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="7.0.13" />
+        <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.13" />
+        <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.13" />
+        <PackageVersion Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+        <PackageVersion Include="Microsoft.Extensions.Logging" Version="7.0.0" />
+    </ItemGroup>
+
+    <ItemGroup Label="FluentValidation">
+        <PackageVersion Include="FluentValidation" Version="11.8.0" />
+        <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="11.8.0" />
+    </ItemGroup>
+    
+    <ItemGroup Label="Logging">
+        <PackageVersion Include="Serilog" Version="3.0.1" />
+        <PackageVersion Include="Serilog.AspNetCore" Version="7.0.0" />
+    </ItemGroup>
+    
+    <ItemGroup Label="Elastic">
+        <PackageVersion Include="NEST" Version="7.17.5" />
+    </ItemGroup>
+
+    <ItemGroup Label="Aws">
+        <PackageVersion Include="AWSSDK.S3" Version="3.7.205.19" />
+    </ItemGroup>
+    
+    <ItemGroup Label="Npgsql">
+        <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.11" />
+    </ItemGroup>
+    
+    <ItemGroup Label="Identity">
+        <PackageVersion Include="Duende.IdentityServer.AspNetIdentity" Version="6.3.6"/>
+    </ItemGroup>
+    
+</Project>
