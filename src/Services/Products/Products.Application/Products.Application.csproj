@@ -12,10 +12,7 @@
 
     <ItemGroup>
         <PackageReference Include="FluentValidation" />
-        <PackageReference Include="Microsoft.AspNetCore" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
-        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
-        <PackageReference Include="Microsoft.AspNetCore.Http.Features" />
     </ItemGroup>
 
 
