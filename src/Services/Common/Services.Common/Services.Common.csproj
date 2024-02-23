@@ -3,20 +3,13 @@
     <Import Project="..\..\..\..\Shared.props" />
 
     <ItemGroup>
-      <Reference Include="FluentValidation">
-        <HintPath>..\..\..\..\..\..\.nuget\packages\fluentvalidation\11.8.0\lib\net7.0\FluentValidation.dll</HintPath>
-      </Reference>
-      <Reference Include="MediatR">
-        <HintPath>..\..\..\..\..\..\.nuget\packages\mediatr\12.1.1\lib\net6.0\MediatR.dll</HintPath>
-      </Reference>
-      <Reference Include="Microsoft.AspNetCore.Http.Abstractions">
-        <HintPath>..\..\..\..\..\..\..\..\usr\lib64\dotnet\shared\Microsoft.AspNetCore.App\7.0.11\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
-      </Reference>
+        <PackageReference Include="FluentValidation" />
+        <PackageReference Include="MediatR" />
+        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" />
+<!--        <PackageReference Include="Microsoft.AspNetCore.Http.Results" />-->
+        <PackageReference Include="Microsoft.EntityFrameworkCore" />
       <Reference Include="Microsoft.AspNetCore.Http.Results">
         <HintPath>..\..\..\..\..\..\..\..\usr\lib64\dotnet\shared\Microsoft.AspNetCore.App\7.0.11\Microsoft.AspNetCore.Http.Results.dll</HintPath>
-      </Reference>
-      <Reference Include="Microsoft.EntityFrameworkCore">
-        <HintPath>..\..\..\..\..\..\.nuget\packages\microsoft.entityframeworkcore\7.0.13\lib\net6.0\Microsoft.EntityFrameworkCore.dll</HintPath>
       </Reference>
     </ItemGroup>
 
@@ -27,8 +20,5 @@
     <ItemGroup>
         <FrameworkReference Include="Microsoft.AspNetCore.App" />
     </ItemGroup>
-
-
-
 
 </Project>
