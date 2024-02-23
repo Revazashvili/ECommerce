@@ -11,11 +11,6 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\BuildingBlocks\EventBus\EventBus.Kafka\EventBus.Kafka.csproj" />
       <ProjectReference Include="..\..\Common\Services.DependencyInjection\Services.DependencyInjection.csproj" />
-
-
     </ItemGroup>
-
-
-
 
 </Project>
