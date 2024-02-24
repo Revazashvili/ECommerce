@@ -49,15 +49,8 @@ public static class SwaggerServiceCollectionExtensions
     }
 }
 
-internal class AuthorizeCheckOperationFilter : IOperationFilter
+internal class AuthorizeCheckOperationFilter(IConfiguration configuration) : IOperationFilter
 {
-    private readonly IConfiguration _configuration;
-
-    public AuthorizeCheckOperationFilter(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
-
     public void Apply(OpenApiOperation operation, OperationFilterContext context)
     {
         var hasAuthorize = context.ApiDescription.ActionDescriptor.EndpointMetadata.Any(m => m is AuthorizeAttribute);
@@ -72,7 +65,7 @@ internal class AuthorizeCheckOperationFilter : IOperationFilter
             Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "oauth2" }
         };
 
-        var identitySection = _configuration.GetSection("Identity");
+        var identitySection = configuration.GetSection("Identity");
         var scopes = identitySection.GetRequiredSection("Scopes").GetChildren().Select(r => r.Key).ToArray();
 
         operation.Security = new List<OpenApiSecurityRequirement>

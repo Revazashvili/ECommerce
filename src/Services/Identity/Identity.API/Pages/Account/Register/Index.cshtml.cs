@@ -10,17 +10,10 @@ namespace Identity.API.Pages.Register;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class Index : PageModel
+public class Index(UserManager<ApplicationUser> userManager) : PageModel
 {
-    private readonly UserManager<ApplicationUser> _userManager;
-
     [BindProperty] 
     public InputModel Input { get; set; }
-
-    public Index(UserManager<ApplicationUser> userManager)
-    {
-        _userManager = userManager;
-    }
 
     public async Task<IActionResult> OnGet(string returnUrl)
     {
@@ -41,14 +34,14 @@ public class Index : PageModel
             Email = $"{Input.Username}@gmail.com",
             EmailConfirmed = true
         };
-        var result = _userManager.CreateAsync(user, Input.Password).Result;
+        var result = userManager.CreateAsync(user, Input.Password).Result;
         
         if (!result.Succeeded)
         {
             return RedirectToPage("/Home/Error/Index");
         }
 
-        result = _userManager.AddClaimsAsync(user, new Claim[]
+        result = userManager.AddClaimsAsync(user, new Claim[]
         {
             new(JwtClaimTypes.Name, Input.FullName),
             new Claim(JwtClaimTypes.WebSite, $"http://{Input.Username}.com"),

@@ -7,26 +7,19 @@ using Services.Common.Extensions;
 
 namespace Ordering.Infrastructure.Repositories;
 
-public class OrderRepository : IOrderRepository
+public class OrderRepository(OrderingContext context) : IOrderRepository
 {
-    private readonly OrderingContext _context;
-
-    public OrderRepository(OrderingContext context)
-    {
-        _context = context;
-    }
-
-    public IUnitOfWork UnitOfWork => _context;
+    public IUnitOfWork UnitOfWork => context;
 
     public async Task<Order> AddAsync(Order order)
     {
-        var entityEntry = await _context.Orders.AddAsync(order);
+        var entityEntry = await context.Orders.AddAsync(order);
         return entityEntry.Entity;
     }
 
     public Task<Order?> GetByOrderNumberAsync(Guid orderNumber, CancellationToken cancellationToken)
     {
-        return _context.Orders
+        return context.Orders
             .Include(order => order.OrderItems)
             .Include(order => order.Address)
             .FirstOrDefaultAsync(order => order.OrderNumber == orderNumber, cancellationToken);
@@ -34,7 +27,7 @@ public class OrderRepository : IOrderRepository
 
     public Task<List<Order>> GetOrdersAsync(DateTime from, DateTime to, Pagination pagination, CancellationToken cancellationToken)
     {
-        return _context.Orders
+        return context.Orders
             .Include(order => order.OrderItems)
             .Include(order => order.Address)
             .Where(order => order.OrderingDate >= from && order.OrderingDate <= to)
@@ -45,7 +38,7 @@ public class OrderRepository : IOrderRepository
 
     public Task<List<Order>> GetUserOrdersAsync(Guid userId, CancellationToken cancellationToken)
     {
-        return _context.Orders
+        return context.Orders
             .Include(order => order.OrderItems)
             .Include(order => order.Address)
             .Where(order => order.UserId == userId)
@@ -54,7 +47,7 @@ public class OrderRepository : IOrderRepository
 
     public Task<List<Guid>> GetNewOrdersOrderNumbersAsync()
     {
-        return _context.Orders
+        return context.Orders
             .Include(order => order.OrderItems)
             .Include(order => order.Address)
             .Where(order => order.OrderStatus == OrderStatus.Created)

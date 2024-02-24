@@ -2,12 +2,7 @@ using EventBus;
 
 namespace Payment.API.IntegrationEvents.Events;
 
-public class OrderPaymentFailedIntegrationEvent : IntegrationEvent
+public class OrderPaymentFailedIntegrationEvent(Guid orderNumber) : IntegrationEvent
 {
-    public OrderPaymentFailedIntegrationEvent(Guid orderNumber)
-    {
-        OrderNumber = orderNumber;
-    }
-
-    public Guid OrderNumber { get; }
+    public Guid OrderNumber { get; } = orderNumber;
 }

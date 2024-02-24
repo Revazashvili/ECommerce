@@ -10,33 +10,24 @@ namespace Products.Application.ProductCategories;
 
 public record DeleteProductCategoryCommand(int Id) : IValidatedCommand<None>;
 
-public class DeleteProductCategoryCommandHandler : IValidatedCommandHandler<DeleteProductCategoryCommand,None>
+public class DeleteProductCategoryCommandHandler(ILogger<CreateProductCategoryCommandHandler> logger,
+        IProductCategoryRepository productCategoryRepository)
+    : IValidatedCommandHandler<DeleteProductCategoryCommand,None>
 {
-    
-    private readonly ILogger<CreateProductCategoryCommandHandler> _logger;
-    private readonly IProductCategoryRepository _productCategoryRepository;
-
-    public DeleteProductCategoryCommandHandler(ILogger<CreateProductCategoryCommandHandler> logger, IProductCategoryRepository productCategoryRepository)
-    {
-        _logger = logger;
-        _productCategoryRepository = productCategoryRepository;
-    }
-
-    
     public async Task<Either<None, ValidationResult>> Handle(DeleteProductCategoryCommand request, CancellationToken cancellationToken)
     {
         try
         {
             var productCategory = new ProductCategory(request.Id);
 
-            _productCategoryRepository.Remove(productCategory);
-            await _productCategoryRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+            productCategoryRepository.Remove(productCategory);
+            await productCategoryRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
             return None.Instance;
         }
         catch (Exception exception)
         {
-            _logger.LogError(exception, "Error occured in {Handler} while deleting product category Id: {Id}",
+            logger.LogError(exception, "Error occured in {Handler} while deleting product category Id: {Id}",
                 nameof(CreateProductCategoryCommandHandler), request.Id);
             return new ValidationResult("Can't delete product category");
         }

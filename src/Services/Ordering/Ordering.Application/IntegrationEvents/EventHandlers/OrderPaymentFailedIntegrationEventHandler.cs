@@ -6,28 +6,20 @@ using Ordering.Application.Orders;
 
 namespace Ordering.Application.IntegrationEvents.EventHandlers;
 
-public class OrderPaymentFailedIntegrationEventHandler : IIntegrationEventHandler<OrderPaymentFailedIntegrationEvent>
+public class OrderPaymentFailedIntegrationEventHandler(ILogger<OrderPaymentFailedIntegrationEventHandler> logger,
+        ISender sender)
+    : IIntegrationEventHandler<OrderPaymentFailedIntegrationEvent>
 {
-    private readonly ILogger<OrderPaymentFailedIntegrationEventHandler> _logger;
-    private readonly ISender _sender;
-
-    public OrderPaymentFailedIntegrationEventHandler(
-        ILogger<OrderPaymentFailedIntegrationEventHandler> logger,ISender sender)
-    {
-        _logger = logger;
-        _sender = sender;
-    }
-    
     public async Task Handle(OrderPaymentFailedIntegrationEvent @event)
     {
         try
         {
-            _logger.LogInformation("Handling Event: {@Event}", @event);
-            await _sender.Send(new CancelOrderCommand(@event.OrderNumber));
+            logger.LogInformation("Handling Event: {@Event}", @event);
+            await sender.Send(new CancelOrderCommand(@event.OrderNumber));
         }
         catch (Exception exception)
         {
-            _logger.LogError(exception, "Error occured in {Handler}",
+            logger.LogError(exception, "Error occured in {Handler}",
                 nameof(OrderPaymentFailedIntegrationEventHandler));
         }
     }

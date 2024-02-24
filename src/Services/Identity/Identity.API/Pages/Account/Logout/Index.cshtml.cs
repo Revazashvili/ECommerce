@@ -13,21 +13,11 @@ namespace Identity.API.Pages.Logout;
 
 [SecurityHeaders]
 [AllowAnonymous]
-public class Index : PageModel
-{
-    private readonly SignInManager<ApplicationUser> _signInManager;
-    private readonly IIdentityServerInteractionService _interaction;
-    private readonly IEventService _events;
-
-    [BindProperty] public string LogoutId { get; set; }
-
-    public Index(SignInManager<ApplicationUser> signInManager, IIdentityServerInteractionService interaction,
+public class Index(SignInManager<ApplicationUser> signInManager, IIdentityServerInteractionService interaction,
         IEventService events)
-    {
-        _signInManager = signInManager;
-        _interaction = interaction;
-        _events = events;
-    }
+    : PageModel
+{
+    [BindProperty] public string LogoutId { get; set; }
 
     public async Task<IActionResult> OnGet(string logoutId)
     {
@@ -42,7 +32,7 @@ public class Index : PageModel
         }
         else
         {
-            var context = await _interaction.GetLogoutContextAsync(LogoutId);
+            var context = await interaction.GetLogoutContextAsync(LogoutId);
             if (context?.ShowSignoutPrompt == false)
             {
                 // it's safe to automatically sign-out
@@ -67,13 +57,13 @@ public class Index : PageModel
             // if there's no current logout context, we need to create one
             // this captures necessary info from the current logged in user
             // this can still return null if there is no context needed
-            LogoutId ??= await _interaction.CreateLogoutContextAsync();
+            LogoutId ??= await interaction.CreateLogoutContextAsync();
 
             // delete local authentication cookie
-            await _signInManager.SignOutAsync();
+            await signInManager.SignOutAsync();
 
             // raise the logout event
-            await _events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));
+            await events.RaiseAsync(new UserLogoutSuccessEvent(User.GetSubjectId(), User.GetDisplayName()));
 
             // see if we need to trigger federated logout
             var idp = User.FindFirst(JwtClaimTypes.IdentityProvider)?.Value;

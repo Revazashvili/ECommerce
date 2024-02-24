@@ -15,27 +15,15 @@ namespace Ordering.Application.Orders;
 public record PlaceOrderCommand(AddressDto Address,List<BasketItem> BasketItems) 
     : IValidatedCommand<Order>;
     
-public class PlaceOrderCommandHandler : IValidatedCommandHandler<PlaceOrderCommand,Order>
+public class PlaceOrderCommandHandler(ILogger<CancelOrderCommandHandler> logger, IOrderRepository orderRepository,
+        IEventBus eventBus, IIdentityService identityService)
+    : IValidatedCommandHandler<PlaceOrderCommand,Order>
 {
-    private readonly ILogger<CancelOrderCommandHandler> _logger;
-    private readonly IOrderRepository _orderRepository;
-    private readonly IEventBus _eventBus;
-    private readonly IIdentityService _identityService;
-
-    public PlaceOrderCommandHandler(ILogger<CancelOrderCommandHandler> logger,IOrderRepository orderRepository,
-        IEventBus eventBus,IIdentityService identityService)
-    {
-        _logger = logger;
-        _orderRepository = orderRepository;
-        _eventBus = eventBus;
-        _identityService = identityService;
-    }
-
     public async Task<Either<Order, ValidationResult>> Handle(PlaceOrderCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            var userId = _identityService.GetUserId();
+            var userId = identityService.GetUserId();
             var order = Order.Create(userId, request.Address.ToAddress());
             foreach (var basketItem in request.BasketItems)
             {
@@ -44,16 +32,16 @@ public class PlaceOrderCommandHandler : IValidatedCommandHandler<PlaceOrderComma
                     basketItem.Quantity, basketItem.PictureUrl);
             }
 
-            await _orderRepository.AddAsync(order);
-            await _orderRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+            await orderRepository.AddAsync(order);
+            await orderRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
-            await _eventBus.PublishAsync(new OrderPlaceStartedIntegrationEvent(userId));
+            await eventBus.PublishAsync(new OrderPlaceStartedIntegrationEvent(userId));
             
             return order;
         }
         catch (Exception exception)
         {
-            _logger.LogError(exception,"Error occured in {Handler}",nameof(PlaceOrderCommandHandler));
+            logger.LogError(exception,"Error occured in {Handler}",nameof(PlaceOrderCommandHandler));
             return new ValidationResult("Can't place order");
         }
     }

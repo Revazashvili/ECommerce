@@ -10,22 +10,15 @@ namespace Products.Application.Products;
 
 public record UpdateProductStockCommand(Guid Id, int Quantity) : IValidatedCommand<Product>;
 
-public class UpdateProductStockCommandHandler : IValidatedCommandHandler<UpdateProductStockCommand, Product>
+public class UpdateProductStockCommandHandler(ILogger<CreateProductCommandHandler> logger,
+        IProductRepository productRepository)
+    : IValidatedCommandHandler<UpdateProductStockCommand, Product>
 {
-    private readonly ILogger<CreateProductCommandHandler> _logger;
-    private readonly IProductRepository _productRepository;
-
-    public UpdateProductStockCommandHandler(ILogger<CreateProductCommandHandler> logger,IProductRepository productRepository)
-    {
-        _logger = logger;
-        _productRepository = productRepository;
-    }
-    
     public async Task<Either<Product, ValidationResult>> Handle(UpdateProductStockCommand request, CancellationToken cancellationToken)
     {
         try
         {
-            var product = await _productRepository.GetByIdAsync(request.Id,cancellationToken);
+            var product = await productRepository.GetByIdAsync(request.Id,cancellationToken);
             if (product is null)
                 return new ValidationResult("Can't find product");
 
@@ -33,13 +26,13 @@ public class UpdateProductStockCommandHandler : IValidatedCommandHandler<UpdateP
                 return product;
             
             product.UpdateQuantity(request.Quantity);
-            await _productRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+            await productRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
 
             return product;
         }
         catch (Exception exception)
         {
-            _logger.LogError(exception, "Error occured in {Handler} with Id: {Id}",
+            logger.LogError(exception, "Error occured in {Handler} with Id: {Id}",
                 nameof(UpdateProductStockCommandHandler), request.Id);
             return new ValidationResult("Can't update product stock");
         }

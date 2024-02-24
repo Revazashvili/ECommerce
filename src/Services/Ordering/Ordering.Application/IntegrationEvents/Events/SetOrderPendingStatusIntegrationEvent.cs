@@ -3,14 +3,8 @@ using Ordering.Domain.Entities;
 
 namespace Ordering.Application.IntegrationEvents.Events;
 
-public class SetOrderPendingStatusIntegrationEvent : IntegrationEvent
+public class SetOrderPendingStatusIntegrationEvent(Guid orderNumber, List<OrderItem> orderItems) : IntegrationEvent
 {
-    public SetOrderPendingStatusIntegrationEvent(Guid orderNumber, List<OrderItem> orderItems)
-    {
-        OrderNumber = orderNumber;
-        OrderItems = orderItems;
-    }
-
-    public Guid OrderNumber { get; }
-    public List<OrderItem> OrderItems { get; }
+    public Guid OrderNumber { get; } = orderNumber;
+    public List<OrderItem> OrderItems { get; } = orderItems;
 }

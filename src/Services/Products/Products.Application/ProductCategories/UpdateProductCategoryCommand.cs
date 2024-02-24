@@ -10,30 +10,23 @@ namespace Products.Application.ProductCategories;
 
 public record UpdateProductCategoryCommand(int Id,string Name) : IValidatedCommand<ProductCategory>;
 
-public class UpdateProductCategoryCommandHandler : IValidatedCommandHandler<UpdateProductCategoryCommand,ProductCategory>
+public class UpdateProductCategoryCommandHandler(ILogger<UpdateProductCategoryCommandHandler> logger,
+        IProductCategoryRepository productCategoryRepository)
+    : IValidatedCommandHandler<UpdateProductCategoryCommand,ProductCategory>
 {
-    private readonly ILogger<UpdateProductCategoryCommandHandler> _logger;
-    private readonly IProductCategoryRepository _productCategoryRepository;
-
-    public UpdateProductCategoryCommandHandler(ILogger<UpdateProductCategoryCommandHandler> logger, IProductCategoryRepository productCategoryRepository)
-    {
-        _logger = logger;
-        _productCategoryRepository = productCategoryRepository;
-    }
-    
     public async Task<Either<ProductCategory, ValidationResult>> Handle(UpdateProductCategoryCommand request, CancellationToken cancellationToken)
     {
         try
         {
             var productCategory = new ProductCategory(request.Id,request.Name);
-            var result = _productCategoryRepository.Update(productCategory);
+            var result = productCategoryRepository.Update(productCategory);
 
-            await _productCategoryRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
+            await productCategoryRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
             return result;
         }
         catch (Exception exception)
         {
-            _logger.LogError(exception,"Error occured in {Handler}",nameof(UpdateProductCategoryCommandHandler));
+            logger.LogError(exception,"Error occured in {Handler}",nameof(UpdateProductCategoryCommandHandler));
             return new ValidationResult("Can't update product category");
         }
     }

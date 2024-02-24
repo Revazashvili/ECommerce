@@ -2,12 +2,7 @@ using EventBus;
 
 namespace Products.Application.IntegrationEvents.Events;
 
-public class ProductStockUnAvailableIntegrationEvent : IntegrationEvent
+public class ProductStockUnAvailableIntegrationEvent(Guid productId) : IntegrationEvent
 {
-    public ProductStockUnAvailableIntegrationEvent(Guid productId)
-    {
-        ProductId = productId;
-    }
-
-    public Guid ProductId { get; }
+    public Guid ProductId { get; } = productId;
 }

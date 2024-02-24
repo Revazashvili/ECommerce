@@ -2,9 +2,7 @@ using Contracts.Mediatr.Wrappers;
 
 namespace Ordering.Domain.Events;
 
-public class SetOrderUnAvailableQuantityStatusDomainEvent : INotification
+public class SetOrderUnAvailableQuantityStatusDomainEvent(Guid orderNumber) : INotification
 {
-    public SetOrderUnAvailableQuantityStatusDomainEvent(Guid orderNumber) => OrderNumber = orderNumber;
-
-    public Guid OrderNumber { get; }
+    public Guid OrderNumber { get; } = orderNumber;
 }

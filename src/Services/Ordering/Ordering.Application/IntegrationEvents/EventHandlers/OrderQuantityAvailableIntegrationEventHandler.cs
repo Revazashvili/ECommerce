@@ -6,28 +6,20 @@ using Ordering.Application.Orders;
 
 namespace Ordering.Application.IntegrationEvents.EventHandlers;
 
-public class OrderQuantityAvailableIntegrationEventHandler : IIntegrationEventHandler<OrderQuantityAvailableIntegrationEvent>
+public class OrderQuantityAvailableIntegrationEventHandler(
+        ILogger<OrderQuantityAvailableIntegrationEventHandler> logger, ISender sender)
+    : IIntegrationEventHandler<OrderQuantityAvailableIntegrationEvent>
 {
-    private readonly ILogger<OrderQuantityAvailableIntegrationEventHandler> _logger;
-    private readonly ISender _sender;
-
-    public OrderQuantityAvailableIntegrationEventHandler(
-        ILogger<OrderQuantityAvailableIntegrationEventHandler> logger,ISender sender)
-    {
-        _logger = logger;
-        _sender = sender;
-    }
-    
     public async Task Handle(OrderQuantityAvailableIntegrationEvent @event)
     {
         try
         {
-            _logger.LogInformation("Handling Event: {@Event}", @event);
-            await _sender.Send(new SetOrderQuantityAvailableStatusCommand(@event.OrderNumber));
+            logger.LogInformation("Handling Event: {@Event}", @event);
+            await sender.Send(new SetOrderQuantityAvailableStatusCommand(@event.OrderNumber));
         }
         catch (Exception exception)
         {
-            _logger.LogError(exception, "Error occured in {Handler}",
+            logger.LogError(exception, "Error occured in {Handler}",
                 nameof(OrderQuantityAvailableIntegrationEventHandler));
         }
     }

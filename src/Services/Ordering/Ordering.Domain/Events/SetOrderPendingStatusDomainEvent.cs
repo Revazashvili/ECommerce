@@ -2,9 +2,7 @@ using Contracts.Mediatr.Wrappers;
 
 namespace Ordering.Domain.Events;
 
-public class SetOrderPendingStatusDomainEvent : INotification
+public class SetOrderPendingStatusDomainEvent(Guid orderNumber) : INotification
 {
-    public SetOrderPendingStatusDomainEvent(Guid orderNumber) => OrderNumber = orderNumber;
-
-    public Guid OrderNumber { get; }
+    public Guid OrderNumber { get; } = orderNumber;
 }

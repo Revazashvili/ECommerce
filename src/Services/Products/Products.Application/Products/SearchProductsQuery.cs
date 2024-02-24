@@ -10,27 +10,20 @@ namespace Products.Application.Products;
 
 public record SearchProductsQuery(string Name,List<int> Categories) : IValidatedQuery<IEnumerable<Product>>;
 
-public class SearchProductsQueryHandler : IValidatedQueryHandler<SearchProductsQuery, IEnumerable<Product>>
+public class SearchProductsQueryHandler(ILogger<CreateProductCommandHandler> logger,
+        IProductRepository productRepository)
+    : IValidatedQueryHandler<SearchProductsQuery, IEnumerable<Product>>
 {
-    private readonly ILogger<CreateProductCommandHandler> _logger;
-    private readonly IProductRepository _productRepository;
-
-    public SearchProductsQueryHandler(ILogger<CreateProductCommandHandler> logger,IProductRepository productRepository)
-    {
-        _logger = logger;
-        _productRepository = productRepository;
-    }
-    
     public async Task<Either<IEnumerable<Product>, ValidationResult>> Handle(SearchProductsQuery request, CancellationToken cancellationToken)
     {
         try
         {
-            var products = await _productRepository.SearchAsync(request.Name, request.Categories,cancellationToken);
+            var products = await productRepository.SearchAsync(request.Name, request.Categories,cancellationToken);
             return products;
         }
         catch (Exception exception)
         {
-            _logger.LogError(exception,"Error occured in {Handler}",nameof(SearchProductsQueryHandler));
+            logger.LogError(exception,"Error occured in {Handler}",nameof(SearchProductsQueryHandler));
             return new ValidationResult("Can't search products");
         }
     }

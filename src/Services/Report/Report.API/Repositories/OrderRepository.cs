@@ -3,18 +3,11 @@ using Report.API.Models;
 
 namespace Report.API.Repositories;
 
-public class OrderRepository : IOrderRepository
+public class OrderRepository(IElasticClient elasticClient) : IOrderRepository
 {
-    private readonly IElasticClient _elasticClient;
-
-    public OrderRepository(IElasticClient elasticClient)
-    {
-        _elasticClient = elasticClient;
-    }
-    
     public async Task<IEnumerable<SalesReport>> GetSalesReportAsync(DateTime from, DateTime to)
     {
-        var response = await _elasticClient
+        var response = await elasticClient
             .SearchAsync<Order>(descriptor =>
                 descriptor
                     .Size(10000)
@@ -51,7 +44,7 @@ public class OrderRepository : IOrderRepository
 
     public async Task<Order?> AddAsync(Order order)
     {
-        var response = await _elasticClient.IndexDocumentAsync(order);
+        var response = await elasticClient.IndexDocumentAsync(order);
         return response.Result == Result.Error ? null : order;
     }
 }

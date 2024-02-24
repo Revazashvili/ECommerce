@@ -3,12 +3,7 @@ using Ordering.Domain.Entities;
 
 namespace Ordering.Application.IntegrationEvents.Events;
 
-public class SetOrderStatusPaidIntegrationEvent : IntegrationEvent
+public class SetOrderStatusPaidIntegrationEvent(Order order) : IntegrationEvent
 {
-    public SetOrderStatusPaidIntegrationEvent(Order order)
-    {
-        Order = order;
-    }
-
-    public Order Order { get; }
+    public Order Order { get; } = order;
 }

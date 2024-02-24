@@ -2,9 +2,7 @@ using Contracts.Mediatr.Wrappers;
 
 namespace Ordering.Domain.Events;
 
-public class OrderCreatedDomainEvent : INotification
+public class OrderCreatedDomainEvent(int userId) : INotification
 {
-    public OrderCreatedDomainEvent(int userId) => UserId = userId;
-    
-    public int UserId { get; }
+    public int UserId { get; } = userId;
 }

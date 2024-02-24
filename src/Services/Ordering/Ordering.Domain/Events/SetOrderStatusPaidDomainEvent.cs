@@ -3,12 +3,7 @@ using Ordering.Domain.Entities;
 
 namespace Ordering.Domain.Events;
 
-public class SetOrderStatusPaidDomainEvent : INotification
+public class SetOrderStatusPaidDomainEvent(Order order) : INotification
 {
-    public SetOrderStatusPaidDomainEvent(Order order)
-    {
-        Order = order;
-    }
-
-    public Order Order { get; }
+    public Order Order { get; } = order;
 }

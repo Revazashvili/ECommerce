@@ -1,15 +1,8 @@
 namespace Report.API.Models;
 
-public class SalesReport
+public class SalesReport(string productName, int totalQuantity, decimal amountQuantity)
 {
-    public SalesReport(string productName, int totalQuantity, decimal amountQuantity)
-    {
-        ProductName = productName;
-        TotalQuantity = totalQuantity;
-        AmountQuantity = amountQuantity;
-    }
-
-    public string ProductName { get; set; }
-    public int TotalQuantity { get; set; }
-    public decimal AmountQuantity { get; set; }
+    public string ProductName { get; set; } = productName;
+    public int TotalQuantity { get; set; } = totalQuantity;
+    public decimal AmountQuantity { get; set; } = amountQuantity;
 }

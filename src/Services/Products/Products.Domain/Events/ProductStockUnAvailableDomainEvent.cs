@@ -3,12 +3,7 @@ using Products.Domain.Entities;
 
 namespace Products.Domain.Events;
 
-public class ProductStockUnAvailableDomainEvent : INotification
+public class ProductStockUnAvailableDomainEvent(Product product) : INotification
 {
-    public ProductStockUnAvailableDomainEvent(Product product)
-    {
-        Product = product;
-    }
-
-    public Product Product { get; }
+    public Product Product { get; } = product;
 }
