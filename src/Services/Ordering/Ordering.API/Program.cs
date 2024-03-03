@@ -34,6 +34,6 @@ endpointRouteBuilder.MapOrder();
 app.UseFluentValidationMiddleware();
 app.SubscribeToEvents();
 
-app.MigrateIfDevelopmentAsync<OrderingContext>();
+app.MigrateIfDevelopment<OrderingContext>();
 
 app.Run();

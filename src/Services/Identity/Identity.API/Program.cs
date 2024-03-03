@@ -20,7 +20,7 @@ try
         .ConfigureServices()
         .ConfigurePipeline();
 
-    app.MigrateIfDevelopmentAsync<ApplicationDbContext>();
+    app.MigrateIfDevelopment<ApplicationDbContext>();
 
     SeedData.EnsureSeedData(app);
     
