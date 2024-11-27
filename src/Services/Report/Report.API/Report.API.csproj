@@ -6,6 +6,7 @@
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
         <PackageReference Include="Elastic.Clients.Elasticsearch" />
         <PackageReference Include="Swashbuckle.AspNetCore" />
+        <PackageReference Include="Microsoft.OpenApi" />
     </ItemGroup>
 
     <ItemGroup>

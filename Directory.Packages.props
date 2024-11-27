@@ -43,6 +43,7 @@
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
     <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" />
     <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.2.1" />
+    <PackageVersion Include="Microsoft.OpenApi" Version="1.6.22" />
   </ItemGroup>
   <ItemGroup Label="FluentValidation">
     <PackageVersion Include="FluentValidation" Version="11.11.0" />
