@@ -6,11 +6,11 @@
     <PackageVersion Include="MediatR" Version="12.4.1" />
   </ItemGroup>
   <ItemGroup Label="Confluent">
-    <PackageVersion Include="Confluent.SchemaRegistry.Serdes.Avro" Version="2.3.0" />
-    <PackageVersion Include="Confluent.SchemaRegistry.Serdes.Json" Version="2.3.0" />
+    <PackageVersion Include="Confluent.SchemaRegistry.Serdes.Avro" Version="2.6.1" />
+    <PackageVersion Include="Confluent.SchemaRegistry.Serdes.Json" Version="2.6.1" />
   </ItemGroup>
   <ItemGroup Label="NATS">
-    <PackageVersion Include="NATS.Client" Version="1.1.2" />
+    <PackageVersion Include="NATS.Client" Version="1.1.6" />
   </ItemGroup>
   <ItemGroup Label="Swagger">
     <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0" />
@@ -19,50 +19,50 @@
     <PackageVersion Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.5.0" />
   </ItemGroup>
   <ItemGroup Label="Microsoft">
-    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="8.0.2" />
-    <PackageVersion Include="Microsoft.Orleans.Server" Version="8.0.0" />
-    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.2" />
-    <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.2" />
-    <PackageVersion Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.2" />
-    <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.2" />
-    <PackageVersion Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.2" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.2" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.2">
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.Orleans.Server" Version="9.0.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.SqlServer" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
-    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.2">
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageVersion>
-    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Logging" Version="8.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="8.0.0" />
-    <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="7.3.1" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" />
+    <PackageVersion Include="System.IdentityModel.Tokens.Jwt" Version="8.2.1" />
   </ItemGroup>
   <ItemGroup Label="FluentValidation">
-    <PackageVersion Include="FluentValidation" Version="11.9.0" />
-    <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="11.9.0" />
+    <PackageVersion Include="FluentValidation" Version="11.11.0" />
+    <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
   </ItemGroup>
   <ItemGroup Label="Logging">
-    <PackageVersion Include="Serilog" Version="3.1.1" />
-    <PackageVersion Include="Serilog.AspNetCore" Version="8.0.1" />
+    <PackageVersion Include="Serilog" Version="4.1.0" />
+    <PackageVersion Include="Serilog.AspNetCore" Version="8.0.3" />
   </ItemGroup>
   <ItemGroup Label="Elastic">
     <PackageVersion Include="NEST" Version="7.17.5" />
   </ItemGroup>
   <ItemGroup Label="Aws">
-    <PackageVersion Include="AWSSDK.S3" Version="3.7.305.28" />
+    <PackageVersion Include="AWSSDK.S3" Version="3.7.408" />
   </ItemGroup>
   <ItemGroup Label="Npgsql">
-    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2" />
+    <PackageVersion Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.1" />
   </ItemGroup>
   <ItemGroup Label="Identity">
-    <PackageVersion Include="Duende.IdentityServer.AspNetIdentity" Version="7.0.1" />
+    <PackageVersion Include="Duende.IdentityServer.AspNetIdentity" Version="7.0.8" />
   </ItemGroup>
   <ItemGroup Label="Json">
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
