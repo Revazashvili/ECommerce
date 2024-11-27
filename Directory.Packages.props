@@ -3,7 +3,7 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup Label="MediatR">
-    <PackageVersion Include="MediatR" Version="12.2.0" />
+    <PackageVersion Include="MediatR" Version="12.4.1" />
   </ItemGroup>
   <ItemGroup Label="Confluent">
     <PackageVersion Include="Confluent.SchemaRegistry.Serdes.Avro" Version="2.3.0" />
