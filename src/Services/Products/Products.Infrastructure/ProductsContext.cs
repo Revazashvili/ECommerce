@@ -16,7 +16,6 @@ public class ProductsContext : DbContext,IUnitOfWork
         _mediator = mediator;
     }
     
-    public ProductsContext() { }
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductCategory> ProductCategories { get; set; }
 

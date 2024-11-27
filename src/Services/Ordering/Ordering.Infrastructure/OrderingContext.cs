@@ -7,7 +7,7 @@ using Services.Common.Extensions;
 
 namespace Ordering.Infrastructure;
 
-public class OrderingContext : DbContext,IUnitOfWork
+public class OrderingContext : DbContext, IUnitOfWork
 {
     private readonly IMediator _mediator;
 
@@ -15,8 +15,6 @@ public class OrderingContext : DbContext,IUnitOfWork
     {
         _mediator = mediator;
     }
-    
-    public OrderingContext() { }
     
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
