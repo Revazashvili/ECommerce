@@ -12,7 +12,7 @@ public class SetOrderStatusPaidIntegrationEventHandler(ILogger<SetOrderStatusPai
     {
         try
         {
-            await orderRepository.AddAsync(@event.Order);
+            await orderRepository.AddAsync(@event.Order, CancellationToken.None);
         }
         catch (Exception exception)
         {
