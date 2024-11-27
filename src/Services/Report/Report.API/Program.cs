@@ -1,7 +1,7 @@
 using System.Text.Json.Serialization;
+using Elastic.Clients.Elasticsearch;
 using EventBus;
 using EventBus.Kafka;
-using Nest;
 using Report.API.Common;
 using Report.API.Endpoints;
 using Report.API.IntegrationEvents.Events;
@@ -20,9 +20,10 @@ builder.Services.AddSwaggerGen(c =>
 builder.Host.UseSerilogLogging();
 builder.Services.AddMediatrWithValidation();
 
-var elasticSettings = new ConnectionSettings()
-    .DefaultMappingFor<Order>(descriptor => descriptor.IndexName("orders"));
-builder.Services.AddScoped<IElasticClient>(_ => new ElasticClient(elasticSettings));
+var elasticsearchClientSettings = new ElasticsearchClientSettings()
+    .DefaultMappingFor(typeof(Order), descriptor => descriptor.IndexName("orders"));
+
+builder.Services.AddScoped<ElasticsearchClient>(_ => new ElasticsearchClient(elasticsearchClientSettings));
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 builder.Services.ConfigureHttpJsonOptions(options =>

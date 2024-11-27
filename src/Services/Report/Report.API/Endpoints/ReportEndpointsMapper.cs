@@ -10,15 +10,16 @@ internal static class ReportEndpointsMapper
     {
         var basketRouteGroupBuilder = endpointRouteBuilder.MapGroup("report");
         
-        basketRouteGroupBuilder.MapGet("/{from:datetime}", async (DateTime from, IOrderRepository orderRepository) => 
-                await orderRepository.GetSalesReportAsync(from,DateTime.Now))
+        basketRouteGroupBuilder.MapGet("/{from:datetime}", async (DateTime from, IOrderRepository orderRepository, CancellationToken cancellationToken) => 
+                await orderRepository.GetSalesReportAsync(from,DateTime.Now, cancellationToken))
             .Produces<IEnumerable<Order>>();
         
-        basketRouteGroupBuilder.MapGet("/{period}", async ([FromQuery]SalesReportPeriod period, IOrderRepository orderRepository) => 
-                await orderRepository.GetSalesReportAsync(period.CalculateFromDate(),DateTime.Now))
+        basketRouteGroupBuilder.MapGet("/{period}", async ([FromQuery]SalesReportPeriod period, IOrderRepository orderRepository, CancellationToken cancellationToken) => 
+                await orderRepository.GetSalesReportAsync(period.CalculateFromDate(),DateTime.Now, cancellationToken))
             .Produces<IEnumerable<Order>>();
         
-        basketRouteGroupBuilder.MapPost("/", async (Order order,IOrderRepository orderRepository) => 
-            await orderRepository.AddAsync(order)).Produces<IEnumerable<Order>>();
+        basketRouteGroupBuilder.MapPost("/", async (Order order,IOrderRepository orderRepository, CancellationToken cancellationToken) => 
+            await orderRepository.AddAsync(order, cancellationToken))
+            .Produces<IEnumerable<Order>>();
     }
 }

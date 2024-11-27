@@ -1,34 +1,32 @@
-using Nest;
+using Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch.Core.Search;
 using Report.API.Models;
 
 namespace Report.API.Repositories;
 
-public class OrderRepository(IElasticClient elasticClient) : IOrderRepository
+public class OrderRepository(ElasticsearchClient elasticClient) : IOrderRepository
 {
-    public async Task<IEnumerable<SalesReport>> GetSalesReportAsync(DateTime from, DateTime to)
+    public async Task<IEnumerable<SalesReport>> GetSalesReportAsync(DateTime from, DateTime to, CancellationToken cancellationToken)
     {
-        var response = await elasticClient
-            .SearchAsync<Order>(descriptor =>
-                descriptor
-                    .Size(10000)
-                    .Source(sf => sf
-                        .Includes(i => i
-                            .Field(order => order.OrderItems)
-                        )
-                        .Excludes(e => e
-                            .Fields(
-                                order => order.OrderingDate,
-                                order => order.OrderNumber,
-                                order => order.OrderStatus,
-                                order => order.Address,
-                                order => order.UserId)
-                        )
-                    ).Query(containerDescriptor =>
-                        containerDescriptor.DateRange(queryDescriptor =>
-                            queryDescriptor.GreaterThanOrEquals(from).LessThanOrEquals(to)
-                        )
-                    )
-            );
+        var response = await elasticClient.SearchAsync<Order>(descriptor =>
+            descriptor
+                .Source(new SourceConfig(new SourceFilter
+                {
+                    Includes = Infer.Field<Order>(order => order.OrderItems),
+                    Excludes = Infer.Fields<Order>(order => order.OrderingDate,
+                        order => order.OrderNumber,
+                        order => order.OrderStatus,
+                        order => order.Address,
+                        order => order.UserId)
+                }))
+                .Query(queryDescriptor => queryDescriptor
+                    .Range(rangeQueryDescriptor => rangeQueryDescriptor.DateRange(dateRangeQueryDescriptor =>
+                    {
+                        dateRangeQueryDescriptor.Gte(from);
+                        dateRangeQueryDescriptor.Lte(to);
+                    }))),
+            cancellationToken
+        );
 
         var salesReports = response.Documents
             .SelectMany(x => x.OrderItems)
@@ -42,9 +40,10 @@ public class OrderRepository(IElasticClient elasticClient) : IOrderRepository
         return salesReports;
     }
 
-    public async Task<Order?> AddAsync(Order order)
+    public async Task<Order?> AddAsync(Order order, CancellationToken cancellationToken)
     {
-        var response = await elasticClient.IndexDocumentAsync(order);
-        return response.Result == Result.Error ? null : order;
+        var response = await elasticClient.IndexAsync(order, cancellationToken);
+
+        return response.IsValidResponse ? order : null;
     }
 }
