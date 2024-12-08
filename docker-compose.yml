@@ -48,3 +48,18 @@ services:
     environment:
       MSSQL_SA_PASSWORD: "myStrong(!)Password"
       ACCEPT_EULA: "Y"
+      
+  elasticsearch:
+    image: elasticsearch:8.8.0
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+  
+  nats:
+    image: nats:2.10.11
+    ports:
+      - "4222:4222"
