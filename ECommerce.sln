@@ -73,6 +73,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution 
 		.gitignore = .gitignore
 		Shared.props = Shared.props
 		README.md = README.md
+		docker-compose.yml = docker-compose.yml
+		docker-compose.kafka.yml = docker-compose.kafka.yml
 	EndProjectSection
 EndProject
 Global
