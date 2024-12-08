@@ -5,24 +5,26 @@ namespace Products.Domain.Entities;
 
 public class Product : Entity
 {
-    private Product() {}
-    public Product(Guid id,string name, int quantity, double price, 
+    public static Product Create(Guid id, string name, int quantity, double price,
         string imageUrl, List<ProductCategory> categories)
     {
-        Id = id;
-        Name = name;
-        Quantity = quantity;
-        Price = price;
-        ImageUrl = imageUrl;
-        Categories = categories;
+        return new Product
+        {
+            Id = id,
+            Name = name,
+            Quantity = quantity,
+            Price = price,
+            ImageUrl = imageUrl,
+            Categories = categories
+        };
     }
-
-    public Guid Id { get; set; }
-    public string Name { get; set; }
-    public int Quantity { get; set; }
-    public double Price { get; set; }
-    public string ImageUrl { get; set; }
-    public List<ProductCategory> Categories { get; set; }
+    
+    public required Guid Id { get; init; }
+    public required string Name { get; init; }
+    public required int Quantity { get; set; }
+    public required double Price { get; init; }
+    public required string ImageUrl { get; init; }
+    public required List<ProductCategory> Categories { get; init; }
 
     public void UpdateQuantity(int quantity)
     {
