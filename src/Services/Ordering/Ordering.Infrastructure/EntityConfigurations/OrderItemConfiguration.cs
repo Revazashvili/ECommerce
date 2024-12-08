@@ -20,7 +20,6 @@ public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
         
         builder.Property(item => item.ProductName)
             .IsRequired()
-            .IsRequired()
             .HasMaxLength(250);
         
         builder.Property(item => item.Price)
