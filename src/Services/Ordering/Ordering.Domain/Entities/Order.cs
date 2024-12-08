@@ -6,28 +6,24 @@ namespace Ordering.Domain.Entities;
 
 public class Order : Entity
 {
-    private Order() { }
-    private Order(Guid orderNumber, Guid userId, Address address, OrderStatus orderStatus, DateTime orderingDate)
-    {
-        OrderNumber = orderNumber;
-        UserId = userId;
-        Address = address;
-        OrderStatus = orderStatus;
-        OrderingDate = orderingDate;
-        OrderItems = new List<OrderItem>();
-    }
-    
-    public Guid OrderNumber { get; private set; }
-    public Guid UserId { get; set; }
-    public List<OrderItem> OrderItems { get; private set; }
-    public Address Address { get; private set; }
-    public OrderStatus OrderStatus { get; private set; }
-    public DateTime OrderingDate { get; private set; }
+    public required Guid OrderNumber { get; init; }
+    public required Guid UserId { get; init; }
+    public required List<OrderItem> OrderItems { get; init; }
+    public required Address Address { get; init; }
+    public required OrderStatus OrderStatus { get; set; }
+    public required DateTime OrderingDate { get; init; }
     
     public static Order Create(Guid userId,Address address)
     {
-        var orderNumber = Guid.NewGuid();
-        return new Order(orderNumber, userId,address, OrderStatus.Created, DateTime.Now);
+        return new Order
+        {
+            OrderNumber = Guid.NewGuid(),
+            UserId = userId,
+            Address = address,
+            OrderStatus = OrderStatus.Created,
+            OrderingDate = DateTime.Now,
+            OrderItems = []
+        };
     }
 
     public void AddOrderItem(Guid productId,string productName,decimal price,int quantity,string pictureUrl)
