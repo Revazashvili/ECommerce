@@ -33,7 +33,7 @@ public class GetUserOrderHistoryQueryHandler(ILogger<GetUserOrderHistoryQueryHan
         }
         catch (Exception exception)
         {
-            logger.LogError(exception,"Error occured in {Handler}",nameof(GetOrdersQueryHandler));
+            logger.LogError(exception,"Error occured in {Handler}",nameof(GetUserOrderHistoryQueryHandler));
             return new ValidationResult("Can't retrieve user orders");
         }
     }
