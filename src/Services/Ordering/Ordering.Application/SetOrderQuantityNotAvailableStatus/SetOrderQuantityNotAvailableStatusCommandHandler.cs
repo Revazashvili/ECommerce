@@ -5,13 +5,11 @@ using Microsoft.Extensions.Logging;
 using Ordering.Domain.Exceptions;
 using Ordering.Domain.Models;
 
-namespace Ordering.Application.Orders;
-
-public record SetOrderQuantityNotAvailableStatusCommand(Guid OrderNumber) : IValidatedCommand<None>;
+namespace Ordering.Application.SetOrderQuantityNotAvailableStatus;
 
 public class SetOrderQuantityNotAvailableStatusCommandHandler(
-        ILogger<SetOrderQuantityNotAvailableStatusCommandHandler> logger,
-        IOrderRepository orderRepository)
+    ILogger<SetOrderQuantityNotAvailableStatusCommandHandler> logger,
+    IOrderRepository orderRepository)
     : IValidatedCommandHandler<SetOrderQuantityNotAvailableStatusCommand,None>
 {
     public async Task<Either<None, ValidationResult>> Handle(SetOrderQuantityNotAvailableStatusCommand request, CancellationToken cancellationToken)

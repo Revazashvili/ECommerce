@@ -5,7 +5,6 @@ using Ordering.Application.CancelOrder;
 using Ordering.Application.GetOrderById;
 using Ordering.Application.GetOrders;
 using Ordering.Application.GetUserOrdersHistory;
-using Ordering.Application.Orders;
 using Ordering.Application.PlaceOrder;
 using Ordering.Domain.Entities;
 using Services.Common;

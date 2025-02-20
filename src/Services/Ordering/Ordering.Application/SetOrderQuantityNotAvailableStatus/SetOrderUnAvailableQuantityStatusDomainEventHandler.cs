@@ -5,7 +5,7 @@ using Ordering.Domain.Events;
 using Ordering.Domain.Exceptions;
 using Ordering.Domain.Models;
 
-namespace Ordering.Application.Orders;
+namespace Ordering.Application.SetOrderQuantityNotAvailableStatus;
 
 public class SetOrderUnAvailableQuantityStatusDomainEventHandler(
         ILogger<SetOrderUnAvailableQuantityStatusDomainEventHandler> logger,

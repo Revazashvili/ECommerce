@@ -2,7 +2,7 @@ using EventBus;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using Ordering.Application.IntegrationEvents.Events;
-using Ordering.Application.Orders;
+using Ordering.Application.SetOrderQuantityNotAvailableStatus;
 
 namespace Ordering.Application.IntegrationEvents.EventHandlers;
 
