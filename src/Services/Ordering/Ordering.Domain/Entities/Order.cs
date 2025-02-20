@@ -22,7 +22,7 @@ public class Order : Entity
         OrderingDate = DateTime.Now;
         OrderItems = [];
 
-        AddDomainEvent(new OrderPlaceDomainEvent(OrderNumber, userId));
+        AddDomainEvent(new OrderPlacedDomainEvent(OrderNumber, userId));
     }
     
     public static Order Create(Guid userId,Address address)
