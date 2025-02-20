@@ -77,6 +77,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution 
 		docker-compose.kafka.yml = docker-compose.kafka.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Project Items", "Project Items", "{9D39E514-9171-4151-BF7F-5615AC5A4E48}"
+	ProjectSection(SolutionItems) = preProject
+		src\Services\Ordering\Project Items\db_creation.sql = src\Services\Ordering\Project Items\db_creation.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +122,7 @@ Global
 		{507B1D4A-7FFB-4A40-AE30-040F069AE6D0} = {F7D00D38-EA76-477A-B70D-9889A0A7AFB5}
 		{284093AA-6DE1-4A61-A357-A4C8C99701C6} = {507B1D4A-7FFB-4A40-AE30-040F069AE6D0}
 		{C3CC9B83-532C-4741-81C2-6F23BCA8F51E} = {507B1D4A-7FFB-4A40-AE30-040F069AE6D0}
+		{9D39E514-9171-4151-BF7F-5615AC5A4E48} = {B30BFBA5-FA9F-4FBC-A97F-9E0D145475A6}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{2781C8EE-4EE1-481E-B7E4-2C363DE2F7C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
