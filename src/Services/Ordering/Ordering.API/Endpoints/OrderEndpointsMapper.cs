@@ -2,6 +2,7 @@ using Contracts;
 using Contracts.Mediatr.Validation;
 using MediatR;
 using Ordering.Application.Orders;
+using Ordering.Application.PlaceOrder;
 using Ordering.Domain.Entities;
 using Services.Common;
 
