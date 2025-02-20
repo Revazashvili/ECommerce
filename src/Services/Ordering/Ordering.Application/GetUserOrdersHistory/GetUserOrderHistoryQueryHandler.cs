@@ -6,13 +6,11 @@ using Ordering.Application.Services;
 using Ordering.Domain.Entities;
 using Ordering.Domain.Models;
 
-namespace Ordering.Application.Orders;
-
-public record GetUserOrderHistoryQuery : IValidatedQuery<IEnumerable<Order>>;
+namespace Ordering.Application.GetUserOrdersHistory;
 
 public class GetUserOrderHistoryQueryHandler(ILogger<GetUserOrderHistoryQueryHandler> logger,
-        IOrderRepository orderRepository,
-        IIdentityService identityService)
+    IOrderRepository orderRepository,
+    IIdentityService identityService)
     : IValidatedQueryHandler<GetUserOrderHistoryQuery, IEnumerable<Order>>
 {
     public async Task<Either<IEnumerable<Order>, ValidationResult>> Handle(GetUserOrderHistoryQuery request, CancellationToken cancellationToken)
