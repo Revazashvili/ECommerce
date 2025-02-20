@@ -1,5 +1,4 @@
 using FluentValidation;
-using Ordering.Application.Models;
 
 namespace Ordering.Application.Features.PlaceOrder;
 
@@ -17,7 +16,7 @@ public class PlaceOrderCommandValidator : AbstractValidator<PlaceOrderCommand>
     }
 }
 
-public class AddressDtoValidator : AbstractValidator<AddressDto>
+public class AddressDtoValidator : AbstractValidator<PlaceOrderCommandAddressDto>
 {
     public AddressDtoValidator()
     {
@@ -47,7 +46,7 @@ public class AddressDtoValidator : AbstractValidator<AddressDto>
     }
 }
 
-public class BasketItemValidator : AbstractValidator<BasketItem>
+public class BasketItemValidator : AbstractValidator<PlaceOrderCommandBasketItem>
 {
     public BasketItemValidator()
     {
