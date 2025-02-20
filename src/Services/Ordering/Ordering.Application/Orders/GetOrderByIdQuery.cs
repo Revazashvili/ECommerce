@@ -10,7 +10,7 @@ namespace Ordering.Application.Orders;
 
 public record GetOrderByOrderNumberQuery(Guid OrderNumber) : IValidatedQuery<Order>;
 
-public class GetOrderByOrderNumberQueryHandler(ILogger<CancelOrderCommandHandler> logger,
+public class GetOrderByOrderNumberQueryHandler(ILogger<GetOrderByOrderNumberQueryHandler> logger,
         IOrderRepository orderRepository)
     : IValidatedQueryHandler<GetOrderByOrderNumberQuery, Order>
 {

@@ -11,7 +11,7 @@ namespace Ordering.Application.Orders;
 
 public record GetOrdersQuery(DateTime From,DateTime To,Pagination Pagination) : IValidatedQuery<IEnumerable<Order>>;
 
-public class GetOrdersQueryHandler(ILogger<CancelOrderCommandHandler> logger, IOrderRepository orderRepository)
+public class GetOrdersQueryHandler(ILogger<GetOrdersQueryHandler> logger, IOrderRepository orderRepository)
     : IValidatedQueryHandler<GetOrdersQuery, IEnumerable<Order>>
 {
     public async Task<Either<IEnumerable<Order>, ValidationResult>> Handle(GetOrdersQuery request, CancellationToken cancellationToken)

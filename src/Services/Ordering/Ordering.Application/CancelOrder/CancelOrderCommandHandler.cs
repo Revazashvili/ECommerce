@@ -5,9 +5,7 @@ using Microsoft.Extensions.Logging;
 using Ordering.Domain.Entities;
 using Ordering.Domain.Models;
 
-namespace Ordering.Application.Orders;
-
-public record CancelOrderCommand(Guid OrderNumber) : IValidatedCommand<None>;
+namespace Ordering.Application.CancelOrder;
 
 public class CancelOrderCommandHandler(ILogger<CancelOrderCommandHandler> logger, IOrderRepository orderRepository)
     : IValidatedCommandHandler<CancelOrderCommand,None>

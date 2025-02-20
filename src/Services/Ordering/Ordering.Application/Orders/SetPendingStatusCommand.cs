@@ -8,7 +8,7 @@ namespace Ordering.Application.Orders;
 
 public record SetPendingStatusCommand(Guid OrderNumber) : IValidatedCommand<None>;
 
-public class SetPendingStatusCommandHandler(ILogger<CancelOrderCommandHandler> logger, IOrderRepository orderRepository)
+public class SetPendingStatusCommandHandler(ILogger<SetPendingStatusCommandHandler> logger, IOrderRepository orderRepository)
     : IValidatedCommandHandler<SetPendingStatusCommand,None>
 {
     public async Task<Either<None, ValidationResult>> Handle(SetPendingStatusCommand request, CancellationToken cancellationToken)

@@ -10,7 +10,7 @@ namespace Ordering.Application.Orders;
 
 public record GetUserOrderHistoryQuery : IValidatedQuery<IEnumerable<Order>>;
 
-public class GetUserOrderHistoryQueryHandler(ILogger<CancelOrderCommandHandler> logger,
+public class GetUserOrderHistoryQueryHandler(ILogger<GetUserOrderHistoryQueryHandler> logger,
         IOrderRepository orderRepository,
         IIdentityService identityService)
     : IValidatedQueryHandler<GetUserOrderHistoryQuery, IEnumerable<Order>>
