@@ -4,9 +4,7 @@ using Contracts.Mediatr.Wrappers;
 using Microsoft.Extensions.Logging;
 using Ordering.Domain.Models;
 
-namespace Ordering.Application.Orders;
-
-public record SetPendingStatusCommand(Guid OrderNumber) : IValidatedCommand<None>;
+namespace Ordering.Application.SetPendingStatus;
 
 public class SetPendingStatusCommandHandler(ILogger<SetPendingStatusCommandHandler> logger, IOrderRepository orderRepository)
     : IValidatedCommandHandler<SetPendingStatusCommand,None>
