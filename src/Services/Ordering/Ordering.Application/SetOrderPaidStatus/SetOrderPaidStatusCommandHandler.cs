@@ -5,12 +5,10 @@ using Microsoft.Extensions.Logging;
 using Ordering.Domain.Exceptions;
 using Ordering.Domain.Models;
 
-namespace Ordering.Application.Orders;
-
-public record SetOrderPaidStatusCommand(Guid OrderNumber) : IValidatedCommand<None>;
+namespace Ordering.Application.SetOrderPaidStatus;
 
 public class SetOrderPaidStatusCommandHandler(ILogger<SetOrderPaidStatusCommandHandler> logger,
-        IOrderRepository orderRepository)
+    IOrderRepository orderRepository)
     : IValidatedCommandHandler<SetOrderPaidStatusCommand,None>
 {
     public async Task<Either<None, ValidationResult>> Handle(SetOrderPaidStatusCommand request, CancellationToken cancellationToken)
@@ -30,7 +28,7 @@ public class SetOrderPaidStatusCommandHandler(ILogger<SetOrderPaidStatusCommandH
         catch (Exception exception)
         {
             logger.LogError(exception, "Error occured in {Handler}",
-                nameof(SetOrderQuantityNotAvailableStatusCommandHandler));
+                nameof(SetOrderPaidStatusCommandHandler));
             return new ValidationResult("can't change order status");
         }
     }

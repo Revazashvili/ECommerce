@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using Ordering.Application.IntegrationEvents.Events;
 using Ordering.Domain.Events;
 
-namespace Ordering.Application.Orders;
+namespace Ordering.Application.SetOrderPaidStatus;
 
 public class SetOrderStatusPaidDomainEventHandler(ILogger<SetOrderStatusPaidDomainEventHandler> logger,
         IEventBus eventBus)
