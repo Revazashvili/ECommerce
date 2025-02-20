@@ -1,5 +1,3 @@
-using Newtonsoft.Json;
-
 namespace EventBridge;
 
 /// <summary>
@@ -20,7 +18,6 @@ public class IntegrationEvent<T> where T : notnull
     /// <summary>
     /// Identifier for event.
     /// </summary>
-    [JsonProperty("id")]
     public Guid Id { get; init; }
     
     /// <summary>
@@ -36,6 +33,5 @@ public class IntegrationEvent<T> where T : notnull
     /// <summary>
     /// Event creation date.
     /// </summary>
-    [JsonProperty("creation_date")]
     public DateTime Timestamp { get; init; }
 }
