@@ -1,6 +1,7 @@
 using Contracts;
 using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
+using EventBridge;
 using EventBus;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
@@ -15,8 +16,8 @@ namespace Ordering.Application.Orders;
 public record PlaceOrderCommand(AddressDto Address,List<BasketItem> BasketItems) 
     : IValidatedCommand<Order>;
     
-public class PlaceOrderCommandHandler(ILogger<CancelOrderCommandHandler> logger, IOrderRepository orderRepository,
-        IEventBus eventBus, IIdentityService identityService)
+public class PlaceOrderCommandHandler(ILogger<CancelOrderCommandHandler> logger, IOrderRepository orderRepository, 
+    IIdentityService identityService, IIntegrationEventDispatcher dispatcher)
     : IValidatedCommandHandler<PlaceOrderCommand,Order>
 {
     public async Task<Either<Order, ValidationResult>> Handle(PlaceOrderCommand request, CancellationToken cancellationToken)
@@ -28,14 +29,17 @@ public class PlaceOrderCommandHandler(ILogger<CancelOrderCommandHandler> logger,
             foreach (var basketItem in request.BasketItems)
             {
                 order.AddOrderItem(basketItem.ProductId,
-                    basketItem.ProductName, basketItem.Price,
-                    basketItem.Quantity, basketItem.PictureUrl);
+                    basketItem.ProductName,
+                    basketItem.Price,
+                    basketItem.Quantity,
+                    basketItem.PictureUrl);
             }
 
             await orderRepository.AddAsync(order);
+            
+            await dispatcher.DispatchAsync(new OrderPlaceStartedIntegrationEvent(userId), cancellationToken);
+            
             await orderRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
-
-            await eventBus.PublishAsync(new OrderPlaceStartedIntegrationEvent(userId));
             
             return order;
         }

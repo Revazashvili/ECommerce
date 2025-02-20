@@ -1,4 +1,5 @@
 using System.Reflection;
+using EventBridge.Outbox;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Ordering.Domain.Entities;
@@ -18,6 +19,7 @@ public class OrderingContext : DbContext, IUnitOfWork
     
     public DbSet<Order> Orders { get; set; }
     public DbSet<OrderItem> OrderItems { get; set; }
+    public DbSet<OutboxMessage> OutboxMessages { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

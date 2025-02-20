@@ -1,8 +1,6 @@
-using EventBus;
+using EventBridge;
 
 namespace Ordering.Application.IntegrationEvents.Events;
 
-public class OrderPlaceStartedIntegrationEvent(Guid userId) : IntegrationEvent
-{
-    public Guid UserId { get; } = userId;
-}
+public class OrderPlaceStartedIntegrationEvent(Guid userId) : 
+    IntegrationEvent<Guid>(userId, "OrderPlaced");
