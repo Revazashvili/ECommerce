@@ -30,8 +30,7 @@ public class Order : Entity
     {
         var alreadyAddedOrderItem = OrderItems.FirstOrDefault(item => item.ProductId == productId);
 
-        if (alreadyAddedOrderItem is not null)
-            alreadyAddedOrderItem.IncreaseQuantity(quantity);
+        alreadyAddedOrderItem?.IncreaseQuantity(quantity);
 
         var newOrderItem = OrderItem.Create(productId, productName, price, quantity, pictureUrl);
         OrderItems.Add(newOrderItem);
