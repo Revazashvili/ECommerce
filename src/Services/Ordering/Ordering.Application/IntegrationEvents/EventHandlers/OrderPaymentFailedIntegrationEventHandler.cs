@@ -1,7 +1,7 @@
 using EventBus;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using Ordering.Application.CancelOrder;
+using Ordering.Application.Features.CancelOrder;
 using Ordering.Application.IntegrationEvents.Events;
 
 namespace Ordering.Application.IntegrationEvents.EventHandlers;

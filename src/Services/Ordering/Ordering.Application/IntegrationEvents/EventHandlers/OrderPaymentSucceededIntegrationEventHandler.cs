@@ -1,8 +1,8 @@
 using EventBus;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Ordering.Application.Features.SetOrderPaidStatus;
 using Ordering.Application.IntegrationEvents.Events;
-using Ordering.Application.SetOrderPaidStatus;
 
 namespace Ordering.Application.IntegrationEvents.EventHandlers;
 
