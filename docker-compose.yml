@@ -8,7 +8,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ~/apps/postgres:/var/lib/postgresql/data
+      - ~/docker/postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=mysecretpassword
       - POSTGRES_USER=postgres
@@ -19,7 +19,7 @@ services:
     ports:
       - 6379:6379
     volumes:
-      - ~/apps/redis:/data
+      - ~/docker/redis:/data
   
   ordering-db:
     image: mcr.microsoft.com/mssql/server:2022-latest
@@ -28,9 +28,9 @@ services:
     ports:
       - "1433:1433"
     volumes:
-      - ~/apps/mssql/ordering/data:/var/opt/mssql/data
-      - ~/apps/mssql/ordering/log:/var/opt/mssql/log
-      - ~/apps/mssql/ordering/secrets:/var/opt/mssql/secrets
+      - ~/docker/mssql/ordering/data:/var/opt/mssql/data
+      - ~/docker/mssql/ordering/log:/var/opt/mssql/log
+      - ~/docker/mssql/ordering/secrets:/var/opt/mssql/secrets
     environment:
       MSSQL_SA_PASSWORD: "myStrong(!)Password"
       ACCEPT_EULA: "Y"
@@ -42,9 +42,9 @@ services:
     ports:
       - "1432:1433"
     volumes:
-      - ~/apps/mssql/identity/data:/var/opt/mssql/data
-      - ~/apps/mssql/identity/log:/var/opt/mssql/log
-      - ~/apps/mssql/identity/secrets:/var/opt/mssql/secrets
+      - ~/docker/mssql/identity/data:/var/opt/mssql/data
+      - ~/docker/mssql/identity/log:/var/opt/mssql/log
+      - ~/docker/mssql/identity/secrets:/var/opt/mssql/secrets
     environment:
       MSSQL_SA_PASSWORD: "myStrong(!)Password"
       ACCEPT_EULA: "Y"
