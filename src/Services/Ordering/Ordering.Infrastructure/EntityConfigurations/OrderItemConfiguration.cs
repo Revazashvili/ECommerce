@@ -8,6 +8,8 @@ public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
 {
     public void Configure(EntityTypeBuilder<OrderItem> builder)
     {
+        builder.ToTable("order_items", Schema.Order);
+        
         builder.HasKey(o => o.Id);
 
         builder.Ignore(b => b.DomainEvents);
