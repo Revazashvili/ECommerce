@@ -2,15 +2,14 @@ using Contracts;
 using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
 using Microsoft.Extensions.Logging;
+using Products.Application.ProductCategories;
 using Products.Domain.Entities;
 using Products.Domain.Models;
 
-namespace Products.Application.ProductCategories;
-
-public record GetProductCategoriesQuery : IValidatedQuery<IEnumerable<ProductCategory>>;
+namespace Products.Application.Features.GetProductCategories;
 
 public class GetProductCategoriesQueryHandler(ILogger<UpdateProductCategoryCommandHandler> logger,
-        IProductCategoryRepository productCategoryRepository)
+    IProductCategoryRepository productCategoryRepository)
     : IValidatedQueryHandler<GetProductCategoriesQuery,IEnumerable<ProductCategory>>
 {
     private readonly ILogger<UpdateProductCategoryCommandHandler> _logger = logger;
