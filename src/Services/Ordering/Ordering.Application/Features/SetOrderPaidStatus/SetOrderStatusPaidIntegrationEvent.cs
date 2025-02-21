@@ -3,9 +3,9 @@ using Ordering.Domain.Entities;
 
 namespace Ordering.Application.Features.SetOrderPaidStatus;
 
-public class SetOrderStatusPaidIntegrationEvent : IntegrationEvent<Guid>
+public class SetOrderStatusPaidIntegrationEvent : IntegrationEvent
 {
-    public SetOrderStatusPaidIntegrationEvent(Order order) : base(order.OrderNumber, "OrderStatusSetPaid")
+    public SetOrderStatusPaidIntegrationEvent(Order order) : base(order.OrderNumber.ToString())
     {
         OrderStatus = order.OrderStatus;
         UserId = order.UserId;

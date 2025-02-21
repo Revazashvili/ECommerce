@@ -4,13 +4,13 @@ namespace EventBridge.Outbox;
 
 public class OutboxIntegrationEventDispatcher(IOutboxMessageRepository outboxMessageRepository) : IIntegrationEventDispatcher
 {
-    public Task DispatchAsync<TKey>(IntegrationEvent<TKey> @event, CancellationToken cancellationToken)
+    public Task DispatchAsync(string topic, IntegrationEvent @event, CancellationToken cancellationToken)
     {
         var outboxMessage = new OutboxMessage
         {
             Id = @event.Id,
-            AggregateId = @event.AggregateId.ToString(),
-            Topic = @event.Topic,
+            AggregateId = @event.AggregateId,
+            Topic = topic,
             Payload = JsonConvert.SerializeObject(@event),
             Timestamp = @event.Timestamp
         };

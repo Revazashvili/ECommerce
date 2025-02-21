@@ -9,5 +9,5 @@ public class SetOrderStatusPaidDomainEventHandler(IIntegrationEventDispatcher di
     : INotificationHandler<SetOrderStatusPaidDomainEvent>
 {
     public Task Handle(SetOrderStatusPaidDomainEvent notification, CancellationToken cancellationToken) =>
-        dispatcher.DispatchAsync(new SetOrderStatusPaidIntegrationEvent(notification.Order), cancellationToken);
+        dispatcher.DispatchAsync("OrderStatusSetPaid", new SetOrderStatusPaidIntegrationEvent(notification.Order), cancellationToken);
 }

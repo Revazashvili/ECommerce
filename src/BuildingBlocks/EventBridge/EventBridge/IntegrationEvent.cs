@@ -5,30 +5,25 @@ namespace EventBridge;
 /// </summary>
 /// <param name="id">unique id of event</param>
 /// <param name="creationDate">creation date of event</param>
-public class IntegrationEvent<T> where T : notnull
+public class IntegrationEvent
 {
-    protected IntegrationEvent(T aggregateId, string topic)
+    public IntegrationEvent() { }
+
+    public IntegrationEvent(string aggregateId)
     {
-        Id = Guid.NewGuid();
         AggregateId = aggregateId;
-        Topic = topic;
         Timestamp = DateTime.UtcNow;
     }
-
+    
     /// <summary>
     /// Identifier for event.
     /// </summary>
-    public Guid Id { get; init; }
+    public long Id { get; init; }
     
     /// <summary>
     /// Aggregate Identifier of event
     /// </summary>
-    public T AggregateId { get; init; }
-    
-    /// <summary>
-    /// topic of event
-    /// </summary>
-    public string Topic { get; init; }
+    public string AggregateId { get; init; }
 
     /// <summary>
     /// Event creation date.

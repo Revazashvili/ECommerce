@@ -2,5 +2,5 @@ namespace EventBridge;
 
 public interface IIntegrationEventDispatcher : IEventDispatcher
 {
-    Task DispatchAsync<TKey>(IntegrationEvent<TKey> @event, CancellationToken cancellationToken);
+    Task DispatchAsync(string topic, IntegrationEvent @event, CancellationToken cancellationToken);
 }

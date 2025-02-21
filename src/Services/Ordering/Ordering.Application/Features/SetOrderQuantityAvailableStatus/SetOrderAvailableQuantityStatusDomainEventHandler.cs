@@ -19,6 +19,6 @@ public class SetOrderAvailableQuantityStatusDomainEventHandler(
             throw new OrderingException($"Can't find order with OrderNumber: {notification.OrderNumber}");
 
         var @event = new OrderStatusChangedToAvailableQuantityIntegrationEvent(order.UserId, order.OrderNumber, order.OrderItems);
-        await dispatcher.DispatchAsync(@event, cancellationToken);
+        await dispatcher.DispatchAsync("OrderStatusChangedToAvailableQuantity", @event, cancellationToken);
     }
 }

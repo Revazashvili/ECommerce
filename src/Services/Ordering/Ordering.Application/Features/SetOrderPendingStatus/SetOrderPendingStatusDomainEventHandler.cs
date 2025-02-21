@@ -18,6 +18,6 @@ public class SetOrderPendingStatusDomainEventHandler(
             throw new OrderingException($"Can't find order with OrderNumber: {notification.OrderNumber}");
             
         var @event = new SetOrderPendingStatusIntegrationEvent(order.OrderNumber,order.OrderItems);
-        await dispatcher.DispatchAsync(@event, cancellationToken);
+        await dispatcher.DispatchAsync("OrderSetOrderPendingStatus", @event, cancellationToken);
     }
 }

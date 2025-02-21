@@ -2,5 +2,4 @@ using EventBridge;
 
 namespace Ordering.Application.Features.PlaceOrder;
 
-public class OrderPlacedIntegrationEvent(Guid userId) : 
-    IntegrationEvent<Guid>(userId, "OrderPlaced");
+public class OrderPlacedIntegrationEvent(Guid userId) : IntegrationEvent(userId.ToString());

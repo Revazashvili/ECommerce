@@ -2,7 +2,7 @@ namespace EventBridge.Outbox;
 
 public class OutboxMessage
 {
-    public Guid Id { get; set; }
+    public long Id { get; set; }
     public string AggregateId { get; set; }
     public string Topic { get; set; }
     public string Payload { get; set; }

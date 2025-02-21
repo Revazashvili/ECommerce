@@ -9,5 +9,5 @@ public class OrderPlacedDomainEventHandler(IIntegrationEventDispatcher dispatche
     : INotificationHandler<OrderPlacedDomainEvent>
 {
     public Task Handle(OrderPlacedDomainEvent notification, CancellationToken cancellationToken) => 
-        dispatcher.DispatchAsync(new OrderPlacedIntegrationEvent(notification.UserId), cancellationToken);
+        dispatcher.DispatchAsync("OrderPlaced", new OrderPlacedIntegrationEvent(notification.UserId), cancellationToken);
 }
