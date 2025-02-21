@@ -3,7 +3,6 @@ using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
 using Microsoft.Extensions.Logging;
 using Products.Application.Features.AddProduct;
-using Products.Application.Products;
 using Products.Domain.Entities;
 using Products.Domain.Models;
 

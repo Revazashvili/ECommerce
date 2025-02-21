@@ -3,7 +3,7 @@ using MediatR;
 using Products.Application.Features.AddProduct;
 using Products.Application.Features.GetProducts;
 using Products.Application.Features.SearchProducts;
-using Products.Application.Products;
+using Products.Application.Features.UpdateProductStock;
 using Products.Domain.Entities;
 using Services.Common;
 

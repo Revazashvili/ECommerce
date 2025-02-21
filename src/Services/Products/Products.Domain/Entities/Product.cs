@@ -35,7 +35,7 @@ public class Product : Entity
         Quantity = quantity;
 
         if (quantity == zero)
-            AddDomainEvent(new ProductStockUnAvailableDomainEvent(this));
+            AddDomainEvent(new ProductStockUnavailableDomainEvent(this));
 
     }
 }
