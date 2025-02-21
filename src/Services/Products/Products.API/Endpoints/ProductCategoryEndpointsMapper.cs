@@ -2,6 +2,8 @@ using Contracts;
 using Contracts.Mediatr.Validation;
 using MediatR;
 using Products.Application.Features.AddProductCategory;
+using Products.Application.Features.DeleteProductCategory;
+using Products.Application.Features.GetProductCategories;
 using Products.Application.ProductCategories;
 using Products.Domain.Entities;
 using Services.Common;

@@ -6,7 +6,7 @@ using Products.Application.Features.AddProductCategory;
 using Products.Domain.Entities;
 using Products.Domain.Models;
 
-namespace Products.Application.ProductCategories;
+namespace Products.Application.Features.DeleteProductCategory;
 
 public class DeleteProductCategoryCommandHandler(ILogger<CreateProductCategoryCommandHandler> logger,
     IProductCategoryRepository productCategoryRepository)
