@@ -1,26 +1,13 @@
 using Contracts.Mediatr.Wrappers;
-using EventBus;
-using Microsoft.Extensions.Logging;
+using EventBridge;
 using Ordering.Application.IntegrationEvents.Events;
 using Ordering.Domain.Events;
 
 namespace Ordering.Application.Features.SetOrderPaidStatus;
 
-public class SetOrderStatusPaidDomainEventHandler(ILogger<SetOrderStatusPaidDomainEventHandler> logger,
-        IEventBus eventBus)
+public class SetOrderStatusPaidDomainEventHandler(IIntegrationEventDispatcher dispatcher)
     : INotificationHandler<SetOrderStatusPaidDomainEvent>
 {
-    public async Task Handle(SetOrderStatusPaidDomainEvent notification, CancellationToken cancellationToken)
-    {
-        try
-        {
-            var setOrderStatusPaidIntegrationEvent = new SetOrderStatusPaidIntegrationEvent(notification.Order);
-
-            await eventBus.PublishAsync(setOrderStatusPaidIntegrationEvent);
-        }
-        catch (Exception exception)
-        {
-            logger.LogError(exception,"Error while publishing event {Event}",nameof(SetOrderStatusPaidIntegrationEvent));
-        }
-    }
+    public Task Handle(SetOrderStatusPaidDomainEvent notification, CancellationToken cancellationToken) =>
+        dispatcher.DispatchAsync(new SetOrderStatusPaidIntegrationEvent(notification.Order), cancellationToken);
 }

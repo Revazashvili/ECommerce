@@ -25,7 +25,7 @@ public class SetOrderUnAvailableQuantityStatusDomainEventHandler(
         }
         catch (Exception exception)
         {
-            logger.LogError(exception,"Error while publishing event {Event}",nameof(SetOrderPendingStatusIntegrationEvent));
+            logger.LogError(exception,"Error while publishing event {Event}",nameof(OrderSetOrderPendingStatusIntegrationEvent));
         }
     }
 }

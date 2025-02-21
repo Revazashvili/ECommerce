@@ -1,8 +1,6 @@
-using EventBus.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ordering.Application.BackgroundServices;
-using Ordering.Application.IntegrationEvents.EventHandlers;
 using Ordering.Application.Services;
 using Services.DependencyInjection;
 
@@ -14,14 +12,14 @@ public static class ServiceCollectionExtensions
     {
         services.AddMediatrWithValidation();
 
-        services.AddKafka(configuration);
+        // services.AddKafka(configuration);
 
         services.AddHostedService<OrderProcessingBackgroundService>();
         services.AddScoped<IIdentityService, IdentityService>();
-        services.AddScoped<OrderQuantityNotAvailableIntegrationEventHandler>();
-        services.AddScoped<OrderQuantityAvailableIntegrationEventHandler>();
-        services.AddScoped<OrderPaymentSucceededIntegrationEventHandler>();
-        services.AddScoped<OrderPaymentFailedIntegrationEventHandler>();
+        // services.AddScoped<OrderQuantityNotAvailableIntegrationEventHandler>();
+        // services.AddScoped<OrderQuantityAvailableIntegrationEventHandler>();
+        // services.AddScoped<OrderPaymentSucceededIntegrationEventHandler>();
+        // services.AddScoped<OrderPaymentFailedIntegrationEventHandler>();
         
         return services;
     }

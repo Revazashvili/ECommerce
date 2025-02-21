@@ -1,8 +1,6 @@
-using EventBus;
-
 namespace Ordering.Application.IntegrationEvents.Events;
 
-public class OrderQuantityAvailableIntegrationEvent : IntegrationEvent
+public class OrderQuantityAvailableIntegrationEvent
 {
     public Guid OrderNumber { get; set; }
 }
