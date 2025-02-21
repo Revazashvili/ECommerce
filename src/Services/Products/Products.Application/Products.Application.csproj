@@ -20,10 +20,4 @@
       <PackageReference Include="AWSSDK.S3" />
     </ItemGroup>
 
-
-    <ItemGroup>
-      <Folder Include="ProductCategories\" />
-      <Folder Include="Products\" />
-    </ItemGroup>
-
 </Project>
