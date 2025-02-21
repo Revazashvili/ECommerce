@@ -22,7 +22,6 @@
 
 
     <ItemGroup>
-      <Folder Include="Features\GetProducts\" />
       <Folder Include="Features\SearchProducts\" />
       <Folder Include="Features\UpdateProductCategory\" />
       <Folder Include="Features\UpdateProductStock\" />
