@@ -1,7 +1,6 @@
 using Contracts;
 using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
-using FluentValidation;
 using Microsoft.Extensions.Logging;
 using Products.Application.Features.AddProductCategory;
 using Products.Domain.Entities;
@@ -9,10 +8,8 @@ using Products.Domain.Models;
 
 namespace Products.Application.ProductCategories;
 
-public record DeleteProductCategoryCommand(int Id) : IValidatedCommand<None>;
-
 public class DeleteProductCategoryCommandHandler(ILogger<CreateProductCategoryCommandHandler> logger,
-        IProductCategoryRepository productCategoryRepository)
+    IProductCategoryRepository productCategoryRepository)
     : IValidatedCommandHandler<DeleteProductCategoryCommand,None>
 {
     public async Task<Either<None, ValidationResult>> Handle(DeleteProductCategoryCommand request, CancellationToken cancellationToken)
@@ -32,17 +29,5 @@ public class DeleteProductCategoryCommandHandler(ILogger<CreateProductCategoryCo
                 nameof(CreateProductCategoryCommandHandler), request.Id);
             return new ValidationResult("Can't delete product category");
         }
-    }
-}
-
-public class DeleteProductCategoryCommandValidator : AbstractValidator<DeleteProductCategoryCommand>
-{
-    public DeleteProductCategoryCommandValidator()
-    {
-        RuleFor(command => command.Id)
-            .NotNull()
-            .WithMessage("Id must not be null.")
-            .GreaterThanOrEqualTo(1)
-            .WithMessage("Id must equal or more than 1.");
     }
 }

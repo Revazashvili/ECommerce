@@ -22,7 +22,6 @@
 
 
     <ItemGroup>
-      <Folder Include="Features\DeleteProductCategory\" />
       <Folder Include="Features\GetProductCategories\" />
       <Folder Include="Features\GetProducts\" />
       <Folder Include="Features\SearchProducts\" />
