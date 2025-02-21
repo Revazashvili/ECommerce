@@ -20,4 +20,14 @@
       <PackageReference Include="AWSSDK.S3" />
     </ItemGroup>
 
+
+    <ItemGroup>
+      <Folder Include="Features\DeleteProductCategory\" />
+      <Folder Include="Features\GetProductCategories\" />
+      <Folder Include="Features\GetProducts\" />
+      <Folder Include="Features\SearchProducts\" />
+      <Folder Include="Features\UpdateProductCategory\" />
+      <Folder Include="Features\UpdateProductStock\" />
+    </ItemGroup>
+
 </Project>

@@ -1,5 +1,6 @@
 using Contracts.Mediatr.Validation;
 using MediatR;
+using Products.Application.Features.AddProduct;
 using Products.Application.Products;
 using Products.Domain.Entities;
 using Services.Common;

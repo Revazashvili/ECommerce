@@ -1,17 +1,14 @@
 using Contracts;
 using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
-using FluentValidation;
 using Microsoft.Extensions.Logging;
 using Products.Domain.Entities;
 using Products.Domain.Models;
 
-namespace Products.Application.ProductCategories;
-
-public record CreateProductCategoryCommand(string Name) : IValidatedCommand<ProductCategory>;
+namespace Products.Application.Features.AddProductCategory;
 
 public class CreateProductCategoryCommandHandler(ILogger<CreateProductCategoryCommandHandler> logger,
-        IProductCategoryRepository productCategoryRepository)
+    IProductCategoryRepository productCategoryRepository)
     : IValidatedCommandHandler<CreateProductCategoryCommand,ProductCategory>
 {
     public async Task<Either<ProductCategory, ValidationResult>> Handle(CreateProductCategoryCommand request, CancellationToken cancellationToken)
@@ -30,17 +27,5 @@ public class CreateProductCategoryCommandHandler(ILogger<CreateProductCategoryCo
             logger.LogError(exception,"Error occured in {Handler}",nameof(CreateProductCategoryCommandHandler));
             return new ValidationResult("Can't create product category");
         }
-    }
-}
-
-public class CreateProductCategoryCommandValidator : AbstractValidator<CreateProductCategoryCommand>
-{
-    public CreateProductCategoryCommandValidator()
-    {
-        RuleFor(command => command.Name)
-            .NotNull()
-            .WithMessage("Name must not be null.")
-            .NotEmpty()
-            .WithMessage("Name must not be empty.");
     }
 }
