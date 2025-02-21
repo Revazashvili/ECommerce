@@ -1,5 +1,4 @@
 using FluentValidation;
-using Products.Application.ProductCategories;
 
 namespace Products.Application.Features.DeleteProductCategory;
 

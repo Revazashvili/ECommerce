@@ -22,8 +22,8 @@
 
 
     <ItemGroup>
-      <Folder Include="Features\UpdateProductCategory\" />
       <Folder Include="Features\UpdateProductStock\" />
+      <Folder Include="ProductCategories\" />
     </ItemGroup>
 
 </Project>
