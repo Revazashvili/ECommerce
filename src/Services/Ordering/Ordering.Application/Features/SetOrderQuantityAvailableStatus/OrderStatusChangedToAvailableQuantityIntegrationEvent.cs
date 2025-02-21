@@ -1,7 +1,7 @@
 using EventBridge;
 using Ordering.Domain.Entities;
 
-namespace Ordering.Application.IntegrationEvents.Events;
+namespace Ordering.Application.Features.SetOrderQuantityAvailableStatus;
 
 public class OrderStatusChangedToAvailableQuantityIntegrationEvent(Guid userId, Guid orderNumber,
     List<OrderItem> orderItems) : IntegrationEvent<Guid>(orderNumber, "OrderStatusChangedToAvailableQuantity")

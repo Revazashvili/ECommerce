@@ -1,7 +1,7 @@
 using EventBridge;
 using Ordering.Domain.Entities;
 
-namespace Ordering.Application.IntegrationEvents.Events;
+namespace Ordering.Application.Features.SetOrderPaidStatus;
 
 public class SetOrderStatusPaidIntegrationEvent : IntegrationEvent<Guid>
 {

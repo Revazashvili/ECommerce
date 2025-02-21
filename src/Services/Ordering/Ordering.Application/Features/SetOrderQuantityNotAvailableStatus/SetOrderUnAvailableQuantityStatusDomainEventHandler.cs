@@ -1,6 +1,6 @@
 using Contracts.Mediatr.Wrappers;
 using Microsoft.Extensions.Logging;
-using Ordering.Application.IntegrationEvents.Events;
+using Ordering.Application.Features.SetOrderPendingStatus;
 using Ordering.Domain.Events;
 using Ordering.Domain.Exceptions;
 using Ordering.Domain.Models;
@@ -25,7 +25,7 @@ public class SetOrderUnAvailableQuantityStatusDomainEventHandler(
         }
         catch (Exception exception)
         {
-            logger.LogError(exception,"Error while publishing event {Event}",nameof(OrderSetOrderPendingStatusIntegrationEvent));
+            logger.LogError(exception,"Error while publishing event {Event}",nameof(SetOrderPendingStatusIntegrationEvent));
         }
     }
 }

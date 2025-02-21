@@ -1,9 +1,9 @@
 using EventBridge;
 using Ordering.Domain.Entities;
 
-namespace Ordering.Application.IntegrationEvents.Events;
+namespace Ordering.Application.Features.SetOrderPendingStatus;
 
-public class OrderSetOrderPendingStatusIntegrationEvent(Guid orderNumber, List<OrderItem> orderItems) 
+public class SetOrderPendingStatusIntegrationEvent(Guid orderNumber, List<OrderItem> orderItems) 
     : IntegrationEvent<Guid>(orderNumber, "OrderSetOrderPendingStatus")
 {
     public List<OrderItem> OrderItems { get; } = orderItems;

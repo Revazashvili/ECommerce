@@ -2,7 +2,7 @@ using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Ordering.Application.Features.SetPendingStatus;
+using Ordering.Application.Features.SetOrderPendingStatus;
 using Ordering.Domain.Models;
 
 namespace Ordering.Application.BackgroundServices;
@@ -55,7 +55,7 @@ public class OrderProcessingBackgroundService : BackgroundService
         var orderNumbers = await orderRepository.GetNewOrdersOrderNumbersAsync();
         foreach (var orderNumber in orderNumbers)
         {
-            await sender.Send(new SetPendingStatusCommand(orderNumber));
+            await sender.Send(new SetOrderPendingStatusCommand(orderNumber));
         }
     }
 }
