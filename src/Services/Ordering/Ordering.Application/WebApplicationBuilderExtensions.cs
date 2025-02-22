@@ -1,16 +1,20 @@
+using EventBridge.Kafka;
 using Microsoft.AspNetCore.Builder;
+using Ordering.Application.IntegrationEvents;
 
 namespace Ordering.Application;
 
 public static class WebApplicationBuilderExtensions
 {
-    public static WebApplication SubscribeToEvents(this WebApplication app)
+    public static WebApplication UseApplication(this WebApplication app)
     {
-        // var eventBus = app.Services.GetRequiredService<IEventBus>();
-        // eventBus.SubscribeAsync<OrderQuantityNotAvailableIntegrationEvent, OrderQuantityNotAvailableIntegrationEventHandler>();
-        // eventBus.SubscribeAsync<OrderQuantityAvailableIntegrationEvent, OrderQuantityAvailableIntegrationEventHandler>();
-        // eventBus.SubscribeAsync<OrderPaymentSucceededIntegrationEvent, OrderPaymentSucceededIntegrationEventHandler>();
-        // eventBus.SubscribeAsync<OrderPaymentFailedIntegrationEvent, OrderPaymentFailedIntegrationEventHandler>();
+        app.UseKafkaSubscriber(subscriber =>
+        {
+            subscriber.Subscribe<OrderQuantityNotAvailableIntegrationEvent, OrderQuantityNotAvailableIntegrationEventHandler>("OrderQuantityNotAvailable");
+            subscriber.Subscribe<OrderQuantityAvailableIntegrationEvent, OrderQuantityAvailableIntegrationEventHandler>("OrderQuantityAvailable");
+            subscriber.Subscribe<OrderPaymentSucceededIntegrationEvent, OrderPaymentSucceededIntegrationEventHandler>("OrderPaymentSucceeded");
+            subscriber.Subscribe<OrderPaymentFailedIntegrationEvent, OrderPaymentFailedIntegrationEventHandler>("OrderPaymentFailed");
+        });
 
         return app;
     }

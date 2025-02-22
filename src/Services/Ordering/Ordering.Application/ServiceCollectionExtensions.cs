@@ -1,3 +1,5 @@
+using Confluent.Kafka;
+using EventBridge.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ordering.Application.BackgroundServices;
@@ -12,14 +14,17 @@ public static class ServiceCollectionExtensions
     {
         services.AddMediatrWithValidation();
 
-        // services.AddKafka(configuration);
+        services.AddKafkaSubscriber(options =>
+        {
+            var kafkaOptions = configuration.GetSection("Kafka");
+            options.BootstrapServers = kafkaOptions["BootstrapServers"];
+            options.GroupId = kafkaOptions["Groupid"];
+            options.AutoOffsetReset = (AutoOffsetReset)Enum.Parse(typeof(AutoOffsetReset), kafkaOptions["AutoOffsetReset"]);
+            options.EnableAutoCommit = bool.Parse(kafkaOptions["EnableAutoCommit"]);
+        });
 
         services.AddHostedService<OrderProcessingBackgroundService>();
         services.AddScoped<IIdentityService, IdentityService>();
-        // services.AddScoped<OrderQuantityNotAvailableIntegrationEventHandler>();
-        // services.AddScoped<OrderQuantityAvailableIntegrationEventHandler>();
-        // services.AddScoped<OrderPaymentSucceededIntegrationEventHandler>();
-        // services.AddScoped<OrderPaymentFailedIntegrationEventHandler>();
         
         return services;
     }

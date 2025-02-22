@@ -18,7 +18,7 @@ public static class ServiceCollectionExtensions
     public static void UseKafkaSubscriber(this WebApplication application,
         Action<IIntegrationEventSubscriber> subscriberAction)
     {
-        var integrationEventSubscriber = application.Services.GetRequiredService<IntegrationEventSubscriber>();
+        var integrationEventSubscriber = application.Services.GetRequiredService<IIntegrationEventSubscriber>();
         
         subscriberAction(integrationEventSubscriber);
     }

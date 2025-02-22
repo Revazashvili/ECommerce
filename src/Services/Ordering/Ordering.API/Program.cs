@@ -32,8 +32,6 @@ var endpointRouteBuilder = app.MapApi();
 endpointRouteBuilder.MapOrder();
 
 app.UseFluentValidationMiddleware();
-app.SubscribeToEvents();
-
-app.MigrateIfDevelopment<OrderingContext>();
+app.UseApplication();
 
 app.Run();
