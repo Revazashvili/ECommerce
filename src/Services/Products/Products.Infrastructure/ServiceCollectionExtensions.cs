@@ -1,3 +1,4 @@
+using EventBridge.Outbox;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,12 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();
         services.AddScoped<IUnitOfWork, ProductsContext>();
+        services.AddOutboxDispatcher(provider =>
+        {
+            var orderingContext = provider.GetRequiredService<ProductsContext>();
+
+            return new OutboxMessageRepository(orderingContext);
+        });
         
         return services;
     }
