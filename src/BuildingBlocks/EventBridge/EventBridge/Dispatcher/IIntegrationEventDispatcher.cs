@@ -1,4 +1,4 @@
-namespace EventBridge;
+namespace EventBridge.Dispatcher;
 
 public interface IIntegrationEventDispatcher : IEventDispatcher
 {

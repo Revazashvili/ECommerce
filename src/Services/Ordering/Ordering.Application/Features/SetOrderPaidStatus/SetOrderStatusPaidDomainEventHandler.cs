@@ -1,5 +1,6 @@
 using Contracts.Mediatr.Wrappers;
 using EventBridge;
+using EventBridge.Dispatcher;
 using Ordering.Domain.Events;
 
 namespace Ordering.Application.Features.SetOrderPaidStatus;

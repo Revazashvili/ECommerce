@@ -1,6 +1,4 @@
-namespace EventBridge;
-
-public interface IEventSubscriber;
+namespace EventBridge.Subscriber;
 
 public interface IIntegrationEventSubscriber : IEventSubscriber
 {

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using EventBridge.Dispatcher;
+using Newtonsoft.Json;
 
 namespace EventBridge.Outbox;
 

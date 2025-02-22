@@ -1,4 +1,4 @@
-using System.Reflection;
+using EventBridge.Subscriber;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,27 +12,15 @@ public static class ServiceCollectionExtensions
         configureOptions(options);
         
         services.AddSingleton(options);
-        services.AddSingleton<InMemorySubscriptionOptionsManager>();
-
-        var handlers = Assembly.GetExecutingAssembly()
-            .GetTypes()
-            .Where(t => t is { IsClass: true, IsAbstract: false } && t.BaseType == typeof(IIntegrationEventHandler<>))
-            .ToList();
-        
-        foreach (var handler in handlers)
-            services.AddTransient(handler);
-
-        services.AddHostedService<KafkaIntegrationEventSubscriberService>();
+        services.AddEventBridge<KafkaIntegrationEventSubscriberService>();
     }
 
     public static void UseKafkaSubscriber(this WebApplication application,
         Action<IIntegrationEventSubscriber> subscriberAction)
     {
-        var inMemorySubscriptionOptionsManager = application.Services.GetRequiredService<InMemorySubscriptionOptionsManager>();
+        var integrationEventSubscriber = application.Services.GetRequiredService<IntegrationEventSubscriber>();
         
-        var subscriber = new KafkaIntegrationEventSubscriber(inMemorySubscriptionOptionsManager);
-        
-        subscriberAction(subscriber);
+        subscriberAction(integrationEventSubscriber);
     }
     
 }

@@ -2,6 +2,7 @@ using Contracts;
 using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
 using EventBridge;
+using EventBridge.Dispatcher;
 using Microsoft.Extensions.Logging;
 using Ordering.Application.Services;
 using Ordering.Domain.Entities;

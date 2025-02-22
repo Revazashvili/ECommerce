@@ -1,4 +1,5 @@
 using EventBridge;
+using EventBridge.Subscriber;
 using MediatR;
 using Ordering.Application.Features.SetOrderQuantityNotAvailableStatus;
 

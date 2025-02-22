@@ -1,3 +1,4 @@
+using EventBridge.Dispatcher;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace EventBridge.Outbox;
