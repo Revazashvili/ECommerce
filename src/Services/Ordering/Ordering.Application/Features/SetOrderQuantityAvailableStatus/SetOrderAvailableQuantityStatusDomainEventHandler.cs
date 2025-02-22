@@ -1,6 +1,5 @@
 using Contracts.Mediatr.Wrappers;
 using EventBridge;
-using Ordering.Application.IntegrationEvents.Events;
 using Ordering.Domain.Events;
 using Ordering.Domain.Exceptions;
 using Ordering.Domain.Models;
