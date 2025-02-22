@@ -4,7 +4,7 @@ using Amazon.S3;
 using EventBus.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Products.Application.IntegrationEvents.EventHandlers;
+using Products.Application.IntegrationEvents;
 using Products.Application.Services;
 using Services.DependencyInjection;
 
