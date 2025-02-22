@@ -8,6 +8,8 @@ public class ProductCategoryConfiguration : IEntityTypeConfiguration<ProductCate
 {
     public void Configure(EntityTypeBuilder<ProductCategory> builder)
     {
+        builder.ToTable("product_categories", Schema.Products);
+
         builder.HasKey(product => product.Id);
 
         builder.Property(product => product.Name)
