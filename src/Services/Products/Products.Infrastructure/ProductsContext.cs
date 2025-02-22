@@ -1,4 +1,5 @@
 using System.Reflection;
+using EventBridge.Outbox;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Products.Domain.Entities;
@@ -18,6 +19,7 @@ public class ProductsContext : DbContext,IUnitOfWork
     
     public DbSet<Product> Products { get; set; }
     public DbSet<ProductCategory> ProductCategories { get; set; }
+    public DbSet<OutboxMessage> OutboxMessages { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
