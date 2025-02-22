@@ -28,7 +28,8 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .HasMaxLength(250);
 
         builder.HasMany(product => product.Categories)
-            .WithMany(category => category.Products);
+            .WithMany(category => category.Products)
+            .UsingEntity(pc => pc.ToTable("product_categories", Schema.Products));
 
         builder.HasIndex(product => product.Name);
 
