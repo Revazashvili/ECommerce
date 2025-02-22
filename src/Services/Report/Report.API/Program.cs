@@ -1,11 +1,10 @@
 using System.Text.Json.Serialization;
+using Confluent.Kafka;
 using Elastic.Clients.Elasticsearch;
-using EventBus;
-using EventBus.Kafka;
+using EventBridge.Kafka;
 using Report.API.Common;
 using Report.API.Endpoints;
-using Report.API.IntegrationEvents.Events;
-using Report.API.IntegrationEvents.Handlers;
+using Report.API.IntegrationEvents;
 using Report.API.Models;
 using Report.API.Repositories;
 using Services.DependencyInjection;
@@ -32,7 +31,14 @@ builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
-builder.Services.AddKafka(builder.Configuration);
+builder.Services.AddKafkaSubscriber(options =>
+{
+    var kafkaOptions = builder.Configuration.GetSection("kafkaOptions");
+    options.BootstrapServers = kafkaOptions["BootstrapServers"];
+    options.GroupId = kafkaOptions["GroupId"];
+    options.AutoOffsetReset = Enum.Parse<AutoOffsetReset>(kafkaOptions["AutoOffsetReset"]);
+    options.EnableAutoCommit = bool.Parse(kafkaOptions["EnableAutoCommit"]);
+});
 
 var app = builder.Build();
 
@@ -43,8 +49,9 @@ var apiEndpointRouteBuilder = app.MapApi();
 apiEndpointRouteBuilder.MapReport();
 
 app.UseFluentValidationMiddleware();
-
-var eventBus = app.Services.GetRequiredService<IEventBus>();
-eventBus.SubscribeAsync<SetOrderStatusPaidIntegrationEvent, SetOrderStatusPaidIntegrationEventHandler>();
+app.UseKafkaSubscriber(subscriber =>
+{
+    subscriber.Subscribe<SetOrderStatusPaidIntegrationEvent, SetOrderStatusPaidIntegrationEventHandler>("OrderStatusSetPaid");
+});
 
 app.Run();
