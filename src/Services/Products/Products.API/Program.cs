@@ -35,6 +35,4 @@ endpointRouteBuilder.MapProduct();
 app.UseFluentValidationMiddleware();
 app.SubscribeToEvents();
 
-app.MigrateIfDevelopment<ProductsContext>();
-
 app.Run();
