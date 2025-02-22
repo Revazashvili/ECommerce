@@ -1,10 +1,10 @@
 using Amazon;
 using Amazon.Runtime;
 using Amazon.S3;
-using EventBus.Kafka;
+using Confluent.Kafka;
+using EventBridge.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Products.Application.IntegrationEvents;
 using Products.Application.Services;
 using Services.DependencyInjection;
 
@@ -29,9 +29,15 @@ public static class ServiceCollectionExtensions
         
         services.AddMediatrWithValidation();
 
-        services.AddKafka(configuration);
+        services.AddKafkaSubscriber(options =>
+        {
+            var kafkaOptions = configuration.GetSection("kafkaOptions");
+            options.BootstrapServers = kafkaOptions["BootstrapServers"];
+            options.GroupId = kafkaOptions["GroupId"];
+            options.AutoOffsetReset = Enum.Parse<AutoOffsetReset>(kafkaOptions["AutoOffsetReset"]);
+            options.EnableAutoCommit = bool.Parse(kafkaOptions["EnableAutoCommit"]);
+        });
 
-        services.AddScoped<SetOrderPendingStatusIntegrationEventHandler>();
         return services;
     }
 }

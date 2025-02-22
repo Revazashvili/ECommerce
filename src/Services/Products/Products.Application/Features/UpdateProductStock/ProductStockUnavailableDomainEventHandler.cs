@@ -1,7 +1,5 @@
 using Contracts.Mediatr.Wrappers;
 using EventBridge.Dispatcher;
-using EventBus;
-using Microsoft.Extensions.Logging;
 using Products.Domain.Events;
 
 namespace Products.Application.Features.UpdateProductStock;
