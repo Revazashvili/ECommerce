@@ -16,9 +16,9 @@ public static class ServiceCollectionExtensions
 
         services.AddKafkaSubscriber(options =>
         {
-            var kafkaOptions = configuration.GetSection("Kafka");
+            var kafkaOptions = configuration.GetSection("kafkaOptions");
             options.BootstrapServers = kafkaOptions["BootstrapServers"];
-            options.GroupId = kafkaOptions["Groupid"];
+            options.GroupId = kafkaOptions["GroupId"];
             options.AutoOffsetReset = (AutoOffsetReset)Enum.Parse(typeof(AutoOffsetReset), kafkaOptions["AutoOffsetReset"]);
             options.EnableAutoCommit = bool.Parse(kafkaOptions["EnableAutoCommit"]);
         });
