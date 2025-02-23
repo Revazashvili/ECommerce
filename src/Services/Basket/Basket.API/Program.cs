@@ -1,12 +1,11 @@
 using System.Text.Json.Serialization;
 using Basket.API.Endpoints;
-using Basket.API.IntegrationEvents.EventHandlers;
-using Basket.API.IntegrationEvents.Events;
+using Basket.API.IntegrationEvents;
 using Basket.API.Interfaces;
 using Basket.API.Repositories;
 using Basket.API.Services;
-using EventBus;
-using EventBus.Kafka;
+using Confluent.Kafka;
+using EventBridge.Kafka;
 using MessageBus.Nats;
 using Microsoft.IdentityModel.Logging;
 using Services.DependencyInjection;
@@ -30,10 +29,16 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 
 builder.Services.AddScoped<IIdentityService, IdentityService>();
 builder.Services.AddScoped<IBasketRepository, RedisBasketRepository>();
-builder.Services.AddScoped<ProductStockUnAvailableIntegrationEventHandler>();
-builder.Services.AddScoped<OrderPlaceStartedIntegrationEventHandler>();
 
-builder.Services.AddKafka(builder.Configuration);
+builder.Services.AddKafkaSubscriber(options =>
+{
+    var kafkaOptions = builder.Configuration.GetSection("kafkaOptions");
+    options.BootstrapServers = kafkaOptions["BootstrapServers"];
+    options.GroupId = kafkaOptions["GroupId"];
+    options.AutoOffsetReset = Enum.Parse<AutoOffsetReset>(kafkaOptions["AutoOffsetReset"]);
+    options.EnableAutoCommit = bool.Parse(kafkaOptions["EnableAutoCommit"]);
+});
+
 builder.Services.AddNatsMessageBus(builder.Configuration);
 
 builder.Host.UseOrleans(siloBuilder =>
@@ -52,8 +57,10 @@ apiEndpointRouteBuilder.MapBasket();
 
 app.UseSwagger(builder.Configuration);
 
-var eventBus = app.Services.GetRequiredService<IEventBus>();
-eventBus.SubscribeAsync<ProductStockUnAvailableIntegrationEvent, ProductStockUnAvailableIntegrationEventHandler>();
-eventBus.SubscribeAsync<OrderPlaceStartedIntegrationEvent, OrderPlaceStartedIntegrationEventHandler>();
+app.UseKafkaSubscriber(subscriber =>
+{
+    subscriber.Subscribe<ProductStockUnAvailableIntegrationEvent, ProductStockUnAvailableIntegrationEventHandler>("ProductStockUnAvailable");
+    subscriber.Subscribe<OrderPlacedIntegrationEvent, OrderPlacedIntegrationEventHandler>("OrderPlaced");
+});
 
 await app.RunAsync();

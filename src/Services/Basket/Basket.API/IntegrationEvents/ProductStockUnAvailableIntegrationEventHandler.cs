@@ -1,10 +1,12 @@
 using Basket.API.Grains;
-using Basket.API.IntegrationEvents.Events;
 using Basket.API.Interfaces;
-using EventBus;
+using EventBridge;
+using EventBridge.Subscriber;
 using MessageBus;
 
-namespace Basket.API.IntegrationEvents.EventHandlers;
+namespace Basket.API.IntegrationEvents;
+
+public class ProductStockUnAvailableIntegrationEvent : IntegrationEvent;
 
 public class ProductStockUnAvailableIntegrationEventHandler(
         ILogger<ProductStockUnAvailableIntegrationEventHandler> logger,
@@ -13,7 +15,7 @@ public class ProductStockUnAvailableIntegrationEventHandler(
         IMessageBus messageBus)
     : IIntegrationEventHandler<ProductStockUnAvailableIntegrationEvent>
 {
-    public async Task Handle(ProductStockUnAvailableIntegrationEvent @event)
+    public async Task HandleAsync(ProductStockUnAvailableIntegrationEvent @event, CancellationToken cancellationToken)
     {
         try
         {
@@ -21,9 +23,9 @@ public class ProductStockUnAvailableIntegrationEventHandler(
             foreach (var key in keys)
             {
                 var basketGrain = grainFactory.GetGrain<IBasketGrain>(key);
-                await basketGrain.RemoveItemsByProductId(@event.ProductId);
+                await basketGrain.RemoveItemsByProductId(Guid.Parse(@event.AggregateId));
 
-                await messageBus.PublishAsync($"PRODUCT_REMOVED_FROM_BASKET_{@event.ProductId}");
+                await messageBus.PublishAsync($"PRODUCT_REMOVED_FROM_BASKET_{@event.AggregateId}");
             }
         }
         catch (Exception exception)
