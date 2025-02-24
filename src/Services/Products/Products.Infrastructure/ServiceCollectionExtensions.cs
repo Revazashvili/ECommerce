@@ -14,11 +14,14 @@ public static class ServiceCollectionExtensions
     {
         var connectionString = configuration.GetConnectionString(nameof(ProductsContext));
 
-        services.AddDbContext<ProductsContext>(builder => builder.UseNpgsql(connectionString,
-            optionsBuilder =>
-            {
-                optionsBuilder.MigrationsAssembly(typeof(ProductsContext).Assembly.FullName);
-            }));
+        services.AddDbContext<ProductsContext>(builder =>
+        {
+            builder.UseNpgsql(connectionString, optionsBuilder =>
+                {
+                    optionsBuilder.MigrationsAssembly(typeof(ProductsContext).Assembly.FullName);
+                });
+            builder.UseSnakeCaseNamingConvention();
+        });
 
         services.AddScoped<IProductCategoryRepository, ProductCategoryRepository>();
         services.AddScoped<IProductRepository, ProductRepository>();

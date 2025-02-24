@@ -12,8 +12,8 @@ using Products.Infrastructure;
 namespace Products.Infrastructure.Migrations
 {
     [DbContext(typeof(ProductsContext))]
-    [Migration("20250222145619_add_outbox_table")]
-    partial class add_outbox_table
+    [Migration("20250224143512_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,27 +29,33 @@ namespace Products.Infrastructure.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
                     b.Property<string>("AggregateId")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("aggregate_id");
 
                     b.Property<string>("Payload")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("text")
+                        .HasColumnName("payload");
 
                     b.Property<DateTime>("Timestamp")
-                        .HasColumnType("timestamp with time zone");
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("timestamp");
 
                     b.Property<string>("Topic")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("topic");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_outbox_messages");
 
                     b.ToTable("outbox_messages", "outbox");
                 });
@@ -57,53 +63,65 @@ namespace Products.Infrastructure.Migrations
             modelBuilder.Entity("ProductProductCategory", b =>
                 {
                     b.Property<int>("CategoriesId")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("categories_id");
 
                     b.Property<Guid>("ProductsId")
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("products_id");
 
-                    b.HasKey("CategoriesId", "ProductsId");
+                    b.HasKey("CategoriesId", "ProductsId")
+                        .HasName("pk_product_categories");
 
-                    b.HasIndex("ProductsId");
+                    b.HasIndex("ProductsId")
+                        .HasDatabaseName("ix_product_categories_products_id");
 
-                    b.ToTable("ProductProductCategory");
+                    b.ToTable("product_categories", "products");
                 });
 
             modelBuilder.Entity("Products.Domain.Entities.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
 
                     b.Property<string>("ImageUrl")
                         .IsRequired()
                         .HasMaxLength(250)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("character varying(250)")
+                        .HasColumnName("image_url");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(250)
                         .IsUnicode(true)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("character varying(250)")
+                        .HasColumnName("name");
 
                     b.Property<double>("Price")
-                        .HasColumnType("double precision");
+                        .HasColumnType("double precision")
+                        .HasColumnName("price");
 
                     b.Property<int>("Quantity")
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("quantity");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_products");
 
-                    b.HasIndex("Name");
+                    b.HasIndex("Name")
+                        .HasDatabaseName("ix_products_name");
 
-                    b.ToTable("Products");
+                    b.ToTable("products", "products");
                 });
 
             modelBuilder.Entity("Products.Domain.Entities.ProductCategory", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("integer")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
@@ -111,14 +129,17 @@ namespace Products.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(250)
                         .IsUnicode(true)
-                        .HasColumnType("character varying(250)");
+                        .HasColumnType("character varying(250)")
+                        .HasColumnName("name");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_categories");
 
                     b.HasIndex("Name")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_categories_name");
 
-                    b.ToTable("ProductCategories");
+                    b.ToTable("categories", "products");
                 });
 
             modelBuilder.Entity("ProductProductCategory", b =>
@@ -127,13 +148,15 @@ namespace Products.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("CategoriesId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_product_categories_categories_categories_id");
 
                     b.HasOne("Products.Domain.Entities.Product", null)
                         .WithMany()
                         .HasForeignKey("ProductsId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_product_categories_products_products_id");
                 });
 #pragma warning restore 612, 618
         }

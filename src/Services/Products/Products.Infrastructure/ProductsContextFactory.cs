@@ -10,7 +10,7 @@ public class ProductsContextFactory : IDesignTimeDbContextFactory<ProductsContex
     {
         var optionsBuilder = new DbContextOptionsBuilder<ProductsContext>();
         optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=products;User Id=postgres;Password=mysecretpassword;");
-
+        optionsBuilder.UseSnakeCaseNamingConvention();
         return new ProductsContext(optionsBuilder.Options, new NoMediator());
     }
 }
