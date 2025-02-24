@@ -13,6 +13,8 @@ public class Order : Entity
     public OrderStatus OrderStatus { get; set; }
     public DateTime OrderingDate { get; init; }
 
+    private Order() {}
+    
     private Order(Guid userId,Address address)
     {
         OrderNumber = Guid.NewGuid();

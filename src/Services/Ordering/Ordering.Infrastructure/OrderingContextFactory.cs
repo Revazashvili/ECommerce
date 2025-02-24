@@ -12,7 +12,7 @@ public class OrderingContextFactory : IDesignTimeDbContextFactory<OrderingContex
         optionsBuilder
             .UseSqlServer(
             "Server=localhost;Database=OrderingDB;User Id=SA;Password=myStrong(!)Password;TrustServerCertificate=true;");
-
+        optionsBuilder.UseSnakeCaseNamingConvention();
         return new OrderingContext(optionsBuilder.Options, new NoMediator());
     }
 }

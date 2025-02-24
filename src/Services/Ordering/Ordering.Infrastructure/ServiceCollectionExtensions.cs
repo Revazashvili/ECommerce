@@ -14,11 +14,14 @@ public static class ServiceCollectionExtensions
     {
         var connectionString = configuration.GetConnectionString(nameof(OrderingContext));
 
-        services.AddDbContext<OrderingContext>(builder => builder.UseSqlServer(connectionString,
-            optionsBuilder =>
-            {
-                optionsBuilder.MigrationsAssembly(typeof(OrderingContext).Assembly.FullName);
-            }));
+        services.AddDbContext<OrderingContext>(builder =>
+        {
+            builder.UseSqlServer(connectionString, optionsBuilder =>
+                {
+                    optionsBuilder.MigrationsAssembly(typeof(OrderingContext).Assembly.FullName);
+                });
+            builder.UseSnakeCaseNamingConvention();
+        });
 
         services.AddScoped<IUnitOfWork, OrderingContext>();
         services.AddScoped<IOrderRepository, OrderRepository>();
