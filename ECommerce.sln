@@ -103,6 +103,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tooling", "Tooling", "{2A9E
 		src\Services\Payment\Tooling\db_creation.sql = src\Services\Payment\Tooling\db_creation.sql
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tooling", "Tooling", "{5F5EA99D-442A-42C3-B3F4-0CD62A5E77DF}"
+	ProjectSection(SolutionItems) = preProject
+		src\Services\Identity\Tooling\add-migration.sh = src\Services\Identity\Tooling\add-migration.sh
+		src\Services\Identity\Tooling\apply-migrations.sh = src\Services\Identity\Tooling\apply-migrations.sh
+		src\Services\Identity\Tooling\remove-migration.sh = src\Services\Identity\Tooling\remove-migration.sh
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -147,6 +154,7 @@ Global
 		{FBD700D7-399F-4039-88D7-70285BAD9427} = {4EF32C3A-A19B-419A-9213-657CD42A87E5}
 		{A7A6E469-5612-4332-9922-4F48DFC9446A} = {3BB5862C-CDCD-417E-9AB6-A0BAA400C3D2}
 		{2A9EB6EC-601B-4ED7-B212-B4D91DDB3C15} = {C405265A-C8A8-4835-BDB9-5980D5C7A440}
+		{5F5EA99D-442A-42C3-B3F4-0CD62A5E77DF} = {00C00537-F393-4CB4-88E6-280C913B4498}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{74B6A18E-874F-45D5-B09C-B7A1809228C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
