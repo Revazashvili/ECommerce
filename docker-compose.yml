@@ -2,11 +2,11 @@ version: '3.4'
 
 services: 
   
-  products-db:
+  postgres:
     image: postgres
     restart: always
     ports:
-      - 5432:5432
+      - "5432:5432"
     volumes:
       - ~/docker/postgres:/var/lib/postgresql/data
     environment:
@@ -17,37 +17,9 @@ services:
     image: redis
     restart: always
     ports:
-      - 6379:6379
+      - "6379:6379"
     volumes:
       - ~/docker/redis:/data
-  
-  ordering-db:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    user: root
-    restart: always
-    ports:
-      - "1433:1433"
-    volumes:
-      - ~/docker/mssql/ordering/data:/var/opt/mssql/data
-      - ~/docker/mssql/ordering/log:/var/opt/mssql/log
-      - ~/docker/mssql/ordering/secrets:/var/opt/mssql/secrets
-    environment:
-      MSSQL_SA_PASSWORD: "myStrong(!)Password"
-      ACCEPT_EULA: "Y"
-      
-  identity-db:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    user: root
-    restart: always
-    ports:
-      - "1432:1433"
-    volumes:
-      - ~/docker/mssql/identity/data:/var/opt/mssql/data
-      - ~/docker/mssql/identity/log:/var/opt/mssql/log
-      - ~/docker/mssql/identity/secrets:/var/opt/mssql/secrets
-    environment:
-      MSSQL_SA_PASSWORD: "myStrong(!)Password"
-      ACCEPT_EULA: "Y"
       
   elasticsearch:
     image: elasticsearch:8.8.0
