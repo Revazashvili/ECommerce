@@ -73,7 +73,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tooling", "Tooling", "{9D39E514-9171-4151-BF7F-5615AC5A4E48}"
 	ProjectSection(SolutionItems) = preProject
-		src\Services\Ordering\Tooling\db_creation.sql = src\Services\Ordering\Tooling\db_creation.sql
 		src\Services\Ordering\Tooling\apply-migrations.sh = src\Services\Ordering\Tooling\apply-migrations.sh
 		src\Services\Ordering\Tooling\add-migration.sh = src\Services\Ordering\Tooling\add-migration.sh
 		src\Services\Ordering\Tooling\remove-migration.sh = src\Services\Ordering\Tooling\remove-migration.sh
@@ -92,7 +91,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tooling", "Tooling", "{A7A6
 		src\Services\Products\Tooling\add-migration.sh = src\Services\Products\Tooling\add-migration.sh
 		src\Services\Products\Tooling\apply-migrations.sh = src\Services\Products\Tooling\apply-migrations.sh
 		src\Services\Products\Tooling\remove-migrations.sh = src\Services\Products\Tooling\remove-migrations.sh
-		src\Services\Products\Tooling\db-creation.sql = src\Services\Products\Tooling\db-creation.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tooling", "Tooling", "{2A9EB6EC-601B-4ED7-B212-B4D91DDB3C15}"
@@ -100,7 +98,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tooling", "Tooling", "{2A9E
 		src\Services\Payment\Tooling\add-migration.sh = src\Services\Payment\Tooling\add-migration.sh
 		src\Services\Payment\Tooling\remove-migration.sh = src\Services\Payment\Tooling\remove-migration.sh
 		src\Services\Payment\Tooling\apply-migration.sh = src\Services\Payment\Tooling\apply-migration.sh
-		src\Services\Payment\Tooling\db_creation.sql = src\Services\Payment\Tooling\db_creation.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tooling", "Tooling", "{5F5EA99D-442A-42C3-B3F4-0CD62A5E77DF}"
