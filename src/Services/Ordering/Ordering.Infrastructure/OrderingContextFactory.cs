@@ -9,9 +9,7 @@ public class OrderingContextFactory : IDesignTimeDbContextFactory<OrderingContex
     public OrderingContext CreateDbContext(string[] args)
     {
         var optionsBuilder = new DbContextOptionsBuilder<OrderingContext>();
-        optionsBuilder
-            .UseSqlServer(
-            "Server=localhost;Database=OrderingDB;User Id=SA;Password=myStrong(!)Password;TrustServerCertificate=true;");
+        optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=ordering;User Id=postgres;Password=mysecretpassword;");
         optionsBuilder.UseSnakeCaseNamingConvention();
         return new OrderingContext(optionsBuilder.Options, new NoMediator());
     }

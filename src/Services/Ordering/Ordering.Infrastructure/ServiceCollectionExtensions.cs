@@ -16,7 +16,7 @@ public static class ServiceCollectionExtensions
 
         services.AddDbContext<OrderingContext>(builder =>
         {
-            builder.UseSqlServer(connectionString, optionsBuilder =>
+            builder.UseNpgsql(connectionString, optionsBuilder =>
                 {
                     optionsBuilder.MigrationsAssembly(typeof(OrderingContext).Assembly.FullName);
                 });

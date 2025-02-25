@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -22,15 +23,15 @@ namespace Ordering.Infrastructure.Migrations
                 schema: "orders",
                 columns: table => new
                 {
-                    order_number = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    user_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    address_street = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    address_city = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    address_state = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    address_country = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    address_zip_code = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    order_status = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ordering_date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    order_number = table.Column<Guid>(type: "uuid", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    address_street = table.Column<string>(type: "text", nullable: false),
+                    address_city = table.Column<string>(type: "text", nullable: false),
+                    address_state = table.Column<string>(type: "text", nullable: true),
+                    address_country = table.Column<string>(type: "text", nullable: false),
+                    address_zip_code = table.Column<string>(type: "text", nullable: false),
+                    order_status = table.Column<string>(type: "text", nullable: false),
+                    ordering_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -43,11 +44,11 @@ namespace Ordering.Infrastructure.Migrations
                 columns: table => new
                 {
                     id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    aggregate_id = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    topic = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    payload = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    timestamp = table.Column<DateTime>(type: "datetime2", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    aggregate_id = table.Column<string>(type: "text", nullable: false),
+                    topic = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    payload = table.Column<string>(type: "text", nullable: false),
+                    timestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,13 +60,13 @@ namespace Ordering.Infrastructure.Migrations
                 schema: "orders",
                 columns: table => new
                 {
-                    id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    product_id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    product_name = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    price = table.Column<decimal>(type: "decimal(10,2)", precision: 10, scale: 2, nullable: false),
-                    quantity = table.Column<int>(type: "int", nullable: false),
-                    picture_url = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    order_number = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    product_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    product_name = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
+                    price = table.Column<decimal>(type: "numeric(10,2)", precision: 10, scale: 2, nullable: false),
+                    quantity = table.Column<int>(type: "integer", nullable: false),
+                    picture_url = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: false),
+                    order_number = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
