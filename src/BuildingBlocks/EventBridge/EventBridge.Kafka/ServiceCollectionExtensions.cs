@@ -1,6 +1,6 @@
 using EventBridge.Subscriber;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace EventBridge.Kafka;
 
@@ -15,7 +15,7 @@ public static class ServiceCollectionExtensions
         services.AddEventBridge<KafkaIntegrationEventSubscriberService>();
     }
 
-    public static void UseKafkaSubscriber(this WebApplication application,
+    public static void UseKafkaSubscriber(this IHost application,
         Action<IIntegrationEventSubscriber> subscriberAction)
     {
         var integrationEventSubscriber = application.Services.GetRequiredService<IIntegrationEventSubscriber>();

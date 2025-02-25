@@ -5,19 +5,7 @@
     </ItemGroup>
     <ItemGroup>
       <PackageReference Include="Confluent.Kafka" />
-      <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-      <PackageReference Include="Newtonsoft.Json" />
-    </ItemGroup>
-    <ItemGroup>
-      <Reference Include="Microsoft.AspNetCore">
-        <HintPath>..\..\..\..\..\..\..\..\usr\local\share\dotnet\shared\Microsoft.AspNetCore.App\9.0.2\Microsoft.AspNetCore.dll</HintPath>
-      </Reference>
-      <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
-        <HintPath>..\..\..\..\..\..\..\..\usr\local\share\dotnet\shared\Microsoft.AspNetCore.App\9.0.2\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
-      </Reference>
-      <Reference Include="Microsoft.Extensions.Hosting.Abstractions">
-        <HintPath>..\..\..\..\..\..\..\..\usr\local\share\dotnet\shared\Microsoft.AspNetCore.App\9.0.2\Microsoft.Extensions.Hosting.Abstractions.dll</HintPath>
-      </Reference>
+<!--      <PackageReference Include="Newtonsoft.Json" />-->
     </ItemGroup>
 
 </Project>
