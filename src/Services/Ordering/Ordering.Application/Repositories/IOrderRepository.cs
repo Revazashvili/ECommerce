@@ -1,5 +1,4 @@
 using Ordering.Domain.Entities;
-using Services.Common.Domain;
 
 namespace Ordering.Application.Repositories;
 

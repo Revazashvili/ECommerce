@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ordering.Application.Repositories;
 using Ordering.Infrastructure.Repositories;
-using Services.Common.Domain;
 
 namespace Ordering.Infrastructure;
 

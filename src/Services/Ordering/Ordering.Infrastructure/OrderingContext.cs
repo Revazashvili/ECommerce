@@ -2,8 +2,8 @@ using System.Reflection;
 using EventBridge.Outbox;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Ordering.Application.Repositories;
 using Ordering.Domain.Entities;
-using Services.Common.Domain;
 using Services.Common.Extensions;
 
 namespace Ordering.Infrastructure;
