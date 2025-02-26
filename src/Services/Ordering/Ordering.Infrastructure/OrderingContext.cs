@@ -2,9 +2,9 @@ using System.Reflection;
 using EventBridge.Outbox;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Ordering.Application.Repositories;
 using Ordering.Domain.Entities;
-using Services.Common.Extensions;
+using Services.Common.Domain;
+using IUnitOfWork = Ordering.Application.Repositories.IUnitOfWork;
 
 namespace Ordering.Infrastructure;
 
@@ -12,7 +12,7 @@ public class OrderingContext : DbContext, IUnitOfWork
 {
     private readonly IMediator _mediator;
 
-    public OrderingContext(DbContextOptions<OrderingContext> options,IMediator mediator) : base(options)
+    public OrderingContext(DbContextOptions<OrderingContext> options, IMediator mediator) : base(options)
     {
         _mediator = mediator;
     }
@@ -29,11 +29,24 @@ public class OrderingContext : DbContext, IUnitOfWork
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
-        var affectedRows = await base.SaveChangesAsync(cancellationToken);
+        var domainEntities = ChangeTracker
+            .Entries<Entity>()
+            .Where(x => x.Entity.DomainEvents.Count != 0)
+            .ToList();
 
-        await _mediator.PublishDomainEventsAsync(this);
+        var domainEvents = domainEntities
+            .SelectMany(x => x.Entity.DomainEvents)
+            .ToList();
+
+        var tasks = domainEvents
+            .Select(domainEvent => _mediator.Publish(domainEvent, cancellationToken))
+            .ToList();
         
-        return affectedRows;
+        await Task.WhenAll(tasks);
+
+        domainEntities.ForEach(entity => entity.Entity.ClearDomainEvents());
+        
+        return await base.SaveChangesAsync(cancellationToken);
     }
     
     public void RejectChanges()
