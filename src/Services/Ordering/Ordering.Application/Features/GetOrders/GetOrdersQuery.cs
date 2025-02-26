@@ -4,4 +4,4 @@ using Services.Common;
 
 namespace Ordering.Application.Features.GetOrders;
 
-public record GetOrdersQuery(DateTime From,DateTime To,Pagination Pagination) : IValidatedQuery<IEnumerable<Order>>;
+public record GetOrdersQuery(DateTime From, DateTime To, int PageNumber, int PageSize) : IValidatedQuery<IEnumerable<Order>>;

@@ -14,7 +14,7 @@ public class GetOrdersQueryHandler(ILogger<GetOrdersQueryHandler> logger, IOrder
     {
         try
         {
-            var orders = await orderRepository.GetOrdersAsync(request.From, request.To, request.Pagination,cancellationToken);
+            var orders = await orderRepository.GetOrdersAsync(request.From, request.To, request.PageNumber, request.PageSize, cancellationToken);
 
             return orders;
         }

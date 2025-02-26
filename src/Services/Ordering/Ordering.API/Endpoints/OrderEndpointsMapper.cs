@@ -21,8 +21,7 @@ internal static class OrderEndpointsMapper
                 async (DateTime from, DateTime to, int pageNumber, int pageSize,
                     CancellationToken cancellationToken, ISender sender) =>
                 {
-                    var pagination = new Pagination(pageNumber, pageSize);
-                    var query = new GetOrdersQuery(from, to, pagination);
+                    var query = new GetOrdersQuery(from, to, pageNumber, pageSize);
                     var result = await sender.Send(query, cancellationToken);
                     return result.ToResult();
                 }).Produces<IEnumerable<Order>>()

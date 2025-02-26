@@ -18,8 +18,16 @@ public class GetOrdersQueryValidator : AbstractValidator<GetOrdersQuery>
             .GreaterThan(DateTime.MinValue)
             .WithMessage("To must be greater or equal to MinValue.");
         
-        RuleFor(command => command.Pagination)
+        RuleFor(command => command.PageNumber)
             .NotNull()
-            .WithMessage("Pagination must not be null.");
+            .WithMessage("PageNumber must not be null.")
+            .GreaterThanOrEqualTo(1)
+            .WithMessage("PageNumber must be greater or equal to One.");
+        
+        RuleFor(command => command.PageSize)
+            .NotNull()
+            .WithMessage("PageSize must not be null.")
+            .GreaterThanOrEqualTo(1)
+            .WithMessage("PageSize must be greater or equal to One.");
     }
 }

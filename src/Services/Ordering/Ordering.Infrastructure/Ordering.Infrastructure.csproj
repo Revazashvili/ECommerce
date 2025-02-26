@@ -18,7 +18,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\BuildingBlocks\EventBridge\EventBridge.Outbox\EventBridge.Outbox.csproj" />
-      <ProjectReference Include="..\..\Common\Services.Common\Services.Common.csproj" />
       <ProjectReference Include="..\Ordering.Domain\Ordering.Domain.csproj" />
     </ItemGroup>
 

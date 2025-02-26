@@ -1,9 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Ordering.Domain.Entities;
 using Ordering.Domain.Models;
-using Services.Common;
 using Services.Common.Domain;
-using Services.Common.Extensions;
 
 namespace Ordering.Infrastructure.Repositories;
 
@@ -25,13 +23,13 @@ public class OrderRepository(OrderingContext context) : IOrderRepository
             .FirstOrDefaultAsync(order => order.OrderNumber == orderNumber, cancellationToken);
     }
 
-    public Task<List<Order>> GetOrdersAsync(DateTime from, DateTime to, Pagination pagination, CancellationToken cancellationToken)
+    public Task<List<Order>> GetOrdersAsync(DateTime from, DateTime to, int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
         return context.Orders
             .Include(order => order.OrderItems)
             .Include(order => order.Address)
             .Where(order => order.OrderingDate >= from && order.OrderingDate <= to)
-            .Paged(pagination)
+            .Paged(pageNumber, pageSize)
             .AsNoTracking()
             .ToListAsync(cancellationToken);
     }
