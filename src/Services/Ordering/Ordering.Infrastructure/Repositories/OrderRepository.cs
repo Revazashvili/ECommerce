@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Ordering.Application.Repositories;
 using Ordering.Domain.Entities;
-using Ordering.Domain.Models;
 using Services.Common.Domain;
 
 namespace Ordering.Infrastructure.Repositories;

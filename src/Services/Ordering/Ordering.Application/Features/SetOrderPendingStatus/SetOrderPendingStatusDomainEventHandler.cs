@@ -1,9 +1,9 @@
 using Contracts.Mediatr.Wrappers;
 using EventBridge;
 using EventBridge.Dispatcher;
+using Ordering.Application.Repositories;
 using Ordering.Domain.Events;
 using Ordering.Domain.Exceptions;
-using Ordering.Domain.Models;
 
 namespace Ordering.Application.Features.SetOrderPendingStatus;
 

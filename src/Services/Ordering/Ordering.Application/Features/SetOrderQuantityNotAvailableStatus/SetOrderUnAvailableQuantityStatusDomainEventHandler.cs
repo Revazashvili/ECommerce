@@ -1,9 +1,9 @@
 using Contracts.Mediatr.Wrappers;
 using Microsoft.Extensions.Logging;
 using Ordering.Application.Features.SetOrderPendingStatus;
+using Ordering.Application.Repositories;
 using Ordering.Domain.Events;
 using Ordering.Domain.Exceptions;
-using Ordering.Domain.Models;
 
 namespace Ordering.Application.Features.SetOrderQuantityNotAvailableStatus;
 

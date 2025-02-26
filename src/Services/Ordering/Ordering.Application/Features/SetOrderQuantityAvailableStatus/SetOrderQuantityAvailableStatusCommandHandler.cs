@@ -2,8 +2,8 @@ using Contracts;
 using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
 using Microsoft.Extensions.Logging;
+using Ordering.Application.Repositories;
 using Ordering.Domain.Exceptions;
-using Ordering.Domain.Models;
 
 namespace Ordering.Application.Features.SetOrderQuantityAvailableStatus;
 

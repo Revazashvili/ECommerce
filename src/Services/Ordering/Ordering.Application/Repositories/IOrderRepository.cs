@@ -1,7 +1,7 @@
 using Ordering.Domain.Entities;
 using Services.Common.Domain;
 
-namespace Ordering.Domain.Models;
+namespace Ordering.Application.Repositories;
 
 public interface IOrderRepository : IRepository<Order>
 {

@@ -2,7 +2,7 @@ using Contracts;
 using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
 using Microsoft.Extensions.Logging;
-using Ordering.Domain.Models;
+using Ordering.Application.Repositories;
 
 namespace Ordering.Application.Features.SetOrderPendingStatus;
 

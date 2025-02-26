@@ -2,7 +2,7 @@ using EventBridge.Outbox;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Ordering.Domain.Models;
+using Ordering.Application.Repositories;
 using Ordering.Infrastructure.Repositories;
 using Services.Common.Domain;
 

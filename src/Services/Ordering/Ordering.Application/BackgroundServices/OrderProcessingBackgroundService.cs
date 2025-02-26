@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Ordering.Application.Features.SetOrderPendingStatus;
-using Ordering.Domain.Models;
+using Ordering.Application.Repositories;
 
 namespace Ordering.Application.BackgroundServices;
 

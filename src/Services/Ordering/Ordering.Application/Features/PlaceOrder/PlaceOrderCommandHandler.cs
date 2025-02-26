@@ -4,9 +4,9 @@ using Contracts.Mediatr.Wrappers;
 using EventBridge;
 using EventBridge.Dispatcher;
 using Microsoft.Extensions.Logging;
+using Ordering.Application.Repositories;
 using Ordering.Application.Services;
 using Ordering.Domain.Entities;
-using Ordering.Domain.Models;
 
 namespace Ordering.Application.Features.PlaceOrder;
 

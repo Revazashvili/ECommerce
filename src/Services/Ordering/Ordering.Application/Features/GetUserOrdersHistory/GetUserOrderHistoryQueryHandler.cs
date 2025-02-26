@@ -2,9 +2,9 @@ using Contracts;
 using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
 using Microsoft.Extensions.Logging;
+using Ordering.Application.Repositories;
 using Ordering.Application.Services;
 using Ordering.Domain.Entities;
-using Ordering.Domain.Models;
 
 namespace Ordering.Application.Features.GetUserOrdersHistory;
 
