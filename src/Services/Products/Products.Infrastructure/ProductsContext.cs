@@ -4,7 +4,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Products.Application.Repositories;
 using Products.Domain.Entities;
-using Services.Common.Domain;
 
 namespace Products.Infrastructure;
 

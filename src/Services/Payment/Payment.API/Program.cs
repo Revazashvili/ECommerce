@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Payment.API.IntegrationEvents;
 using Payment.API.Persistence;
 using Payment.API.Persistence.Respositories;
-using Services.Common.Domain;
 using Services.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);

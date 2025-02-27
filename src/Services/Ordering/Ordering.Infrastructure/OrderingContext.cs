@@ -3,8 +3,7 @@ using EventBridge.Outbox;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Ordering.Domain.Entities;
-using Services.Common.Domain;
-using IUnitOfWork = Ordering.Application.Repositories.IUnitOfWork;
+using Ordering.Application.Repositories;
 
 namespace Ordering.Infrastructure;
 

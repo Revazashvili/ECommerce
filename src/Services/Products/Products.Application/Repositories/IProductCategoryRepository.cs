@@ -1,5 +1,4 @@
 using Products.Domain.Entities;
-using Services.Common.Domain;
 
 namespace Products.Application.Repositories;
 
