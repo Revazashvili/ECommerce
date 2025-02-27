@@ -3,6 +3,7 @@ using BuildingBlocks.Setup;
 using Ordering.API.Endpoints;
 using Ordering.Application;
 using Ordering.Infrastructure;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,7 +12,7 @@ builder.Services.AddEndpointsApiExplorer()
     .AddAuthentication(builder.Configuration);
 builder.Services.AddSwagger(builder.Configuration);
 
-builder.Host.UseSerilogLogging();
+builder.Host.UseSerilog((_, configuration) => configuration.WriteTo.Console());
 builder.Services
     .AddApplication(builder.Configuration)
     .AddInfrastructure(builder.Configuration);

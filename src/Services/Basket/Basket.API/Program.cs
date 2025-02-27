@@ -9,7 +9,7 @@ using Confluent.Kafka;
 using EventBridge.Kafka;
 using MessageBus.Nats;
 using Microsoft.IdentityModel.Logging;
-using IIdentityService = Basket.API.Services.IIdentityService;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 IdentityModelEventSource.ShowPII = true;
@@ -20,7 +20,7 @@ builder.Services.AddEndpointsApiExplorer()
 
 builder.Services.AddSwagger(builder.Configuration);
 
-builder.Host.UseSerilogLogging();
+builder.Host.UseSerilog((_, configuration) => configuration.WriteTo.Console());
 
 builder.Services.ConfigureHttpJsonOptions(options =>
 {

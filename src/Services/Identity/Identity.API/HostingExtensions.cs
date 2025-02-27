@@ -4,6 +4,7 @@ using Identity.API.Endpoints;
 using Identity.API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 namespace Identity.API;
 
@@ -44,7 +45,7 @@ internal static class HostingExtensions
             .AddAspNetIdentity<ApplicationUser>()
             .AddDeveloperSigningCredential();
         
-        builder.Host.UseSerilogLogging();
+        builder.Host.UseSerilog((_, configuration) => configuration.WriteTo.Console());
         builder.Services.AddMediatrWithValidation();
         
         return builder.Build();

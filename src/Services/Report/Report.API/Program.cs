@@ -8,6 +8,7 @@ using Report.API.Endpoints;
 using Report.API.IntegrationEvents;
 using Report.API.Models;
 using Report.API.Repositories;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SchemaFilter<EnumSchemaFilter>();   
 });
-builder.Host.UseSerilogLogging();
+builder.Host.UseSerilog((_, configuration) => configuration.WriteTo.Console());
 builder.Services.AddMediatrWithValidation();
 
 var elasticsearchClientSettings = new ElasticsearchClientSettings()

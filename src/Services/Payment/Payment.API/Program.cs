@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Payment.API.IntegrationEvents;
 using Payment.API.Persistence;
 using Payment.API.Persistence.Respositories;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,7 +35,7 @@ builder.Services.AddOutboxDispatcher(provider =>
     return new OutboxMessageRepository(paymentContext);
 });
 
-builder.Host.UseSerilogLogging();
+builder.Host.UseSerilog((_, configuration) => configuration.WriteTo.Console());
 
 var app = builder.Build();
 
