@@ -1,12 +1,12 @@
 using Contracts;
 using Contracts.Mediatr.Validation;
 using MediatR;
+using Products.API.Extensions;
 using Products.Application.Features.AddProductCategory;
 using Products.Application.Features.DeleteProductCategory;
 using Products.Application.Features.GetProductCategories;
 using Products.Application.Features.UpdateProductCategory;
 using Products.Domain.Entities;
-using Services.Common;
 
 namespace Products.API.Endpoints;
 

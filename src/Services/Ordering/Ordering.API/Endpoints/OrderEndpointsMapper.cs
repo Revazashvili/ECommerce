@@ -1,13 +1,13 @@
 using Contracts;
 using Contracts.Mediatr.Validation;
 using MediatR;
+using Ordering.API.Extensions;
 using Ordering.Application.Features.CancelOrder;
 using Ordering.Application.Features.GetOrderById;
 using Ordering.Application.Features.GetOrders;
 using Ordering.Application.Features.GetUserOrdersHistory;
 using Ordering.Application.Features.PlaceOrder;
 using Ordering.Domain.Entities;
-using Services.Common;
 
 namespace Ordering.API.Endpoints;
 

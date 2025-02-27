@@ -1,8 +1,8 @@
 using Duende.IdentityServer.Validation;
+using Identity.API.Extensions;
 using Identity.API.Handlers;
 using Identity.API.Models;
 using MediatR;
-using Services.Common;
 
 namespace Identity.API.Endpoints;
 

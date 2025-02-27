@@ -1,11 +1,11 @@
 using Contracts.Mediatr.Validation;
 using MediatR;
+using Products.API.Extensions;
 using Products.Application.Features.AddProduct;
 using Products.Application.Features.GetProducts;
 using Products.Application.Features.SearchProducts;
 using Products.Application.Features.UpdateProductStock;
 using Products.Domain.Entities;
-using Services.Common;
 
 namespace Products.API.Endpoints;
 
