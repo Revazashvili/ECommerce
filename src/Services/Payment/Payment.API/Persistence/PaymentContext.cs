@@ -1,7 +1,7 @@
 using System.Reflection;
 using EventBridge.Outbox;
 using Microsoft.EntityFrameworkCore;
-using Services.Common.Domain;
+using Payment.API.Persistence.Respositories;
 
 namespace Payment.API.Persistence;
 

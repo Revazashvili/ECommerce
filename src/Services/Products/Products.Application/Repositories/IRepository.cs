@@ -1,4 +1,4 @@
-namespace Services.Common.Domain;
+namespace Products.Application.Repositories;
 
 public interface IRepository<T> where T : class
 {

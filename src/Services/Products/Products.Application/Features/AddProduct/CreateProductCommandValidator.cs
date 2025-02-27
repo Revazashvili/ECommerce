@@ -1,5 +1,5 @@
 using FluentValidation;
-using Products.Domain.Models;
+using Products.Application.Repositories;
 
 namespace Products.Application.Features.AddProduct;
 

@@ -2,9 +2,8 @@ using EventBridge.Outbox;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Products.Domain.Models;
+using Products.Application.Repositories;
 using Products.Infrastructure.Repositories;
-using Services.Common.Domain;
 
 namespace Products.Infrastructure;
 

@@ -1,4 +1,4 @@
-namespace Services.Common.Domain;
+namespace Payment.API.Persistence.Respositories;
 
 public interface IUnitOfWork : IDisposable
 {

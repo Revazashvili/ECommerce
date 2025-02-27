@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Products.Application.Repositories;
 using Products.Domain.Entities;
-using Products.Domain.Models;
-using Services.Common.Domain;
 
 namespace Products.Infrastructure.Repositories;
 

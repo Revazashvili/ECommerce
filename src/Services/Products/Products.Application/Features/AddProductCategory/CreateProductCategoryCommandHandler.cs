@@ -2,8 +2,8 @@ using Contracts;
 using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
 using Microsoft.Extensions.Logging;
+using Products.Application.Repositories;
 using Products.Domain.Entities;
-using Products.Domain.Models;
 
 namespace Products.Application.Features.AddProductCategory;
 

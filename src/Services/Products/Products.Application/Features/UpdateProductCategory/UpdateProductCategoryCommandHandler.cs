@@ -3,7 +3,7 @@ using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
 using Microsoft.Extensions.Logging;
 using Products.Domain.Entities;
-using Products.Domain.Models;
+using Products.Application.Repositories;
 
 namespace Products.Application.Features.UpdateProductCategory;
 

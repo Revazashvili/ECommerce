@@ -2,7 +2,7 @@ using Contracts;
 using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
 using EventBridge.Dispatcher;
-using Products.Domain.Models;
+using Products.Application.Repositories;
 
 namespace Products.Application.Features.CheckProductsQuantityAvailabilityCommand;
 
