@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Services.Common.Mediator;
 
 namespace Payment.API.Persistence;
 

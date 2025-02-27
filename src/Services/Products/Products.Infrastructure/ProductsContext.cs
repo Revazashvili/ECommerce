@@ -4,7 +4,6 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Products.Domain.Entities;
 using Services.Common.Domain;
-using Services.Common.Extensions;
 
 namespace Products.Infrastructure;
 
@@ -29,11 +28,24 @@ public class ProductsContext : DbContext,IUnitOfWork
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
     {
-        var affectedRows = await base.SaveChangesAsync(cancellationToken);
+        var domainEntities = ChangeTracker
+            .Entries<Entity>()
+            .Where(x => x.Entity.DomainEvents.Count != 0)
+            .ToList();
 
-        await _mediator.PublishDomainEventsAsync(this);
+        var domainEvents = domainEntities
+            .SelectMany(x => x.Entity.DomainEvents)
+            .ToList();
+
+        var tasks = domainEvents
+            .Select(domainEvent => _mediator.Publish(domainEvent, cancellationToken))
+            .ToList();
         
-        return affectedRows;
+        await Task.WhenAll(tasks);
+
+        domainEntities.ForEach(entity => entity.Entity.ClearDomainEvents());
+        
+        return await base.SaveChangesAsync(cancellationToken);
     }
     
     public void RejectChanges()
