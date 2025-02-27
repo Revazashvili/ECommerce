@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
+using BuildingBlocks.Setup;
 using Ordering.API.Endpoints;
 using Ordering.Application;
 using Ordering.Infrastructure;
-using Services.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 

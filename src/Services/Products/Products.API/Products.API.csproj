@@ -17,7 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Common\Services.DependencyInjection\Services.DependencyInjection.csproj" />
+      <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks.Setup\BuildingBlocks.Setup.csproj" />
       <ProjectReference Include="..\Products.Application\Products.Application.csproj" />
       <ProjectReference Include="..\Products.Infrastructure\Products.Infrastructure.csproj" />
     </ItemGroup>

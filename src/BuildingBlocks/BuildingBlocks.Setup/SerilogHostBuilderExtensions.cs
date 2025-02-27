@@ -1,7 +1,7 @@
 using Microsoft.Extensions.Hosting;
 using Serilog;
 
-namespace Services.DependencyInjection;
+namespace BuildingBlocks.Setup;
 
 public static class SerilogHostBuilderExtensions
 {

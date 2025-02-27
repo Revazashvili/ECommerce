@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using BuildingBlocks.Setup;
 using Confluent.Kafka;
 using Elastic.Clients.Elasticsearch;
 using EventBridge.Kafka;
@@ -7,7 +8,6 @@ using Report.API.Endpoints;
 using Report.API.IntegrationEvents;
 using Report.API.Models;
 using Report.API.Repositories;
-using Services.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 

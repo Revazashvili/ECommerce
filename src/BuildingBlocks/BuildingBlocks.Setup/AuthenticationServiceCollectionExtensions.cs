@@ -2,7 +2,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Services.DependencyInjection;
+namespace BuildingBlocks.Setup;
 
 public static class AuthenticationServiceCollectionExtensions
 {

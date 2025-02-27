@@ -3,7 +3,7 @@ using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Services.DependencyInjection;
+namespace BuildingBlocks.Setup;
 
 public static class MediatrServiceCollectionExtensions
 {

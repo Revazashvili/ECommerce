@@ -1,9 +1,9 @@
+using BuildingBlocks.Setup;
 using Identity.API.Data;
 using Identity.API.Endpoints;
 using Identity.API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Services.DependencyInjection;
 
 namespace Identity.API;
 

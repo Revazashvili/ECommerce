@@ -1,3 +1,4 @@
+using BuildingBlocks.Setup;
 using Confluent.Kafka;
 using EventBridge.Kafka;
 using EventBridge.Outbox;
@@ -5,7 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Payment.API.IntegrationEvents;
 using Payment.API.Persistence;
 using Payment.API.Persistence.Respositories;
-using Services.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 

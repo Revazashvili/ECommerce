@@ -1,10 +1,10 @@
+using BuildingBlocks.Setup;
 using Confluent.Kafka;
 using EventBridge.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ordering.Application.BackgroundServices;
 using Ordering.Application.Services;
-using Services.DependencyInjection;
 
 namespace Ordering.Application;
 

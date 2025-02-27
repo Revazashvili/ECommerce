@@ -1,8 +1,8 @@
 using System.Text.Json.Serialization;
+using BuildingBlocks.Setup;
 using Products.API.Endpoints;
 using Products.Application;
 using Products.Infrastructure;
-using Services.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 

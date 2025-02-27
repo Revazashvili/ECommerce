@@ -1,12 +1,12 @@
 using Amazon;
 using Amazon.Runtime;
 using Amazon.S3;
+using BuildingBlocks.Setup;
 using Confluent.Kafka;
 using EventBridge.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Products.Application.Services;
-using Services.DependencyInjection;
 
 namespace Products.Application;
 

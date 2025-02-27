@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
-    <Import Project="..\..\..\..\Shared.props" />
-    
+    <Import Project="..\..\..\Shared.props" />
+
     <ItemGroup>
         <PackageReference Include="FluentValidation" />
         <PackageReference Include="FluentValidation.DependencyInjectionExtensions" />
@@ -19,11 +19,10 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
-
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\BuildingBlocks\Contracts\Contracts\Contracts.csproj" />
+      <ProjectReference Include="..\Contracts\Contracts\Contracts.csproj" />
     </ItemGroup>
 
 </Project>

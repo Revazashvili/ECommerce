@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Services.DependencyInjection;
+namespace BuildingBlocks.Setup;
 
 public static class SwaggerServiceCollectionExtensions
 {

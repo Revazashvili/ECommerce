@@ -3,7 +3,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 
-namespace Services.DependencyInjection;
+namespace BuildingBlocks.Setup;
 
 public static class FluentValidationApplicationBuilderExtensions
 {

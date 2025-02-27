@@ -9,10 +9,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks.Setup\BuildingBlocks.Setup.csproj" />
       <ProjectReference Include="..\..\..\BuildingBlocks\Contracts\Contracts\Contracts.csproj" />
       <ProjectReference Include="..\..\..\BuildingBlocks\EventBridge\EventBridge.Kafka\EventBridge.Kafka.csproj" />
       <ProjectReference Include="..\..\..\BuildingBlocks\MessageBus.Nats\MessageBus.Nats.csproj" />
-      <ProjectReference Include="..\..\Common\Services.DependencyInjection\Services.DependencyInjection.csproj" />
     </ItemGroup>
 
 

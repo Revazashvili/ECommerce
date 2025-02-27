@@ -4,11 +4,11 @@ using Basket.API.IntegrationEvents;
 using Basket.API.Interfaces;
 using Basket.API.Repositories;
 using Basket.API.Services;
+using BuildingBlocks.Setup;
 using Confluent.Kafka;
 using EventBridge.Kafka;
 using MessageBus.Nats;
 using Microsoft.IdentityModel.Logging;
-using Services.DependencyInjection;
 using IIdentityService = Basket.API.Services.IIdentityService;
 
 var builder = WebApplication.CreateBuilder(args);

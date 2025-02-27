@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 
-namespace Services.DependencyInjection;
+namespace BuildingBlocks.Setup;
 
 public static class SwaggerApplicationBuilderExtensions
 {
