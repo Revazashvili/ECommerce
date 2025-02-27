@@ -19,6 +19,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks.Setup\BuildingBlocks.Setup.csproj" />
+      <ProjectReference Include="..\..\..\BuildingBlocks\Setup\BuildingBlocks.Swagger\BuildingBlocks.Swagger.csproj" />
       <ProjectReference Include="..\Products.Application\Products.Application.csproj" />
       <ProjectReference Include="..\Products.Infrastructure\Products.Infrastructure.csproj" />
     </ItemGroup>

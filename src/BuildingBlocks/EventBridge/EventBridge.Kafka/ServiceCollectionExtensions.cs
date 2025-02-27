@@ -6,13 +6,15 @@ namespace EventBridge.Kafka;
 
 public static class ServiceCollectionExtensions
 {
-    public static void AddKafkaSubscriber(this IServiceCollection services, Action<KafkaOptions> configureOptions)
+    public static IServiceCollection AddKafkaSubscriber(this IServiceCollection services, Action<KafkaOptions> configureOptions)
     {
         var options = new KafkaOptions();
         configureOptions(options);
         
         services.AddSingleton(options);
         services.AddEventBridge<KafkaIntegrationEventSubscriberService>();
+
+        return services;
     }
 
     public static void UseKafkaSubscriber(this IHost application,

@@ -5,6 +5,7 @@ using Basket.API.Interfaces;
 using Basket.API.Repositories;
 using Basket.API.Services;
 using BuildingBlocks.Setup;
+using BuildingBlocks.Swagger;
 using Confluent.Kafka;
 using EventBridge.Kafka;
 using MessageBus.Nats;
@@ -16,46 +17,39 @@ IdentityModelEventSource.ShowPII = true;
 
 builder.Services.AddEndpointsApiExplorer()
     .AddAuthorization()
-    .AddAuthentication(builder.Configuration);
+    .AddAuthentication(builder.Configuration)
+    .AddSwagger(builder.Configuration, "Swagger", "Identity")
+    .ConfigureHttpJsonOptions(options =>
+    {
+        options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    })
+    .AddScoped<IIdentityService, IdentityService>()
+    .AddScoped<IBasketRepository, RedisBasketRepository>()
+    .AddKafkaSubscriber(options =>
+    {
+        var kafkaOptions = builder.Configuration.GetSection("kafkaOptions");
+        options.BootstrapServers = kafkaOptions["BootstrapServers"];
+        options.GroupId = kafkaOptions["GroupId"];
+        options.AutoOffsetReset = Enum.Parse<AutoOffsetReset>(kafkaOptions["AutoOffsetReset"]);
+        options.EnableAutoCommit = bool.Parse(kafkaOptions["EnableAutoCommit"]);
+    })
+    .AddNatsMessageBus(builder.Configuration);
 
-builder.Services.AddSwagger(builder.Configuration);
-
-builder.Host.UseSerilog((_, configuration) => configuration.WriteTo.Console());
-
-builder.Services.ConfigureHttpJsonOptions(options =>
-{
-    options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-});
-
-builder.Services.AddScoped<IIdentityService, IdentityService>();
-builder.Services.AddScoped<IBasketRepository, RedisBasketRepository>();
-
-builder.Services.AddKafkaSubscriber(options =>
-{
-    var kafkaOptions = builder.Configuration.GetSection("kafkaOptions");
-    options.BootstrapServers = kafkaOptions["BootstrapServers"];
-    options.GroupId = kafkaOptions["GroupId"];
-    options.AutoOffsetReset = Enum.Parse<AutoOffsetReset>(kafkaOptions["AutoOffsetReset"]);
-    options.EnableAutoCommit = bool.Parse(kafkaOptions["EnableAutoCommit"]);
-});
-
-builder.Services.AddNatsMessageBus(builder.Configuration);
-
-builder.Host.UseOrleans(siloBuilder =>
-{
-    siloBuilder.UseLocalhostClustering();
-    siloBuilder.AddMemoryGrainStorage("baskets");
-});
+builder.Host.UseSerilog((_, configuration) => configuration.WriteTo.Console())
+    .UseOrleans(siloBuilder =>
+    {
+        siloBuilder.UseLocalhostClustering();
+        siloBuilder.AddMemoryGrainStorage("baskets");
+    });
 
 var app = builder.Build();
 
-app.UseAuthentication();
-app.UseAuthorization();
+app.UseSwagger(builder.Configuration, "Swagger")
+    .UseAuthentication()
+    .UseAuthorization();
 
 var apiEndpointRouteBuilder = app.MapApi();
 apiEndpointRouteBuilder.MapBasket();
-
-app.UseSwagger(builder.Configuration);
 
 app.UseKafkaSubscriber(subscriber =>
 {

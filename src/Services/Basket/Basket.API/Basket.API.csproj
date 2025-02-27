@@ -14,6 +14,7 @@
       <ProjectReference Include="..\..\..\BuildingBlocks\Contracts\Contracts\Contracts.csproj" />
       <ProjectReference Include="..\..\..\BuildingBlocks\EventBridge\EventBridge.Kafka\EventBridge.Kafka.csproj" />
       <ProjectReference Include="..\..\..\BuildingBlocks\MessageBus.Nats\MessageBus.Nats.csproj" />
+      <ProjectReference Include="..\..\..\BuildingBlocks\Setup\BuildingBlocks.Swagger\BuildingBlocks.Swagger.csproj" />
     </ItemGroup>
 
 

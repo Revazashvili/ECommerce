@@ -9,6 +9,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\BuildingBlocks\Setup\BuildingBlocks.Swagger\BuildingBlocks.Swagger.csproj" />
       <ProjectReference Include="..\Ordering.Application\Ordering.Application.csproj" />
       <ProjectReference Include="..\Ordering.Domain\Ordering.Domain.csproj" />
       <ProjectReference Include="..\Ordering.Infrastructure\Ordering.Infrastructure.csproj" />

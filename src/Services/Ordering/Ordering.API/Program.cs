@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using BuildingBlocks.Setup;
+using BuildingBlocks.Swagger;
 using Ordering.API.Endpoints;
 using Ordering.Application;
 using Ordering.Infrastructure;
@@ -9,25 +10,22 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer()
     .AddAuthorization()
-    .AddAuthentication(builder.Configuration);
-builder.Services.AddSwagger(builder.Configuration);
+    .AddAuthentication(builder.Configuration)
+    .AddSwagger(builder.Configuration, "Swagger", "Identity")
+    .AddApplication(builder.Configuration)
+    .AddInfrastructure(builder.Configuration)
+    .ConfigureHttpJsonOptions(options =>
+    {
+        options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 
 builder.Host.UseSerilog((_, configuration) => configuration.WriteTo.Console());
-builder.Services
-    .AddApplication(builder.Configuration)
-    .AddInfrastructure(builder.Configuration);
-
-builder.Services.ConfigureHttpJsonOptions(options =>
-{
-    options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-});
 
 var app = builder.Build();
 
-app.UseSwagger(app.Configuration);
-
-app.UseAuthentication();
-app.UseAuthorization();
+app.UseSwagger(app.Configuration, "Swagger")
+    .UseAuthentication()
+    .UseAuthorization();
 
 var endpointRouteBuilder = app.MapApi();
 endpointRouteBuilder.MapOrder();

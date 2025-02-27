@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <Import Project="..\..\..\..\Shared.props" />
+    
+    <ItemGroup>
+        <PackageReference Include="Swashbuckle.AspNetCore.Swagger" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" />
+    </ItemGroup>
+
+</Project>
