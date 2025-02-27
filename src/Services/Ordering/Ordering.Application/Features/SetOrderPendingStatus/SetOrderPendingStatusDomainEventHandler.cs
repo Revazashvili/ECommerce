@@ -1,5 +1,4 @@
 using Contracts.Mediatr.Wrappers;
-using EventBridge;
 using EventBridge.Dispatcher;
 using Ordering.Application.Repositories;
 using Ordering.Domain.Events;

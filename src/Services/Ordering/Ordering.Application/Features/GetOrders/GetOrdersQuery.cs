@@ -1,6 +1,5 @@
 using Contracts.Mediatr.Wrappers;
 using Ordering.Domain.Entities;
-using Services.Common;
 
 namespace Ordering.Application.Features.GetOrders;
 
