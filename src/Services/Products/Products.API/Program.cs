@@ -47,6 +47,5 @@ endpointRouteBuilder.MapProductCategory();
 endpointRouteBuilder.MapProduct();
 
 app.UseFluentValidation();
-app.SubscribeToEvents();
 
 app.Run();

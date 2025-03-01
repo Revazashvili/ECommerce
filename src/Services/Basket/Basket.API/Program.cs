@@ -6,7 +6,6 @@ using Basket.API.Interfaces;
 using Basket.API.Repositories;
 using Basket.API.Services;
 using BuildingBlocks.Swagger;
-using Confluent.Kafka;
 using EventBridge.Kafka;
 using MessageBus.Nats;
 using Microsoft.IdentityModel.Logging;
@@ -37,7 +36,17 @@ builder.Services.AddSwagger(builder.Configuration, "Swagger", "Identity")
     })
     .AddScoped<IIdentityService, IdentityService>()
     .AddScoped<IBasketRepository, RedisBasketRepository>()
-    .AddKafkaSubscriber(() => builder.Configuration.GetSection("KafkaOptions").Get<KafkaOptions>())
+    .AddKafkaSubscriber(configurator =>
+    {
+        configurator.KafkaOptions = builder.Configuration.GetSection("KafkaOptions").Get<KafkaOptions>();
+        configurator.Subscriber = subscriber =>
+        {
+            subscriber.Subscribe<ProductStockUnAvailableIntegrationEvent, ProductStockUnAvailableIntegrationEventHandler>(
+                    "ProductStockUnAvailable");
+            subscriber.Subscribe<OrderPlacedIntegrationEvent, OrderPlacedIntegrationEventHandler>
+                ("OrderPlaced");
+        };
+    })
     .AddNatsMessageBus(builder.Configuration);
 
 builder.Host.UseSerilog((_, configuration) => configuration.WriteTo.Console())
@@ -55,11 +64,5 @@ app.UseSwagger(builder.Configuration, "Swagger")
 
 var apiEndpointRouteBuilder = app.MapApi();
 apiEndpointRouteBuilder.MapBasket();
-
-app.UseKafkaSubscriber(subscriber =>
-{
-    subscriber.Subscribe<ProductStockUnAvailableIntegrationEvent, ProductStockUnAvailableIntegrationEventHandler>("ProductStockUnAvailable");
-    subscriber.Subscribe<OrderPlacedIntegrationEvent, OrderPlacedIntegrationEventHandler>("OrderPlaced");
-});
 
 await app.RunAsync();

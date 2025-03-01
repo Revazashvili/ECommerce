@@ -35,7 +35,15 @@ builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
-builder.Services.AddKafkaSubscriber(() => builder.Configuration.GetSection("KafkaOptions").Get<KafkaOptions>());
+builder.Services.AddKafkaSubscriber(configurator =>
+{
+    configurator.KafkaOptions = builder.Configuration.GetSection("KafkaOptions").Get<KafkaOptions>();
+    configurator.Subscriber = subscriber =>
+    {
+        subscriber.Subscribe<SetOrderStatusPaidIntegrationEvent, SetOrderStatusPaidIntegrationEventHandler>(
+            "OrderStatusSetPaid");
+    };
+});
 builder.Host.UseSerilog((_, configuration) => configuration.WriteTo.Console());
 
 var app = builder.Build();
@@ -47,9 +55,5 @@ var apiEndpointRouteBuilder = app.MapApi();
 apiEndpointRouteBuilder.MapReport();
 
 app.UseFluentValidation();
-app.UseKafkaSubscriber(subscriber =>
-{
-    subscriber.Subscribe<SetOrderStatusPaidIntegrationEvent, SetOrderStatusPaidIntegrationEventHandler>("OrderStatusSetPaid");
-});
 
 app.Run();

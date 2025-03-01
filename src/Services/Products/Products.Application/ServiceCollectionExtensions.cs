@@ -3,10 +3,10 @@ using Amazon;
 using Amazon.Runtime;
 using Amazon.S3;
 using BuildingBlocks.FluentValidation;
-using Confluent.Kafka;
 using EventBridge.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Products.Application.IntegrationEvents;
 using Products.Application.Services;
 
 namespace Products.Application;
@@ -32,7 +32,16 @@ public static class ServiceCollectionExtensions
         services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(assembly));
         services.AddFluentValidation(assembly);
 
-        services.AddKafkaSubscriber(() => configuration.GetSection("KafkaOptions").Get<KafkaOptions>());
+        services.AddKafkaSubscriber(configurator => 
+        {
+            configurator.KafkaOptions = configuration.GetSection("KafkaOptions").Get<KafkaOptions>();
+            configurator.Subscriber = subscriber =>
+            {
+                subscriber
+                    .Subscribe<SetOrderPendingStatusIntegrationEvent, SetOrderPendingStatusIntegrationEventHandler>(
+                        "OrderSetOrderPendingStatus");
+            };
+        });
 
         return services;
     }

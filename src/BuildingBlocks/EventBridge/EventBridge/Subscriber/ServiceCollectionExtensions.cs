@@ -5,11 +5,16 @@ namespace EventBridge.Subscriber;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddEventBridge<THostedService>(this IServiceCollection services)
+    public static IServiceCollection AddEventBridge<THostedService>(this IServiceCollection services,
+        Action<IIntegrationEventSubscriber> subscriberAction)
         where THostedService : IntegrationEventSubscriberService
     {
-        services.AddSingleton<SubscriberEventProcessFunctionStore>();
-        services.AddSingleton<IIntegrationEventSubscriber, IntegrationEventSubscriber>();
+        var store = new SubscriberEventProcessFunctionStore();
+        var integrationEventSubscriber = new IntegrationEventSubscriber(store);
+        
+        subscriberAction(integrationEventSubscriber);
+        
+        services.AddSingleton<IIntegrationEventSubscriber>(_ => integrationEventSubscriber);
         services.AddHostedService<THostedService>();
         
         var handlers = Assembly.GetExecutingAssembly()

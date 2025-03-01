@@ -45,6 +45,5 @@ var endpointRouteBuilder = app.MapApi();
 endpointRouteBuilder.MapOrder();
 
 app.UseFluentValidation();
-app.UseApplication();
 
 app.Run();
