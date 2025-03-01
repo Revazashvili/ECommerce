@@ -14,15 +14,16 @@ public class IntegrationEventSubscriber : IIntegrationEventSubscriber
     
     public virtual void Subscribe<TEvent, TEventHandler>(string topic) where TEvent : IntegrationEvent where TEventHandler : IIntegrationEventHandler<TEvent>
     {
-        ProcessEvent processFunc = (payload, serviceProvider, cancellationToken) =>
+        _subscriberEventProcessFunctionStore.AddProcessEventFunction(topic, ProcessFunc);
+        return;
+
+        Task ProcessFunc(string payload, IServiceProvider serviceProvider, CancellationToken cancellationToken)
         {
-            var message = (TEvent)JsonConvert.DeserializeObject(payload, typeof(TEvent))!;
+            var message = JsonConvert.DeserializeObject<TEvent>(payload)!;
 
             var handler = serviceProvider.GetRequiredService<TEventHandler>();
 
             return handler.HandleAsync(message, cancellationToken);
-        };
-        
-        _subscriberEventProcessFunctionStore.AddProcessEventFunction(topic, processFunc);
+        }
     }
 }
