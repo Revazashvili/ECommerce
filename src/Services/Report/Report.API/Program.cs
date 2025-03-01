@@ -35,14 +35,7 @@ builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
-builder.Services.AddKafkaSubscriber(options =>
-{
-    var kafkaOptions = builder.Configuration.GetSection("kafkaOptions");
-    options.BootstrapServers = kafkaOptions["BootstrapServers"];
-    options.GroupId = kafkaOptions["GroupId"];
-    options.AutoOffsetReset = Enum.Parse<AutoOffsetReset>(kafkaOptions["AutoOffsetReset"]);
-    options.EnableAutoCommit = bool.Parse(kafkaOptions["EnableAutoCommit"]);
-});
+builder.Services.AddKafkaSubscriber(() => builder.Configuration.GetSection("KafkaOptions").Get<KafkaOptions>());
 builder.Host.UseSerilog((_, configuration) => configuration.WriteTo.Console());
 
 var app = builder.Build();

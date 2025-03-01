@@ -9,14 +9,7 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddKafkaSubscriber(options =>
-{
-    var kafkaOptions = builder.Configuration.GetSection("kafkaOptions");
-    options.BootstrapServers = kafkaOptions["BootstrapServers"];
-    options.GroupId = kafkaOptions["GroupId"];
-    options.AutoOffsetReset = Enum.Parse<AutoOffsetReset>(kafkaOptions["AutoOffsetReset"]);
-    options.EnableAutoCommit = bool.Parse(kafkaOptions["EnableAutoCommit"]);
-});
+builder.Services.AddKafkaSubscriber(() => builder.Configuration.GetSection("KafkaOptions").Get<KafkaOptions>());
 
 var connectionString = builder.Configuration.GetConnectionString(nameof(PaymentContext));
 

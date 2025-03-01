@@ -32,14 +32,7 @@ public static class ServiceCollectionExtensions
         services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(assembly));
         services.AddFluentValidation(assembly);
 
-        services.AddKafkaSubscriber(options =>
-        {
-            var kafkaOptions = configuration.GetSection("kafkaOptions");
-            options.BootstrapServers = kafkaOptions["BootstrapServers"];
-            options.GroupId = kafkaOptions["GroupId"];
-            options.AutoOffsetReset = Enum.Parse<AutoOffsetReset>(kafkaOptions["AutoOffsetReset"]);
-            options.EnableAutoCommit = bool.Parse(kafkaOptions["EnableAutoCommit"]);
-        });
+        services.AddKafkaSubscriber(() => configuration.GetSection("KafkaOptions").Get<KafkaOptions>());
 
         return services;
     }

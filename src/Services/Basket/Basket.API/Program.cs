@@ -37,14 +37,7 @@ builder.Services.AddSwagger(builder.Configuration, "Swagger", "Identity")
     })
     .AddScoped<IIdentityService, IdentityService>()
     .AddScoped<IBasketRepository, RedisBasketRepository>()
-    .AddKafkaSubscriber(options =>
-    {
-        var kafkaOptions = builder.Configuration.GetSection("kafkaOptions");
-        options.BootstrapServers = kafkaOptions["BootstrapServers"];
-        options.GroupId = kafkaOptions["GroupId"];
-        options.AutoOffsetReset = Enum.Parse<AutoOffsetReset>(kafkaOptions["AutoOffsetReset"]);
-        options.EnableAutoCommit = bool.Parse(kafkaOptions["EnableAutoCommit"]);
-    })
+    .AddKafkaSubscriber(() => builder.Configuration.GetSection("KafkaOptions").Get<KafkaOptions>())
     .AddNatsMessageBus(builder.Configuration);
 
 builder.Host.UseSerilog((_, configuration) => configuration.WriteTo.Console())
