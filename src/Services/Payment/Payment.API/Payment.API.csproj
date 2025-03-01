@@ -8,7 +8,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\..\BuildingBlocks\BuildingBlocks.Setup\BuildingBlocks.Setup.csproj" />
       <ProjectReference Include="..\..\..\BuildingBlocks\EventBridge\EventBridge.Kafka\EventBridge.Kafka.csproj" />
       <ProjectReference Include="..\..\..\BuildingBlocks\EventBridge\EventBridge.Outbox\EventBridge.Outbox.csproj" />
     </ItemGroup>

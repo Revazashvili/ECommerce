@@ -1,10 +1,10 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json.Serialization;
 using Basket.API.Endpoints;
 using Basket.API.IntegrationEvents;
 using Basket.API.Interfaces;
 using Basket.API.Repositories;
 using Basket.API.Services;
-using BuildingBlocks.Setup;
 using BuildingBlocks.Swagger;
 using Confluent.Kafka;
 using EventBridge.Kafka;
@@ -14,11 +14,23 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 IdentityModelEventSource.ShowPII = true;
+JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
+
+var identitySection = builder.Configuration.GetSection("Identity");
 
 builder.Services.AddEndpointsApiExplorer()
+    .AddHttpContextAccessor()
     .AddAuthorization()
-    .AddAuthentication(builder.Configuration)
-    .AddSwagger(builder.Configuration, "Swagger", "Identity")
+    .AddAuthentication().AddJwtBearer(options =>
+    {
+
+        options.Authority = identitySection["Url"];
+        options.RequireHttpsMetadata = false;
+        options.Audience = identitySection["Audience"];
+        options.TokenValidationParameters.ValidateAudience = false;
+    });
+
+builder.Services.AddSwagger(builder.Configuration, "Swagger", "Identity")
     .ConfigureHttpJsonOptions(options =>
     {
         options.SerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;

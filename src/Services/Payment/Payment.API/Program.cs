@@ -1,4 +1,3 @@
-using BuildingBlocks.Setup;
 using Confluent.Kafka;
 using EventBridge.Kafka;
 using EventBridge.Outbox;

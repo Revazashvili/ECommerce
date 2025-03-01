@@ -3,11 +3,11 @@ using FluentValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 
-namespace BuildingBlocks.Setup;
+namespace BuildingBlocks.FluentValidation;
 
-public static class FluentValidationApplicationBuilderExtensions
+public static class ApplicationBuilderExtensions
 {
-    public static IApplicationBuilder UseFluentValidationMiddleware(this IApplicationBuilder app)
+    public static IApplicationBuilder UseFluentValidation(this IApplicationBuilder app)
     {
         app.Use(async (context, next) =>
         {

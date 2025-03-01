@@ -6,9 +6,12 @@
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
         <PackageReference Include="Swashbuckle.AspNetCore" />
         <PackageReference Include="Serilog.AspNetCore" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" />
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\..\BuildingBlocks\Setup\BuildingBlocks.FluentValidation\BuildingBlocks.FluentValidation.csproj" />
       <ProjectReference Include="..\..\..\BuildingBlocks\Setup\BuildingBlocks.Swagger\BuildingBlocks.Swagger.csproj" />
       <ProjectReference Include="..\Ordering.Application\Ordering.Application.csproj" />
       <ProjectReference Include="..\Ordering.Domain\Ordering.Domain.csproj" />

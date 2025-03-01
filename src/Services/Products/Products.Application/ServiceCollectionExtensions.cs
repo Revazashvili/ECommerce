@@ -1,7 +1,8 @@
+using System.Reflection;
 using Amazon;
 using Amazon.Runtime;
 using Amazon.S3;
-using BuildingBlocks.Setup;
+using BuildingBlocks.FluentValidation;
 using Confluent.Kafka;
 using EventBridge.Kafka;
 using Microsoft.Extensions.Configuration;
@@ -27,7 +28,9 @@ public static class ServiceCollectionExtensions
 
         services.AddScoped<IImageService, ImageService>();
         
-        services.AddMediatrWithValidation();
+        var assembly = Assembly.GetExecutingAssembly();
+        services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(assembly));
+        services.AddFluentValidation(assembly);
 
         services.AddKafkaSubscriber(options =>
         {

@@ -1,5 +1,6 @@
+using System.Reflection;
 using System.Text.Json.Serialization;
-using BuildingBlocks.Setup;
+using BuildingBlocks.FluentValidation;
 using Confluent.Kafka;
 using Elastic.Clients.Elasticsearch;
 using EventBridge.Kafka;
@@ -17,8 +18,10 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SchemaFilter<EnumSchemaFilter>();   
 });
-builder.Host.UseSerilog((_, configuration) => configuration.WriteTo.Console());
-builder.Services.AddMediatrWithValidation();
+
+var assembly = Assembly.GetExecutingAssembly();
+builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(assembly));
+builder.Services.AddFluentValidation(assembly);
 
 var elasticsearchClientSettings = new ElasticsearchClientSettings()
     .DefaultMappingFor(typeof(Order), descriptor => descriptor.IndexName("orders"));
@@ -40,6 +43,7 @@ builder.Services.AddKafkaSubscriber(options =>
     options.AutoOffsetReset = Enum.Parse<AutoOffsetReset>(kafkaOptions["AutoOffsetReset"]);
     options.EnableAutoCommit = bool.Parse(kafkaOptions["EnableAutoCommit"]);
 });
+builder.Host.UseSerilog((_, configuration) => configuration.WriteTo.Console());
 
 var app = builder.Build();
 
@@ -49,7 +53,7 @@ app.UseSwaggerUI();
 var apiEndpointRouteBuilder = app.MapApi();
 apiEndpointRouteBuilder.MapReport();
 
-app.UseFluentValidationMiddleware();
+app.UseFluentValidation();
 app.UseKafkaSubscriber(subscriber =>
 {
     subscriber.Subscribe<SetOrderStatusPaidIntegrationEvent, SetOrderStatusPaidIntegrationEventHandler>("OrderStatusSetPaid");

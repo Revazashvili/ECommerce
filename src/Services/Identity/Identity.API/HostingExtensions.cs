@@ -1,4 +1,5 @@
-using BuildingBlocks.Setup;
+using System.Reflection;
+using BuildingBlocks.FluentValidation;
 using Identity.API.Data;
 using Identity.API.Endpoints;
 using Identity.API.Models;
@@ -45,9 +46,11 @@ internal static class HostingExtensions
             .AddAspNetIdentity<ApplicationUser>()
             .AddDeveloperSigningCredential();
         
-        builder.Host.UseSerilog((_, configuration) => configuration.WriteTo.Console());
-        builder.Services.AddMediatrWithValidation();
+        var assembly = Assembly.GetExecutingAssembly();
+        builder.Services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(assembly));
+        builder.Services.AddFluentValidation(assembly);
         
+        builder.Host.UseSerilog((_, configuration) => configuration.WriteTo.Console());
         return builder.Build();
     }
 
@@ -70,7 +73,7 @@ internal static class HostingExtensions
         var endpointRouteBuilder = app.MapApi();
         endpointRouteBuilder.MapUser();
         
-        app.UseFluentValidationMiddleware();
+        app.UseFluentValidation();
 
         app.MapRazorPages()
             .RequireAuthorization();
