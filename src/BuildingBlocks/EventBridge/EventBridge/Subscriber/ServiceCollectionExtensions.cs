@@ -5,7 +5,7 @@ namespace EventBridge.Subscriber;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddEventBridge<THostedService>(this IServiceCollection services, 
-        EventBridgeSubscriberConfiguration subscriberConfiguration)
+        SubscriberConfiguration subscriberConfiguration)
         where THostedService : IntegrationEventSubscriberService
     {
         var store = new SubscriberEventProcessFunctionStore();

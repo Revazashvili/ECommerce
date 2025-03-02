@@ -35,14 +35,15 @@ builder.Services.ConfigureHttpJsonOptions(options =>
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
-builder.Services.AddKafkaSubscriber(configurator =>
+builder.Services.AddKafkaSubscriber(configuration =>
 {
-    configurator.KafkaOptions = builder.Configuration.GetSection("KafkaOptions").Get<KafkaOptions>();
-    configurator.Subscriber = subscriber =>
+    configuration.WithKafkaOptions(builder.Configuration.GetSection("KafkaOptions").Get<KafkaOptions>());
+    configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+    configuration.ConfigureSubscriber(subscriber =>
     {
         subscriber.Subscribe<SetOrderStatusPaidIntegrationEvent, SetOrderStatusPaidIntegrationEventHandler>(
             "OrderStatusSetPaid");
-    };
+    });
 });
 builder.Host.UseSerilog((_, configuration) => configuration.WriteTo.Console());
 

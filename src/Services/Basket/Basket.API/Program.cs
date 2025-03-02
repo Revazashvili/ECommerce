@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text.Json.Serialization;
 using Basket.API.Endpoints;
 using Basket.API.IntegrationEvents;
@@ -37,16 +38,17 @@ builder.Services.AddSwagger(builder.Configuration, "Swagger", "Identity")
     })
     .AddScoped<IIdentityService, IdentityService>()
     .AddScoped<IBasketRepository, RedisBasketRepository>()
-    .AddKafkaSubscriber(configurator =>
+    .AddKafkaSubscriber(configuration =>
     {
-        configurator.KafkaOptions = builder.Configuration.GetSection("KafkaOptions").Get<KafkaOptions>();
-        configurator.Subscriber = subscriber =>
+        configuration.WithKafkaOptions(builder.Configuration.GetSection("KafkaOptions").Get<KafkaOptions>());
+        configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+        configuration.ConfigureSubscriber(subscriber =>
         {
             subscriber.Subscribe<ProductStockUnAvailableIntegrationEvent, ProductStockUnAvailableIntegrationEventHandler>(
-                    "ProductStockUnAvailable");
+                "ProductStockUnAvailable");
             subscriber.Subscribe<OrderPlacedIntegrationEvent, OrderPlacedIntegrationEventHandler>
                 ("OrderPlaced");
-        };
+        });
     })
     .AddNatsMessageBus(builder.Configuration);
 

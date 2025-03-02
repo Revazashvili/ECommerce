@@ -7,9 +7,9 @@ namespace EventBridge.Kafka;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddKafkaSubscriber(this IServiceCollection services, 
-        Action<KafkaSubscriberConfigurator> kafkaSubscriberConfigurator)
+        Action<KafkaSubscriberConfiguration> kafkaSubscriberConfigurator)
     {
-        var configurator = new KafkaSubscriberConfigurator();
+        var configurator = new KafkaSubscriberConfiguration();
         kafkaSubscriberConfigurator(configurator);
 
         services.AddSingleton(configurator.KafkaOptions);

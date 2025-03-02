@@ -1,3 +1,4 @@
+using System.Reflection;
 using EventBridge.Kafka;
 using EventBridge.Outbox;
 using Microsoft.EntityFrameworkCore;
@@ -8,16 +9,17 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddKafkaSubscriber(configurator =>
+builder.Services.AddKafkaSubscriber(configuration =>
 {
-    configurator.KafkaOptions = builder.Configuration.GetSection("KafkaOptions").Get<KafkaOptions>();
-    configurator.Subscriber = subscriber =>
+    configuration.WithKafkaOptions(builder.Configuration.GetSection("KafkaOptions").Get<KafkaOptions>());
+    configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+    configuration.ConfigureSubscriber(subscriber =>
     {
         subscriber.Subscribe<
                 OrderStatusChangedToAvailableQuantityIntegrationEvent,
                 OrderStatusChangedToAvailableQuantityIntegrationEventHandler>
             ("OrderStatusChangedToAvailableQuantity");
-    };
+    });
 });
 
 var connectionString = builder.Configuration.GetConnectionString(nameof(PaymentContext));

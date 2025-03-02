@@ -32,15 +32,15 @@ public static class ServiceCollectionExtensions
         services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(assembly));
         services.AddFluentValidation(assembly);
 
-        services.AddKafkaSubscriber(configurator => 
+        services.AddKafkaSubscriber(kafkaConfiguration => 
         {
-            configurator.KafkaOptions = configuration.GetSection("KafkaOptions").Get<KafkaOptions>();
-            configurator.Subscriber = subscriber =>
+            kafkaConfiguration.WithKafkaOptions(configuration.GetSection("KafkaOptions").Get<KafkaOptions>());
+            kafkaConfiguration.RegisterServicesFromAssembly(assembly);
+            kafkaConfiguration.ConfigureSubscriber(subscriber =>
             {
-                subscriber
-                    .Subscribe<SetOrderPendingStatusIntegrationEvent, SetOrderPendingStatusIntegrationEventHandler>(
+                subscriber.Subscribe<SetOrderPendingStatusIntegrationEvent, SetOrderPendingStatusIntegrationEventHandler>(
                         "OrderSetOrderPendingStatus");
-            };
+            });
         });
 
         return services;

@@ -18,24 +18,21 @@ public static class ServiceCollectionExtensions
         services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(assembly));
         services.AddFluentValidation(assembly);
 
-        services.AddKafkaSubscriber(configurator =>
+        services.AddKafkaSubscriber(subscriberConfiguration =>
         {
-            configurator.RegisterServicesFromAssembly(assembly);
-            configurator.KafkaOptions = configuration.GetSection("KafkaOptions").Get<KafkaOptions>();
-            configurator.Subscriber = subscriber =>
+            subscriberConfiguration.WithKafkaOptions(configuration.GetSection("KafkaOptions").Get<KafkaOptions>());
+            subscriberConfiguration.RegisterServicesFromAssembly(assembly);
+            subscriberConfiguration.ConfigureSubscriber(subscriber =>
             {
-                subscriber
-                    .Subscribe<OrderQuantityNotAvailableIntegrationEvent, OrderQuantityNotAvailableIntegrationEventHandler>
+                subscriber.Subscribe<OrderQuantityNotAvailableIntegrationEvent, OrderQuantityNotAvailableIntegrationEventHandler>
                         ("OrderQuantityNotAvailable");
-                subscriber
-                    .Subscribe<OrderQuantityAvailableIntegrationEvent, OrderQuantityAvailableIntegrationEventHandler>(
+                subscriber.Subscribe<OrderQuantityAvailableIntegrationEvent, OrderQuantityAvailableIntegrationEventHandler>(
                         "OrderQuantityAvailable");
-                subscriber
-                    .Subscribe<OrderPaymentSucceededIntegrationEvent, OrderPaymentSucceededIntegrationEventHandler>(
+                subscriber.Subscribe<OrderPaymentSucceededIntegrationEvent, OrderPaymentSucceededIntegrationEventHandler>(
                         "OrderPaymentSucceeded");
                 subscriber.Subscribe<OrderPaymentFailedIntegrationEvent, OrderPaymentFailedIntegrationEventHandler>(
                     "OrderPaymentFailed");
-            };
+            });
         });
 
         services.AddHostedService<OrderProcessingBackgroundService>();
