@@ -1,4 +1,3 @@
-using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json.Serialization;
 using Basket.API.Endpoints;
 using Basket.API.IntegrationEvents;
@@ -8,12 +7,14 @@ using Basket.API.Services;
 using BuildingBlocks.Swagger;
 using EventBridge.Kafka;
 using MessageBus.Nats;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Logging;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 IdentityModelEventSource.ShowPII = true;
-JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
+// prevent JWT claim keys getting mapped to the XML soap scheme URLs
+JsonWebTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
 var identitySection = builder.Configuration.GetSection("Identity");
 

@@ -1,14 +1,15 @@
-using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json.Serialization;
 using BuildingBlocks.FluentValidation;
 using BuildingBlocks.Swagger;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Products.API.Endpoints;
 using Products.Application;
 using Products.Infrastructure;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
-JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
+// prevent JWT claim keys getting mapped to the XML soap scheme URLs
+JsonWebTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
 var identitySection = builder.Configuration.GetSection("Identity");
 
