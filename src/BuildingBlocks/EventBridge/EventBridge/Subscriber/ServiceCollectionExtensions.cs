@@ -13,7 +13,8 @@ public static class ServiceCollectionExtensions
         var integrationEventSubscriber = new IntegrationEventSubscriber(store);
         
         subscriberAction(integrationEventSubscriber);
-        
+
+        services.AddSingleton(store);
         services.AddSingleton<IIntegrationEventSubscriber>(_ => integrationEventSubscriber);
         services.AddHostedService<THostedService>();
         
