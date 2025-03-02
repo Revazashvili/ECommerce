@@ -20,6 +20,7 @@ public static class ServiceCollectionExtensions
 
         services.AddKafkaSubscriber(configurator =>
         {
+            configurator.RegisterServicesFromAssembly(assembly);
             configurator.KafkaOptions = configuration.GetSection("KafkaOptions").Get<KafkaOptions>();
             configurator.Subscriber = subscriber =>
             {

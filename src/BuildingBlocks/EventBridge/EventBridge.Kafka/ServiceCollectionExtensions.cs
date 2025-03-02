@@ -13,7 +13,7 @@ public static class ServiceCollectionExtensions
         kafkaSubscriberConfigurator(configurator);
 
         services.AddSingleton(configurator.KafkaOptions);
-        services.AddEventBridge<KafkaIntegrationEventSubscriberService>(configurator.Subscriber);
+        services.AddEventBridge<KafkaIntegrationEventSubscriberService>(configurator);
 
         return services;
     }
