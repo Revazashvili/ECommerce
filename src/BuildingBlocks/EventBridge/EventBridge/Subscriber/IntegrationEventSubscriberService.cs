@@ -6,6 +6,7 @@ namespace EventBridge.Subscriber;
 public abstract class IntegrationEventSubscriberService : IHostedService
 {
     private readonly SubscriberEventProcessFunctionStore _subscriberEventProcessFunctionStore;
+    private CancellationTokenSource _stoppingCts;
 
     protected IntegrationEventSubscriberService(IServiceProvider serviceProvider)
     {
@@ -18,12 +19,14 @@ public abstract class IntegrationEventSubscriberService : IHostedService
     {
         var processEvents = _subscriberEventProcessFunctionStore.GetProcessEventFunctions();
 
-        var tasks = processEvents.Select(pair => Subscribe(pair.Key, pair.Value, cancellationToken)).ToList();
-        await Task.WhenAll(tasks);
+        _stoppingCts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        
+        foreach (var processEvent in processEvents)
+            Task.Run(() => Subscribe(processEvent.Key, processEvent.Value, _stoppingCts.Token), _stoppingCts.Token);
     }
 
     public Task StopAsync(CancellationToken cancellationToken)
     {
-        return Task.CompletedTask;
+        return _stoppingCts.CancelAsync();
     }
 }
