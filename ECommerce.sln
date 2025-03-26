@@ -62,7 +62,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution 
 		Shared.props = Shared.props
 		README.md = README.md
 		docker-compose.yml = docker-compose.yml
-		docker-compose.kafka.yml = docker-compose.kafka.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tooling", "Tooling", "{9D39E514-9171-4151-BF7F-5615AC5A4E48}"
