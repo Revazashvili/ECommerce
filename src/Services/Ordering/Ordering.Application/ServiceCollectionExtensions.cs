@@ -1,10 +1,8 @@
 using System.Reflection;
 using BuildingBlocks.FluentValidation;
-using Confluent.Kafka;
 using EventBridge.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Ordering.Application.BackgroundServices;
 using Ordering.Application.IntegrationEvents;
 using Ordering.Application.Services;
 
@@ -35,7 +33,6 @@ public static class ServiceCollectionExtensions
             });
         });
 
-        services.AddHostedService<OrderProcessingBackgroundService>();
         services.AddScoped<IIdentityService, IdentityService>();
         
         return services;

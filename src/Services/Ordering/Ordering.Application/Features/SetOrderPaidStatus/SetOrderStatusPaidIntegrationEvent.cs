@@ -18,5 +18,5 @@ public class SetOrderStatusPaidIntegrationEvent : IntegrationEvent
     public List<OrderItem> OrderItems { get; init; }
     public Address Address { get; init; }
     public OrderStatus OrderStatus { get; set; }
-    public DateTime OrderingDate { get; init; }
+    public DateTimeOffset OrderingDate { get; init; }
 }

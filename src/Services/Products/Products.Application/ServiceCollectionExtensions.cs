@@ -6,7 +6,6 @@ using BuildingBlocks.FluentValidation;
 using EventBridge.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Products.Application.IntegrationEvents;
 using Products.Application.Services;
 
 namespace Products.Application;
@@ -38,8 +37,6 @@ public static class ServiceCollectionExtensions
             kafkaConfiguration.RegisterServicesFromAssembly(assembly);
             kafkaConfiguration.ConfigureSubscriber(subscriber =>
             {
-                subscriber.Subscribe<SetOrderPendingStatusIntegrationEvent, SetOrderPendingStatusIntegrationEventHandler>(
-                        "OrderSetOrderPendingStatus");
             });
         });
 

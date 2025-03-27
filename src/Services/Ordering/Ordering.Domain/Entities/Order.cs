@@ -10,7 +10,7 @@ public class Order : Entity
     public List<OrderItem> OrderItems { get; init; }
     public Address Address { get; init; }
     public OrderStatus OrderStatus { get; set; }
-    public DateTime OrderingDate { get; init; }
+    public DateTimeOffset OrderingDate { get; init; }
 
     private Order() {}
     
@@ -20,10 +20,8 @@ public class Order : Entity
         UserId = userId;
         Address = address;
         OrderStatus = OrderStatus.Created;
-        OrderingDate = DateTime.Now;
+        OrderingDate = DateTime.UtcNow;
         OrderItems = [];
-
-        AddDomainEvent(new OrderPlacedDomainEvent(OrderNumber, userId));
     }
     
     public static Order Create(Guid userId,Address address)
@@ -79,15 +77,5 @@ public class Order : Entity
         OrderStatus = OrderStatus.Paid;
 
         AddDomainEvent(new SetOrderStatusPaidDomainEvent(this));
-    }
-    
-    public void SetPendingStatus()
-    {
-        if (OrderStatus != OrderStatus.Created)
-            throw new OrderStatusException(OrderStatus, OrderStatus.Pending);
-
-        OrderStatus = OrderStatus.Pending;
-
-        AddDomainEvent(new SetOrderPendingStatusDomainEvent(OrderNumber));
     }
 }

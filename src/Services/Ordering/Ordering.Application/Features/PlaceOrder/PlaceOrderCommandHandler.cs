@@ -1,7 +1,6 @@
 using Contracts;
 using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
-using EventBridge;
 using EventBridge.Dispatcher;
 using Microsoft.Extensions.Logging;
 using Ordering.Application.Repositories;
@@ -30,6 +29,8 @@ public class PlaceOrderCommandHandler(ILogger<PlaceOrderCommandHandler> logger, 
             }
 
             await orderRepository.AddAsync(order);
+
+            await dispatcher.DispatchAsync("OrderPlaced", new OrderPlacedIntegrationEvent(order), cancellationToken);
             
             await orderRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
             
