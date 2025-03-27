@@ -1,5 +1,6 @@
 using Confluent.Kafka;
 using EventBridge.Subscriber;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace EventBridge.Kafka;
 
@@ -9,7 +10,7 @@ public class KafkaIntegrationEventSubscriberService : IntegrationEventSubscriber
     private readonly ConsumerConfig _consumerConfig;
     public KafkaIntegrationEventSubscriberService(KafkaOptions kafkaOptions, IServiceProvider serviceProvider) : base(serviceProvider)
     {
-        _serviceProvider = serviceProvider;
+        _serviceProvider = serviceProvider.CreateAsyncScope().ServiceProvider;
         _consumerConfig = new ConsumerConfig
         {
             BootstrapServers = kafkaOptions.BootstrapServers,

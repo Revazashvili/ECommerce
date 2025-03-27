@@ -1,7 +1,6 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
 using BuildingBlocks.FluentValidation;
-using Confluent.Kafka;
 using Elastic.Clients.Elasticsearch;
 using EventBridge.Kafka;
 using Report.API.Common;
