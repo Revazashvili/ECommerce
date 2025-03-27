@@ -47,7 +47,7 @@ namespace Ordering.Infrastructure.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     aggregate_id = table.Column<string>(type: "text", nullable: false),
                     topic = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    payload = table.Column<string>(type: "text", nullable: false),
+                    payload = table.Column<string>(type: "jsonb", nullable: false),
                     timestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>

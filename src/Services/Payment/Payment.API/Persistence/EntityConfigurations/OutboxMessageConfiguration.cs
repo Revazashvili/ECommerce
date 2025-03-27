@@ -9,24 +9,22 @@ public class OutboxMessageConfiguration : IEntityTypeConfiguration<OutboxMessage
     public void Configure(EntityTypeBuilder<OutboxMessage> builder)
     {
         builder.ToTable("outbox_messages", Schema.Outbox);
-        builder.HasKey(outboxMessage => outboxMessage.Id)
-            .HasName("id");
+        builder.HasKey(outboxMessage => outboxMessage.Id);
+
+        builder.Property(outboxMessage => outboxMessage.Id);
 
         builder.Property(outboxMessage => outboxMessage.AggregateId)
-            .IsRequired()
-            .HasColumnName("aggregate_id");
-        
+            .IsRequired();
+
         builder.Property(outboxMessage => outboxMessage.Topic)
             .IsRequired()
-            .HasMaxLength(100)
-            .HasColumnName("topic");
-        
+            .HasMaxLength(100);
+
         builder.Property(outboxMessage => outboxMessage.Payload)
             .IsRequired()
-            .HasColumnName("payload");
-        
+            .HasColumnType("jsonb");
+
         builder.Property(outboxMessage => outboxMessage.Timestamp)
-            .IsRequired()
-            .HasColumnName("timestamp");
+            .IsRequired();
     }
 }

@@ -12,7 +12,7 @@ using Ordering.Infrastructure;
 namespace Ordering.Infrastructure.Migrations
 {
     [DbContext(typeof(OrderingContext))]
-    [Migration("20250225095201_initial")]
+    [Migration("20250327102815_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Ordering.Infrastructure.Migrations
 
                     b.Property<string>("Payload")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("jsonb")
                         .HasColumnName("payload");
 
                     b.Property<DateTime>("Timestamp")

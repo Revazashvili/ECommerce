@@ -12,7 +12,7 @@ using Products.Infrastructure;
 namespace Products.Infrastructure.Migrations
 {
     [DbContext(typeof(ProductsContext))]
-    [Migration("20250224143512_initial")]
+    [Migration("20250327102617_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -41,7 +41,7 @@ namespace Products.Infrastructure.Migrations
 
                     b.Property<string>("Payload")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("jsonb")
                         .HasColumnName("payload");
 
                     b.Property<DateTime>("Timestamp")

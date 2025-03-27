@@ -38,7 +38,7 @@ namespace Products.Infrastructure.Migrations
 
                     b.Property<string>("Payload")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("jsonb")
                         .HasColumnName("payload");
 
                     b.Property<DateTime>("Timestamp")

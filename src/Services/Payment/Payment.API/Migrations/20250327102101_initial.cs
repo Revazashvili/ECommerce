@@ -20,16 +20,16 @@ namespace Payment.API.Migrations
                 schema: "outbox",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     aggregate_id = table.Column<string>(type: "text", nullable: false),
                     topic = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    payload = table.Column<string>(type: "text", nullable: false),
+                    payload = table.Column<string>(type: "jsonb", nullable: false),
                     timestamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("id", x => x.Id);
+                    table.PrimaryKey("pk_outbox_messages", x => x.id);
                 });
         }
 

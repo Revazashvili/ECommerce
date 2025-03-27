@@ -24,11 +24,15 @@ builder.Services.AddKafkaSubscriber(configuration =>
 
 var connectionString = builder.Configuration.GetConnectionString(nameof(PaymentContext));
 
-builder.Services.AddDbContext<PaymentContext>(builder => builder.UseNpgsql(connectionString,
-    optionsBuilder =>
-    {
-        optionsBuilder.MigrationsAssembly(typeof(PaymentContext).Assembly.FullName);
-    }));
+builder.Services.AddDbContext<PaymentContext>(builder =>
+{
+    builder.UseNpgsql(connectionString,
+        optionsBuilder =>
+        {
+            optionsBuilder.MigrationsAssembly(typeof(PaymentContext).Assembly.FullName);
+        });
+    builder.UseSnakeCaseNamingConvention();
+});
 
 builder.Services.AddScoped<IUnitOfWork, PaymentContext>();
 builder.Services.AddOutboxDispatcher(provider =>

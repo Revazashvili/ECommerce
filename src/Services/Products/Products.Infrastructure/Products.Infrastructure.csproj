@@ -22,6 +22,10 @@
       <PackageReference Include="EFCore.NamingConventions" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Migrations\" />
+    </ItemGroup>
+
 
 
 

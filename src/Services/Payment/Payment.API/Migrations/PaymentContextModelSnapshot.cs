@@ -26,7 +26,8 @@ namespace Payment.API.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("bigint")
+                        .HasColumnName("id");
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
@@ -37,7 +38,7 @@ namespace Payment.API.Migrations
 
                     b.Property<string>("Payload")
                         .IsRequired()
-                        .HasColumnType("text")
+                        .HasColumnType("jsonb")
                         .HasColumnName("payload");
 
                     b.Property<DateTime>("Timestamp")
@@ -51,7 +52,7 @@ namespace Payment.API.Migrations
                         .HasColumnName("topic");
 
                     b.HasKey("Id")
-                        .HasName("id");
+                        .HasName("pk_outbox_messages");
 
                     b.ToTable("outbox_messages", "outbox");
                 });

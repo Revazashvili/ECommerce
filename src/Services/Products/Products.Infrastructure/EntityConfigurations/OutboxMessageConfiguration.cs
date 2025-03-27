@@ -19,7 +19,8 @@ public class OutboxMessageConfiguration : IEntityTypeConfiguration<OutboxMessage
             .HasMaxLength(100);
         
         builder.Property(outboxMessage => outboxMessage.Payload)
-            .IsRequired();
+            .IsRequired()
+            .HasColumnType("jsonb");
         
         builder.Property(outboxMessage => outboxMessage.Timestamp)
             .IsRequired();
