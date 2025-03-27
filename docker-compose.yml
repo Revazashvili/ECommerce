@@ -1,5 +1,20 @@
 services:
 
+  connect:
+    image: "debezium/connect:2.1"
+    container_name: connect
+    ports:
+      - "8083:8083"
+    depends_on:
+      - postgres
+      - kafka
+    environment:
+      BOOTSTRAP_SERVERS: kafka:9092
+      GROUP_ID: 1
+      CONFIG_STORAGE_TOPIC: CONNECT_CONFIGS
+      OFFSET_STORAGE_TOPIC: CONNECT_OFFSETS
+      STATUS_STORAGE_TOPIC: CONNECT_STATUSES
+
   kafka:
     image: bitnami/kafka:latest
     ports:
@@ -43,6 +58,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=mysecretpassword
       - POSTGRES_USER=postgres
+    command: [ "postgres", "-c", "wal_level=logical" ]
   
   basket-db:
     image: redis
