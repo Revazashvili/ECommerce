@@ -29,7 +29,7 @@ public class KafkaIntegrationEventSubscriberService : IntegrationEventSubscriber
 
         while (!cancellationToken.IsCancellationRequested)
         {
-            var consumerResult = consumer.Consume();
+            var consumerResult = consumer.Consume(cancellationToken);
 
             if (consumerResult.Message == null || consumerResult.IsPartitionEOF)
                 continue;
