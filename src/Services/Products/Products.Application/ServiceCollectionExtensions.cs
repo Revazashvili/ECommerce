@@ -6,7 +6,9 @@ using BuildingBlocks.FluentValidation;
 using EventBridge.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Products.Application.IntegrationEvents;
 using Products.Application.Services;
+using Refit;
 
 namespace Products.Application;
 
@@ -37,8 +39,12 @@ public static class ServiceCollectionExtensions
             kafkaConfiguration.RegisterServicesFromAssembly(assembly);
             kafkaConfiguration.ConfigureSubscriber(subscriber =>
             {
+                subscriber.Subscribe<OrderPlacedIntegrationEvent, OrderPlacedIntegrationEventHandler>("ordering.OrderPlaced");
             });
         });
+        
+        services.AddRefitClient<IInventoryService>()
+            .ConfigureHttpClient(c => c.BaseAddress = new Uri(configuration["InventoryApiUrl"]));
 
         return services;
     }

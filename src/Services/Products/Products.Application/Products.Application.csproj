@@ -13,16 +13,12 @@
     <ItemGroup>
         <PackageReference Include="FluentValidation" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+        <PackageReference Include="Refit.HttpClientFactory" />
     </ItemGroup>
 
 
     <ItemGroup>
       <PackageReference Include="AWSSDK.S3" />
-    </ItemGroup>
-
-
-    <ItemGroup>
-      <Folder Include="IntegrationEvents\" />
     </ItemGroup>
 
 </Project>

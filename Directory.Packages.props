@@ -69,4 +69,7 @@
   <ItemGroup Label="Json">
     <PackageVersion Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
+  <ItemGroup Label="Http">
+    <PackageVersion Include="Refit.HttpClientFactory" Version="8.0.0" />
+  </ItemGroup>
 </Project>
