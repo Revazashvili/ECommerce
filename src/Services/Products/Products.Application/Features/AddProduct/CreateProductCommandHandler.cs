@@ -1,6 +1,7 @@
 using Contracts;
 using Contracts.Mediatr.Validation;
 using Contracts.Mediatr.Wrappers;
+using EventBridge.Dispatcher;
 using Microsoft.Extensions.Logging;
 using Products.Application.Services;
 using Products.Domain.Entities;
@@ -10,7 +11,9 @@ namespace Products.Application.Features.AddProduct;
 
 public class CreateProductCommandHandler(ILogger<CreateProductCommandHandler> logger,
     IProductRepository productRepository,
-    IImageService imageService, IProductCategoryRepository productCategoryRepository)
+    IImageService imageService, 
+    IProductCategoryRepository productCategoryRepository,
+    IIntegrationEventDispatcher dispatcher)
     : IValidatedCommandHandler<CreateProductCommand, Product>
 {
     public async Task<Either<Product, ValidationResult>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
@@ -24,6 +27,13 @@ public class CreateProductCommandHandler(ILogger<CreateProductCommandHandler> lo
             var product = Product.Create(id, request.Name, request.Quantity, request.Price, imageUrl, categories);
             
             var result = await productRepository.AddAsync(product,cancellationToken);
+
+            await dispatcher.DispatchAsync(
+                "ProductAdded",
+                new ProductAddedIntegrationEvent(product.Id, product.Name),
+                cancellationToken
+            );
+            
             await productRepository.UnitOfWork.SaveChangesAsync(cancellationToken);
             return result;
         }
