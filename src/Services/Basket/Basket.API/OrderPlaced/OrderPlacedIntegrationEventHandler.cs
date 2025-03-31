@@ -1,14 +1,11 @@
 using Basket.API.Grains;
-using EventBridge;
 using EventBridge.Subscriber;
 
-namespace Basket.API.IntegrationEvents;
-
-public class OrderPlacedIntegrationEvent : IntegrationEvent;
+namespace Basket.API.OrderPlaced;
 
 public class OrderPlacedIntegrationEventHandler(
-        ILogger<OrderPlacedIntegrationEventHandler> logger,
-        IGrainFactory grainFactory)
+    ILogger<OrderPlacedIntegrationEventHandler> logger,
+    IGrainFactory grainFactory)
     : IIntegrationEventHandler<OrderPlacedIntegrationEvent>
 {
     public Task HandleAsync(OrderPlacedIntegrationEvent @event, CancellationToken cancellationToken)

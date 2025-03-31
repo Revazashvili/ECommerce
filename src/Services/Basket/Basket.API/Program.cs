@@ -1,8 +1,9 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
 using Basket.API.Endpoints;
-using Basket.API.IntegrationEvents;
 using Basket.API.Interfaces;
+using Basket.API.OrderPlaced;
+using Basket.API.ProductsReserveFailed;
 using Basket.API.Repositories;
 using Basket.API.Services;
 using BuildingBlocks.Swagger;
@@ -44,8 +45,8 @@ builder.Services.AddSwagger(builder.Configuration, "Swagger", "Identity")
         configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
         configuration.ConfigureSubscriber(subscriber =>
         {
-            subscriber.Subscribe<ProductStockUnAvailableIntegrationEvent, ProductStockUnAvailableIntegrationEventHandler>(
-                "ProductStockUnAvailable");
+            subscriber.Subscribe<ProductsReserveFailedIntegrationEvent, ProductsReserveFailedIntegrationEventHandler>(
+                "ProductsReserveFailed");
             subscriber.Subscribe<OrderPlacedIntegrationEvent, OrderPlacedIntegrationEventHandler>
                 ("OrderPlaced");
         });
