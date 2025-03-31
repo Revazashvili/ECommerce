@@ -3,6 +3,7 @@ using BuildingBlocks.FluentValidation;
 using EventBridge.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Ordering.Application.Features.PaymentFailed;
 using Ordering.Application.Features.PaymentSucceeded;
 using Ordering.Application.IntegrationEvents;
 using Ordering.Application.Services;
