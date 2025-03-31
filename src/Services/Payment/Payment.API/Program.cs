@@ -2,9 +2,9 @@ using System.Reflection;
 using EventBridge.Kafka;
 using EventBridge.Outbox;
 using Microsoft.EntityFrameworkCore;
-using Payment.API.IntegrationEvents;
 using Payment.API.Persistence;
 using Payment.API.Persistence.Respositories;
+using Payment.API.ProductsReserved;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,10 +15,7 @@ builder.Services.AddKafkaSubscriber(configuration =>
     configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
     configuration.ConfigureSubscriber(subscriber =>
     {
-        subscriber.Subscribe<
-                OrderStatusChangedToAvailableQuantityIntegrationEvent,
-                OrderStatusChangedToAvailableQuantityIntegrationEventHandler>
-            ("OrderStatusChangedToAvailableQuantity");
+        subscriber.Subscribe<ProductsReservedIntegrationEvent, ProductsReservedIntegrationEventHandler>("ProductsReserved");
     });
 });
 
