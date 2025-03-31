@@ -7,6 +7,7 @@ using EventBridge.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Products.Application.Features.OrderPlaced;
+using Products.Application.Inventory;
 using Products.Application.Services;
 using Refit;
 

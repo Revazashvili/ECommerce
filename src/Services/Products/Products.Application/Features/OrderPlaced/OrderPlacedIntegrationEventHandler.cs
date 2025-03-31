@@ -1,7 +1,7 @@
 using EventBridge.Dispatcher;
 using EventBridge.Subscriber;
+using Products.Application.Inventory;
 using Products.Application.Repositories;
-using Products.Application.Services;
 
 namespace Products.Application.Features.OrderPlaced;
 
