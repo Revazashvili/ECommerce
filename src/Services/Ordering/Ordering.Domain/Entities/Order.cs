@@ -74,8 +74,7 @@ public class Order : Entity
     {
         if (OrderStatus != OrderStatus.AvailableQuantity)
             throw new OrderStatusException(OrderStatus, OrderStatus.Paid);
+        
         OrderStatus = OrderStatus.Paid;
-
-        AddDomainEvent(new SetOrderStatusPaidDomainEvent(this));
     }
 }
