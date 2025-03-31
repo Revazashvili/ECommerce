@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ordering.Application.Features.PaymentFailed;
 using Ordering.Application.Features.PaymentSucceeded;
-using Ordering.Application.IntegrationEvents;
 using Ordering.Application.Services;
 
 namespace Ordering.Application;
@@ -24,10 +23,6 @@ public static class ServiceCollectionExtensions
             subscriberConfiguration.RegisterServicesFromAssembly(assembly);
             subscriberConfiguration.ConfigureSubscriber(subscriber =>
             {
-                subscriber.Subscribe<OrderQuantityNotAvailableIntegrationEvent, OrderQuantityNotAvailableIntegrationEventHandler>
-                        ("OrderQuantityNotAvailable");
-                subscriber.Subscribe<OrderQuantityAvailableIntegrationEvent, OrderQuantityAvailableIntegrationEventHandler>(
-                        "OrderQuantityAvailable");
                 subscriber.Subscribe<OrderPaymentSucceededIntegrationEvent, OrderPaymentSucceededIntegrationEventHandler>(
                         "OrderPaymentSucceeded");
                 subscriber.Subscribe<OrderPaymentFailedIntegrationEvent, OrderPaymentFailedIntegrationEventHandler>(

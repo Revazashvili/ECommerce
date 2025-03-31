@@ -1,4 +1,3 @@
-using Ordering.Domain.Events;
 using Ordering.Domain.Exceptions;
 
 namespace Ordering.Domain.Entities;
@@ -50,24 +49,6 @@ public class Order : Entity
     public void SetCreatedStatus()
     {
         OrderStatus = OrderStatus.Created;
-    }
-    
-    public void SetUnAvailableQuantityStatus()
-    {
-        if (OrderStatus != OrderStatus.Pending)
-            throw new OrderStatusException(OrderStatus, OrderStatus.UnAvailableQuantity);
-        OrderStatus = OrderStatus.UnAvailableQuantity;
-
-        AddDomainEvent(new SetOrderUnAvailableQuantityStatusDomainEvent(OrderNumber));
-    }
-    
-    public void SetAvailableQuantityStatus()
-    {
-        if (OrderStatus != OrderStatus.Pending)
-            throw new OrderStatusException(OrderStatus, OrderStatus.AvailableQuantity);
-        OrderStatus = OrderStatus.AvailableQuantity;
-
-        AddDomainEvent(new SetOrderAvailableQuantityStatusDomainEvent(OrderNumber));
     }
     
     public void SetPaidStatus()
