@@ -6,7 +6,7 @@ using BuildingBlocks.FluentValidation;
 using EventBridge.Kafka;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Products.Application.IntegrationEvents;
+using Products.Application.Features.OrderPlaced;
 using Products.Application.Services;
 using Refit;
 

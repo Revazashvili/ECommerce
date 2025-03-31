@@ -1,32 +1,9 @@
-using EventBridge;
 using EventBridge.Dispatcher;
 using EventBridge.Subscriber;
 using Products.Application.Repositories;
 using Products.Application.Services;
 
-namespace Products.Application.IntegrationEvents;
-
-public class OrderPlacedIntegrationEvent : IntegrationEvent
-{
-    public Guid UserId { get; set; }
-    public List<OrderPlacedIntegrationEventOrderItem> OrderItems { get; set; }
-}
-
-public class OrderPlacedIntegrationEventOrderItem
-{
-    public Guid ProductId { get; set; }
-    public int Quantity { get; set; }
-}
-
-public class ProductsReservedEvent : IntegrationEvent
-{
-    public ProductsReservedEvent(Guid orderNumber) : base(orderNumber.ToString()) { }
-}
-
-public class ProductsReserveFailedEvent : IntegrationEvent
-{
-    public ProductsReserveFailedEvent(Guid orderNumber) : base(orderNumber.ToString()) { }
-}
+namespace Products.Application.Features.OrderPlaced;
 
 public class OrderPlacedIntegrationEventHandler : IIntegrationEventHandler<OrderPlacedIntegrationEvent>
 {
@@ -52,12 +29,12 @@ public class OrderPlacedIntegrationEventHandler : IIntegrationEventHandler<Order
         try
         {
             await _inventoryService.ReserveAsync(request, cancellationToken);
-            var productsReservedEvent = new ProductsReservedEvent(@event.UserId);
+            var productsReservedEvent = new ProductsReservedIntegrationEvent(@event.UserId);
             await _dispatcher.DispatchAsync("ProductsReserved", productsReservedEvent, cancellationToken);
         }
         catch (Exception ex)
         {
-            var productsReserveFailedEvent = new ProductsReserveFailedEvent(@event.UserId);
+            var productsReserveFailedEvent = new ProductsReserveFailedIntegrationEvent(@event.UserId);
             await _dispatcher.DispatchAsync("ProductsReserveFailed", productsReserveFailedEvent, cancellationToken);
         }
         finally
