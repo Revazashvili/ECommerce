@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ordering.Application.Features.PaymentFailed;
 using Ordering.Application.Features.PaymentSucceeded;
+using Ordering.Application.Features.ReserveFailed;
 using Ordering.Application.Services;
 
 namespace Ordering.Application;
@@ -27,6 +28,8 @@ public static class ServiceCollectionExtensions
                         "OrderPaymentSucceeded");
                 subscriber.Subscribe<OrderPaymentFailedIntegrationEvent, OrderPaymentFailedIntegrationEventHandler>(
                     "OrderPaymentFailed");
+                subscriber.Subscribe<ProductsReserveFailedIntegrationEvent, ProductsReserveFailedIntegrationEventHandler>(
+                    "ProductsReserveFailed");
             });
         });
 
