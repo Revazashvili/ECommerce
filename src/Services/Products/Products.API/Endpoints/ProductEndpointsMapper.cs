@@ -4,7 +4,6 @@ using Products.API.Extensions;
 using Products.Application.Features.AddProduct;
 using Products.Application.Features.GetProducts;
 using Products.Application.Features.SearchProducts;
-using Products.Application.Features.UpdateProductStock;
 using Products.Domain.Entities;
 
 namespace Products.API.Endpoints;
@@ -32,15 +31,6 @@ internal static class ProductEndpointsMapper
             .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
 
         basketRouteGroupBuilder.MapPost("/", async (CreateProductCommand command, CancellationToken cancellationToken,
-                ISender sender) =>
-            {
-                var result = await sender.Send(command, cancellationToken);
-                return result.ToResult();
-            })
-            .Produces<Product>()
-            .Produces<ValidationResult>(StatusCodes.Status400BadRequest);
-        
-        basketRouteGroupBuilder.MapPut("/stock", async (UpdateProductStockCommand command, CancellationToken cancellationToken,
                 ISender sender) =>
             {
                 var result = await sender.Send(command, cancellationToken);

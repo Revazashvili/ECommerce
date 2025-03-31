@@ -19,12 +19,6 @@ public class CreateProductCommandValidator : AbstractValidator<CreateProductComm
             .NotEmpty()
             .WithMessage("Name must not be empty.");
         
-        RuleFor(command => command.Quantity)
-            .NotNull()
-            .WithMessage("Quantity must not be null.")
-            .GreaterThanOrEqualTo(1)
-            .WithMessage("Quantity must be greater or equal to 1.");
-        
         RuleFor(command => command.Price)
             .NotNull()
             .WithMessage("Price must not be null.")

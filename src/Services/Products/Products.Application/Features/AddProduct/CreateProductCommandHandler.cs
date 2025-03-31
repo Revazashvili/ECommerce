@@ -24,7 +24,7 @@ public class CreateProductCommandHandler(ILogger<CreateProductCommandHandler> lo
             var imageUrl = await imageService.UploadAsync(id,request.ImageBase64,cancellationToken);
             var categories = await productCategoryRepository.GetAsync(request.Categories.ToArray(), cancellationToken);
 
-            var product = Product.Create(id, request.Name, request.Quantity, request.Price, imageUrl, categories);
+            var product = Product.Create(id, request.Name, request.Price, imageUrl, categories);
             
             var result = await productRepository.AddAsync(product,cancellationToken);
 

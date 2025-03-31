@@ -20,9 +20,6 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(product => product.Price)
             .IsRequired();
         
-        builder.Property(product => product.Quantity)
-            .IsRequired();
-
         builder.Property(product => product.ImageUrl)
             .IsRequired()
             .HasMaxLength(250);
